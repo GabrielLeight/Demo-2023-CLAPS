@@ -17,6 +17,9 @@
 -> otherwise, instalar usando
     npm i react-native
 
+TAMBIEN INCLUIR 
+npm install @react-navigation/native
+
 -> abrir sdk manager de android studio
     -> instalar 
         Android SDK platform 34
