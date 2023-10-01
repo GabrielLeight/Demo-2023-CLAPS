@@ -6,6 +6,7 @@
  */
 
 import React,  { useState }from 'react';
+import axios from 'axios';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -64,6 +65,8 @@ function Section({children, title}: SectionProps): JSX.Element {
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const submitForm = (event: React.FormEvent) => {
     
     //event.preventDefault();
@@ -71,32 +74,47 @@ function LoginForm() {
   };
 
   const create = () => {
-    // Add your create function logic here
+    try {
+      const response = await axios.post('YOUR_API_ENDPOINT', {
+        email,
+        password,
+        first_name: firstName,
+        last_name: lastName,
+        is_active: true, // Set this as needed
+      });
+
+      // Handle success, e.g., navigate to a new screen or display a success message
+      console.log('User registered:', response.data);
+    } catch (error) {
+      // Handle error, e.g., display an error message
+      console.error('Registration failed:', error);
+    }
   };
 
   return (
-    <Section style={style.container}>
-      <Text style={style.title}>LOGIN</Text>
-      <TextInput
-        style={style.input}
+    <>
+      <Text style={styles.title}>LOGIN</Text>
+      <TextInput 
+        style={styles.input}
         placeholder="Enter your email"
         onChangeText={(text) => setEmail(text)}
         value={email}
       />
       <TextInput
-        style={style.input}
+        style={styles.input}
+
         placeholder="Enter your password"
         onChangeText={(text) => setPassword(text)}
         secureTextEntry={true}
         value={password}
       />
-      <TouchableOpacity style={style.button} onPress={submitForm}>
+      <TouchableOpacity style={styles.button} onPress={submitForm}>
         <Text>Login</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={style.button} onPress={create}>
+      <TouchableOpacity style={styles.button} onPress={create}>
         <Text>Sign Up</Text>
       </TouchableOpacity>
-    </Section>
+      </>
   );
 }
 
@@ -162,8 +180,6 @@ const styles = StyleSheet.create({
   highlight: {
     fontWeight: '700',
   },
-});
-const style = StyleSheet.create({
   container: {
     marginTop: 32,
     paddingHorizontal: 24,
@@ -174,10 +190,9 @@ const style = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    margin: 12,
     borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
+    padding: 10,
   },
   button: {
     backgroundColor: 'lightblue',
@@ -186,22 +201,5 @@ const style = StyleSheet.create({
     marginTop: 10,
     alignItems: 'center',
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
 });
-
 export default App;
