@@ -9,4 +9,5 @@ const CustomInput = () => {
             </Text>
         </View>
     )
-}
+};
+export default CustomInput;
