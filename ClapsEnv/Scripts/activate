@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\Moonlabpc\Desktop\infosoc\teatro\Teatro\ClapsEnv"
+VIRTUAL_ENV="C:\Users\gabri\Documents\GitHub\Teatro\ClapsEnv\Scripts"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
