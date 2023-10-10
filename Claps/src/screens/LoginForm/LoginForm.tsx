@@ -4,10 +4,9 @@ import {
     View,
     Text,
     TextInput,
-    TouchableOpacity,
 } from 'react-native';
-
 import {styles} from '../../../App';
+import CustomButton from '../../components/CustomButton';
 
 // Agregar onpress submitForm
 function LoginForm() {
@@ -20,7 +19,9 @@ function LoginForm() {
       //event.preventDefault();
       // Add your form submission logic here
     };
-  
+
+    
+
     const create = async () => {
       try {
         const response = await axios.post('YOUR_API_ENDPOINT', {
@@ -38,9 +39,13 @@ function LoginForm() {
         console.error('Registration failed:', error);
       }
     };
-  
+    
+    const loginMessage = () => {
+      console.warn('Iniciando sesión');
+    };
+    
     return (
-      <View>
+      <View style ={styles.root}>
         <Text style={styles.title}>Inicio de Sesion</Text>
         <TextInput 
             style={styles.input}
@@ -55,12 +60,18 @@ function LoginForm() {
             secureTextEntry={true}
             value={password}
         />
-        <TouchableOpacity style={styles.button}>
-            <Text>Iniciar Sesion</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={create}>
-            <Text>Registrarse</Text>
-        </TouchableOpacity>
+        <CustomButton
+          text="Iniciar Sesion" 
+          onPress={loginMessage}
+          bgColor = "#2674ff"
+          fgColor ="white"
+        />
+        <CustomButton
+          text="Registrarse" 
+          onPress={create}
+          bgColor = "#FAE9EA"
+          fgColor ="#DD4D44"
+        />
     </View>
     );
   }

@@ -47,6 +47,8 @@ function App(): JSX.Element {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    padding: 20,
+    alignItems: 'center',
   },
   title: {
     textAlign: 'center',
@@ -61,14 +63,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 5,
     width: "65%",
-  },
-  button: {
-    backgroundColor: 'orange', color: 'white',
-    alignItems: 'center',
-    width: "65%",
-    paddingVertical: 10,
-    borderRadius: 10,
-    margin:5,
   },
 });
 
