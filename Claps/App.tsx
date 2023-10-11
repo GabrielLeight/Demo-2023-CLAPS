@@ -53,18 +53,10 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     fontSize: 20,
-    color: 'orange'
-  },
-  input: {
-    borderWidth: 2,
-    borderColor: 'white',
-    textAlign: 'center',
-    opacity: 0.5,
-    borderRadius: 10,
-    margin: 5,
-    width: "65%",
+    color: 'orange',
+    fontWeight: 'bold',
   },
 });
 
-export {styles};
+
 export default App;

@@ -3,10 +3,11 @@ import axios from 'axios';
 import {
     View,
     Text,
-    TextInput,
+    StyleSheet,
 } from 'react-native';
-import {styles} from '../../../App';
+
 import CustomButton from '../../components/CustomButton';
+import CustomInput from '../../components/CustomInput';
 
 // Agregar onpress submitForm
 function LoginForm() {
@@ -47,34 +48,48 @@ function LoginForm() {
     return (
       <View style ={styles.root}>
         <Text style={styles.title}>Inicio de Sesion</Text>
-        <TextInput 
-            style={styles.input}
+        <CustomInput
             placeholder="Ingresa tu correo electrónico"
-            onChangeText={(text) => setEmail(text)}
+            //onChangeText={(text) => setEmail(text)}
+            setValue = {setEmail}
             value={email}
+            secureTextEntry={false}
         />
-        <TextInput
-            style={styles.input}
+        <CustomInput
             placeholder="Ingresa tu contraseña"
-            onChangeText={(text) => setPassword(text)}
+            //onChangeText={(text) => setPassword(text)}
             secureTextEntry={true}
+            setValue = {setPassword}
             value={password}
         />
         <CustomButton
           text="Iniciar Sesion" 
           onPress={loginMessage}
-          bgColor = "#2674ff"
-          fgColor ="white"
+          bgColor = 'orange'
+          fgColor = 'white'
         />
         <CustomButton
           text="Registrarse" 
           onPress={create}
-          bgColor = "#FAE9EA"
-          fgColor ="#DD4D44"
+          bgColor = 'orange'
+          fgColor ='white'
         />
     </View>
     );
   }
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 20,
+  },
+  title: {
+     color: 'orange',
+     fontWeight: 'bold',
+
+  }
+})
 
 export default LoginForm;
     
