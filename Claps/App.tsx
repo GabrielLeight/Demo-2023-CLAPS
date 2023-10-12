@@ -57,6 +57,10 @@ const styles = StyleSheet.create({
     color: 'orange',
     fontWeight: 'bold',
   },
+  input:{
+    color: 'rgb(169, 27, 13)',
+    textAlign: 'center',
+},
 });
 
 export {styles};
