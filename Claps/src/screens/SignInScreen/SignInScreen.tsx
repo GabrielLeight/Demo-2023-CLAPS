@@ -4,10 +4,12 @@ import {
     View,
     Text,
     StyleSheet,
+    Image
 } from 'react-native';
 
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
+const Logo = '../../../assets/images/Claps.png';
 
 // Agregar onpress submitForm
 function SignInScreen() {
@@ -27,31 +29,33 @@ function SignInScreen() {
     
     return (
       <View style ={styles.root}>
-        <Text style={styles.title}>Inicio de Sesion</Text>
+        <Image style = {styles.tinyLogo} source = {require(Logo)}/>
+        {/* <Text style={styles.title}>Inicio de Sesion</Text> */}
         <CustomInput
             placeholder="Ingresa tu correo electrónico"
             setValue = {setEmail}
             value={email}
             secureTextEntry={false}
-            bgColor = 'rgba(47, 228, 0,0.1)'
+            bgColor = '#ffffff'
         />
         <CustomInput
             placeholder="Ingresa tu contraseña"
             secureTextEntry={true}
             setValue = {setPassword}
             value={password}
-            bgColor = 'rgba(47, 228, 0, 0.1)'
+            bgColor = '#ffffff'
         />
         <CustomButton
           text="Iniciar Sesion" 
           onPress={SignInMessage}
-          bgColor = '#c02437'
+          bgColor = '#8c1a28'
           fgColor = 'white'
         />
         <CustomButton
           text="Registrarse" 
           onPress={SignInMessage}
-          bgColor = '#c02437'
+          bgColor='#c12537'
+          // bgColor = '#9f2626'
           fgColor ='white'
         />
     </View>
@@ -61,15 +65,20 @@ function SignInScreen() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    padding: 10,
     alignItems: 'center',
-    padding: 20,
+    justifyContent: 'center',
   },
   title: {
-     color: '#c02437',
+     color: '#eb3838',
      fontSize: 20,
      fontWeight: 'bold',
 
-  }
+  },
+  tinyLogo: {
+    width: 120,
+    height: 55,
+  },
 })
 
 export default SignInScreen;
