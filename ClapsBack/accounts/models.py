@@ -3,12 +3,24 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 class clapsUserManager(BaseUserManager):
     def create_user(self, email, name, password=None):
-            if not email:
-                raise ValueError('Users must have an email address')
-            user = self.model(email=self.normalize_email(email), name=name)
-            user.set_password(password)
-            user.save()
-            return user
+        if not email:
+            raise ValueError('Users must have an email address')
+        if not password:
+            raise ValueError('User must have a password')
+        user = self.model(email=self.normalize_email(email), name=name)
+        user.set_password(password)
+        user.save()
+        return user
+    def create_superuser(self, email, name, password=None):
+        if not email:
+            raise ValueError('Users must have an email address')
+        if not password:
+            raise ValueError('User must have a password')
+        user = self.model(email=self.normalize_email(email), name=name)
+        user.is_superuser = True
+        user.set_password(password)
+        user.save()
+        return user
 
 class clapsUser(AbstractBaseUser):
     email = models.EmailField(max_length=60,unique=True)
