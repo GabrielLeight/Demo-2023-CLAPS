@@ -1,2 +1,2 @@
-export { default } from "./CustomInput.js";
+export { default } from "./CustomInput";
 

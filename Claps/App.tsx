@@ -29,7 +29,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import LoginForm from './src/screens/LoginForm/LoginForm';
+import SignInScreen from './src/screens/SignInScreen/SignInScreen';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -39,7 +39,7 @@ function App(): JSX.Element {
 
   return (
     <SafeAreaView style = {styles.root}>
-      <LoginForm/>
+      <SignInScreen/>
     </SafeAreaView>
   );
 }

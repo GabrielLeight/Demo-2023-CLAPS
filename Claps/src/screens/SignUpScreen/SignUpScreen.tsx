@@ -3,23 +3,22 @@ import axios from 'axios';
 import {
     View,
     Text,
-    StyleSheet,
+    TextInput,
 } from 'react-native';
-
+import {styles} from '../../../App';
 import CustomButton from '../../components/CustomButton';
-import CustomInput from '../../components/CustomInput';
 
 // Agregar onpress submitForm
-function LoginForm() {
+function SignUpScreen() {
+  const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const submitForm = (event: React.FormEvent) => {
-      
-      //event.preventDefault();
-      // Add your form submission logic here
-    };
+    const [password, setPassword] = useState('');
+    const [passwordRepeat, setPasswordRepeat] = useState('');
+    
+    
+  
 
     
 
@@ -48,48 +47,28 @@ function LoginForm() {
     return (
       <View style ={styles.root}>
         <Text style={styles.title}>Inicio de Sesion</Text>
-        <CustomInput
+        <TextInput 
+            style={styles.input}
             placeholder="Ingresa tu correo electrónico"
-            //onChangeText={(text) => setEmail(text)}
-            setValue = {setEmail}
+            onChangeText={(text) => setEmail(text)}
             value={email}
-            secureTextEntry={false}
         />
-        <CustomInput
+        <TextInput
+            style={styles.input}
             placeholder="Ingresa tu contraseña"
-            //onChangeText={(text) => setPassword(text)}
+            onChangeText={(text) => setPassword(text)}
             secureTextEntry={true}
-            setValue = {setPassword}
             value={password}
-        />
-        <CustomButton
-          text="Iniciar Sesion" 
-          onPress={loginMessage}
-          bgColor = 'orange'
-          fgColor = 'white'
         />
         <CustomButton
           text="Registrarse" 
           onPress={create}
-          bgColor = 'orange'
-          fgColor ='white'
+          bgColor = "#FAE9EA"
+          fgColor ="#DD4D44"
         />
     </View>
     );
   }
 
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    alignItems: 'center',
-    padding: 20,
-  },
-  title: {
-     color: 'orange',
-     fontWeight: 'bold',
-
-  }
-})
-
-export default LoginForm;
+export default SignUpScreen;
     
