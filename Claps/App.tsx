@@ -29,7 +29,8 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import SignInScreen from './src/screens/SignInScreen/SignInScreen';
+import SignInScreen from './src/screens/SignInScreen';
+
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -47,7 +48,7 @@ function App(): JSX.Element {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    padding: 20,
+    backgroundColor: 'rgba(234, 234, 234, 0.45)',
     alignItems: 'center',
   },
   title: {

@@ -1,1 +1,1 @@
-export { default } from "./FormReviewScreen.js";
+export { default } from "./FormReviewScreen";

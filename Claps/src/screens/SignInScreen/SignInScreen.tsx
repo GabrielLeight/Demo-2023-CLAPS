@@ -33,14 +33,14 @@ function SignInScreen() {
             setValue = {setEmail}
             value={email}
             secureTextEntry={false}
-            bgColor = 'rgba(47, 228, 0,0.1)'
+            bgColor = '#ffffff'
         />
         <CustomInput
             placeholder="Ingresa tu contraseña"
             secureTextEntry={true}
             setValue = {setPassword}
             value={password}
-            bgColor = 'rgba(47, 228, 0, 0.1)'
+            bgColor = '#ffffff'
         />
         <CustomButton
           text="Iniciar Sesion" 
@@ -61,8 +61,9 @@ function SignInScreen() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    padding: 10,
     alignItems: 'center',
-    padding: 20,
+    justifyContent: 'center',
   },
   title: {
      color: '#c02437',
