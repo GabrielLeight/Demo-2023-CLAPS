@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import {styles} from '../../../App';
 import { View, TextInput,StyleSheet, Text } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
@@ -34,18 +34,18 @@ const TheaterCriticsForm: React.FC = () => {
     <View style ={styles.root}>
         <Text style={styles.title}>Inicio de Sesion</Text>
         <CustomInput
-            style={styles.input}
-            
-            placeholder="Ingresa tu correo electrónico"
-            onChangeText={(text) => setEmail(text)}
-            value={email}
+            placeholder="Ingresa tu contraseña"
+            secureTextEntry={true}
+            setValue = {setRating}
+            value={rating}
+            bgColor = '#ffffff'
         />
         <CustomInput
-            style={styles.input}
             placeholder="Ingresa tu contraseña"
-            onChangeText={(text) => setPassword(text)}
             secureTextEntry={true}
-            value={password}
+            setValue = {setComments}
+            value={comments}
+            bgColor = '#ffffff'
         />
         <CustomButton
         text="Registrarse" 
