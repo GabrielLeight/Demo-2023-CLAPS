@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {styles} from '../../../App';
+import axios from 'axios';
 import { View, TextInput,StyleSheet, Text } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
@@ -29,7 +30,23 @@ const TheaterCriticsForm: React.FC = () => {
     setRating(5);
     setComments('');
   };
+  const create = async () => {
+    try {
+      const response = await axios.post('YOUR_API_ENDPOINT', {
+        criticName,
+        performanceTitle,
+        rating: rating,
+        comments: comments,
+        is_active: true, // Set this as needed
+      });
 
+      // Handle success, e.g., navigate to a new screen or display a success message
+      console.log('User registered:', response.data);
+    } catch (error) {
+      // Handle error, e.g., display an error message
+      console.error('Registration failed:', error);
+    }
+  };
   return (
     <View style ={styles.root}>
         <Text style={styles.title}>Inicio de Sesion</Text>
