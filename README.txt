@@ -37,3 +37,9 @@ npm install @react-navigation/native
     react-native run-android
 
    para probar la aplicación
+
+django dependencies:
+    pip install django
+    pip install djangorestframework
+    pip install django-rest-framework-simplejwt
+    pip install django-cors-headers

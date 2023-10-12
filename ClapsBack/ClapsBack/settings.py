@@ -27,7 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["5e0d-2800-150-140-319-1c6b-b21f-bca8-81a3.ngrok-free.app","127.0.0.1"]
 
+CORS_ALLOWED_ORIGINS = ['http://localhost:8080']
 
+CORS_ALLOW_CREDENTIALS = True
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,6 +42,7 @@ INSTALLED_APPS = [
     'accounts',
     'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
