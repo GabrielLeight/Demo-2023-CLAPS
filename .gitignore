@@ -3,3 +3,5 @@ ClapsEnv/Scripts/activate
 Claps/tsx/App2.tsx
 ClapsEnv/pyvenv.cfg
 ClapsEnv/
+clapsBack/accounts/__pycache__
+clapsBack/clapsBack/__pycache__

@@ -29,7 +29,8 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import LoginForm from './src/screens/LoginForm/LoginForm';
+import SignInScreen from './src/screens/SignInScreen';
+
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -39,7 +40,7 @@ function App(): JSX.Element {
 
   return (
     <SafeAreaView style = {styles.root}>
-      <LoginForm/>
+      <SignInScreen/>
     </SafeAreaView>
   );
 }
@@ -47,30 +48,16 @@ function App(): JSX.Element {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    backgroundColor: 'rgba(234, 234, 234, 0.45)',
+    alignItems: 'center',
   },
   title: {
     textAlign: 'center',
     fontSize: 20,
-    color: 'orange'
-  },
-  input: {
-    borderWidth: 2,
-    borderColor: 'white',
-    textAlign: 'center',
-    opacity: 0.5,
-    borderRadius: 10,
-    margin: 5,
-    width: "65%",
-  },
-  button: {
-    backgroundColor: 'orange', color: 'white',
-    alignItems: 'center',
-    width: "65%",
-    paddingVertical: 10,
-    borderRadius: 10,
-    margin:5,
+    color: 'orange',
+    fontWeight: 'bold',
   },
 });
 
-export {styles};
+
 export default App;
