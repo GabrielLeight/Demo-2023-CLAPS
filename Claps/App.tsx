@@ -48,7 +48,7 @@ function App(): JSX.Element {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: 'rgba(234, 234, 234, 0.45)',
+    backgroundColor: 'rgba(255, 116, 94, 0.05)',
     alignItems: 'center',
   },
   title: {
@@ -59,5 +59,5 @@ const styles = StyleSheet.create({
   },
 });
 
-
+export {styles};
 export default App;
