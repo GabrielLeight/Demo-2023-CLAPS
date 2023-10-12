@@ -1,28 +1,18 @@
-from django.shortcuts import render
-
-from rest_framework import viewsets
-
+from rest_framework.permissions import AllowAny
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .serializers import customUserSerializer
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from rest_framework.authentication import TokenAuthentication
+from rest_framework import generics, viewsets
 
-from .serializers import UserSerializer
-#from .models import clapsBasicUser
-from rest_framework.mixins import (
-    CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin
-)
-from rest_framework.viewsets import GenericViewSet
+User = get_user_model()
 
-from .models import Usuario
+class CurrentUserViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = customUserSerializer
 
-
-class UserViewset(GenericViewSet,  # generic view functionality
-                     CreateModelMixin,  # handles POSTs
-                     RetrieveModelMixin,  # handles GETs for 1 Company
-                     UpdateModelMixin,  # handles PUTs and PATCHes
-                     ListModelMixin):  # handles GETs for many Companies
-
-      serializer_class = UserSerializer
-      queryset = Usuario.objects.all()
-#class UserViewset(viewsets.ModelViewSet):
-#   queryset = User.objects.all()
-#  serializer_class = UserSerializer
-# Create your views here.
+class RegisterUserAPIView(generics.CreateAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = customUserSerializer

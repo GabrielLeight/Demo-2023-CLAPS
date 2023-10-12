@@ -1,7 +1,10 @@
 
 from rest_framework import serializers
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from .models import clapsUser
 
+''' 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
         write_only = True,
@@ -42,3 +45,36 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+'''
+
+class customUserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(
+        write_only = True,
+        min_length = 8,
+        error_messages={
+            "min_length": "contraseña debe tener al menos 8 caracteres"
+        }
+    )
+    class Meta:
+        model = clapsUser
+        fields = "__all__"
+        extra_kwargs = {"password": {"error_messages": {"required": "Give yourself a username"}}}
+
+    def create(self, validated_data):
+        user = User.objects.create(
+            username=validated_data["username"],
+            email = validated_data["email"],
+            first_name=validated_data["first_name"],
+            last_name = validated_data["last_name"],
+            is_active=validated_data["is_active"]
+        )
+
+        user.set_password(validated_data["password"])
+        user.save()
+
+        return user
+
+    def validate(self, data):
+        if data["password"] != data["password2"]:
+            raise serializers.ValidationError("las contraseñas no coinciden")
+        return super().validate(data)
