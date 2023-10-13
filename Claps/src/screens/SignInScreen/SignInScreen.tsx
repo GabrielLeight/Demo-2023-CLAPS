@@ -1,4 +1,4 @@
-import React,  { useState } from 'react';
+import React,  { useState,useEffect,useRef } from 'react';
 import axios from 'axios';
 import {
     View,
@@ -11,21 +11,34 @@ import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
 const Logo = '../../../assets/images/Claps.png';
 
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+axios.defaults.withCredentials = true;
+
+const client  = axios.create({
+    baseURL: "http://127.0.0.1:8000"
+})
 // Agregar onpress submitForm
+
 function SignInScreen() {
+    const divRef = useRef();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [SignInMessage, setSignInMessage] = useState(false);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+
     const submitForm = (event: React.FormEvent) => {
-      
+      if (SignInMessage){
+        divRef.current.value = 'SignIn'
+      }
       //event.preventDefault();
       // Add your form submission logic here
     };
 
-    const SignInMessage = () => {
-      console.warn('Iniciando sesión');
-    };
+    //const SignInMessage = () => {
+    //  console.warn('Iniciando sesión');
+    //};
     
     return (
       <View style ={styles.root}>
