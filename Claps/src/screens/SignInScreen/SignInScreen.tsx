@@ -21,24 +21,65 @@ const client  = axios.create({
 // Agregar onpress submitForm
 
 function SignInScreen() {
-    const divRef = useRef();
+    const divRef = useRef<HTMLInputElement>();
+    const [CurrentUser, setCurrentUser] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [SignInMessage, setSignInMessage] = useState(false);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-
-    const submitForm = (event: React.FormEvent) => {
-      if (SignInMessage){
-        divRef.current.value = 'SignIn'
+      function update_form_btn(){
+        if (SignInMessage){
+          divRef.current = 'SignIn'
+          setSignInMessage(true)
+        }
+        else{
+          divRef.current = 'Login'
+          setSignInMessage(false)
+        }
       }
-      //event.preventDefault();
-      // Add your form submission logic here
-    };
 
+    //FUNCION DE SIGN UP ABAJO (COPIAR A SIGNUPSCREEN):::: V V V V V V V V 
+    const submitsignup= (event: React.FormEvent) => {
+      event.preventDefault();  
+      client.post(
+        "/api/register",
+      {
+        email: email,
+        password: password 
+      }).then(function(res){
+        client.post(
+          "/api/login",     
+          {
+            email: email,
+            password: password 
+          }
+        ).then(function(res){
+          setCurrentUser(true);
+        });
+      });
+    };
+    //FUNCION DE LOGIN ABAJO:::: V V V V V V V V 
+    const submitsignin= (event: React.FormEvent) => {
+      event.preventDefault();  
+      client.post(
+        "/api/login",     
+        {
+          email: email,
+          password: password 
+        }
+      ).then(function(res){
+        setCurrentUser(true);
+      });
+    }
     //const SignInMessage = () => {
     //  console.warn('Iniciando sesión');
     //};
+    if (CurrentUser){
+      return(
+        <Text style={styles.title}>Habeis iniciado sesion</Text>
+      )
+    }
     
     return (
       <View style ={styles.root}>
@@ -60,17 +101,21 @@ function SignInScreen() {
         />
         <CustomButton
           text="Iniciar Sesion" 
-          onPress={SignInMessage}
+          onPress={[submitsignin,SignInMessage,update_form_btn]}
           bgColor = '#8c1a28'
           fgColor = 'white'
         />
-        <CustomButton
+         {/*
+         <CustomButton
           text="Registrarse" 
-          onPress={SignInMessage}
+          onPress={[submitsignup,update_form_btn]}
           bgColor='#c12537'
           // bgColor = '#9f2626'
-          fgColor ='white'
-        />
+          fgColor ='white'  />
+          
+          */}
+        
+       
     </View>
     );
   }
