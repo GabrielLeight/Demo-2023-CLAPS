@@ -4,7 +4,6 @@ import axios from 'axios';
 import { View, TextInput,StyleSheet, Text } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
-import ShowTeatro from '.';
 const TheaterCriticsForm: React.FC = () => {
     const [criticName, getUsername] = useState('');
     const [performanceTitle, setPerformanceTitle] = useState('');
@@ -74,4 +73,4 @@ const Enviar = async () => {
 </View>
   );
 };
-export default ShowTeatro
+export default TheaterCriticsForm

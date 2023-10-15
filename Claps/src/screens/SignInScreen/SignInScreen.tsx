@@ -70,6 +70,9 @@ function SignInScreen() {
         }
       ).then(function(res){
         setCurrentUser(true);
+      })
+      .catch((Error) =>   {
+        console.error(Error)
       });
     }
     //const SignInMessage = () => {
@@ -101,7 +104,7 @@ function SignInScreen() {
         />
         <CustomButton
           text="Iniciar Sesion" 
-          onPress={[submitsignin,SignInMessage,update_form_btn]}
+          onPress={submitsignin}
           bgColor = '#8c1a28'
           fgColor = 'white'
         />
