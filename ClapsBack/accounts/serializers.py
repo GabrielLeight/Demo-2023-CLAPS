@@ -1,10 +1,12 @@
 
 from rest_framework import serializers
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.password_validation import validate_password
 from .models import clapsUser
 from rest_framework.validators import UniqueValidator
+
+User = get_user_model()
 
 ''' 
 class UserSerializer(serializers.ModelSerializer):
@@ -82,10 +84,10 @@ class registerSerializer(serializers.ModelSerializer):
         return user
     
 class LoginSerializer(serializers.Serializer):
-    email = serializers.EmailField()
+    username = serializers.CharField()
     password = serializers.CharField()
     def check_user(self, clean_data):
-        user = authenticate(email=clean_data['email'], password=clean_data['password'])
+        user = authenticate(username=clean_data['username'], password=clean_data['password'])
         if not user:
             raise serializers.ValidationError('user not found')
         return user 

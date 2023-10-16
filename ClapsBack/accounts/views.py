@@ -25,7 +25,7 @@ class UserLogin(APIView):
     authentication_classes = (SessionAuthentication,)
     def post(self,request):
         data = request.data
-        assert validate_email(data)
+        assert validate_username(data)
         assert validate_password(data)
         serializer = LoginSerializer(data=data)
         if serializer.is_valid(raise_exception=True):

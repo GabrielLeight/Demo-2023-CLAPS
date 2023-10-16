@@ -16,7 +16,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
 
 const client  = axios.create({
-    baseURL: "http://127.0.0.1:8000"
+    baseURL: "https://c1fd-2800-150-140-1edf-306e-8f66-7ec0-3852.ngrok-free.app"
 })
 // Agregar onpress submitForm
 
@@ -43,13 +43,13 @@ function SignInScreen() {
     const submitsignup= (event: React.FormEvent) => {
       event.preventDefault();  
       client.post(
-        "/api/register",
+        "/register",
       {
         email: email,
         password: password 
       }).then(function(res){
         client.post(
-          "/api/login",     
+          "/login",     
           {
             email: email,
             password: password 
@@ -63,7 +63,7 @@ function SignInScreen() {
     const submitsignin= (event: React.FormEvent) => {
       event.preventDefault();  
       client.post(
-        "/api/login",     
+        "/login",     
         {
           email: email,
           password: password 
