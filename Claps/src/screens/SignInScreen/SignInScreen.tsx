@@ -24,6 +24,7 @@ function SignInScreen() {
     const divRef = useRef<HTMLInputElement>();
     const [CurrentUser, setCurrentUser] = useState(false);
     const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [SignInMessage, setSignInMessage] = useState(false);
     const [firstName, setFirstName] = useState('');
@@ -45,13 +46,13 @@ function SignInScreen() {
       client.post(
         "/register",
       {
-        email: email,
+        username: username,
         password: password 
       }).then(function(res){
         client.post(
           "/login",     
           {
-            email: email,
+            username: username,
             password: password 
           }
         ).then(function(res){
@@ -65,7 +66,7 @@ function SignInScreen() {
       client.post(
         "/login",     
         {
-          email: email,
+          username: username,
           password: password 
         }
       ).then(function(res){
@@ -90,8 +91,8 @@ function SignInScreen() {
         {/* <Text style={styles.title}>Inicio de Sesion</Text> */}
         <CustomInput
             placeholder="Ingresa tu correo electrónico"
-            setValue = {setEmail}
-            value={email}
+            setValue = {setUsername}
+            value={username}
             secureTextEntry={false}
             bgColor = '#ffffff'
         />
