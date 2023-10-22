@@ -50,7 +50,7 @@ class UserSerializer(serializers.ModelSerializer):
 
         return user
 '''
-class registerSerializer(serializers.ModelSerializer):
+class registercommonUserSerializer(serializers.ModelSerializer):
     username = serializers.CharField(required=True, validators=[UniqueValidator(queryset=clapsUser.objects.all())])
     email = serializers.EmailField(required=True, validators=[UniqueValidator(queryset=clapsUser.objects.all())])
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password], min_length=8)
@@ -58,7 +58,7 @@ class registerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = clapsUser
-        fields = ('username', 'password', 'password2', 'email', 'first_name', 'last_name','is_teatro','is_hall','is_commonUser')
+        fields = ('username', 'password', 'password2', 'email', 'first_name', 'last_name')
         extra_kwargs = {
         'first_name': {'required': True},
         'last_name': {'required': True}
@@ -75,14 +75,78 @@ class registerSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
-            is_teatro=validated_data['is_teatro'],
-            is_hall=validated_data['is_hall'],
-            is_commonUser=validated_data['is_commonUser']
+            is_teatro=False,
+            is_hall=False,
+            is_commonUser=True
         )
         user.set_password(validated_data['password'])
         user.save()
         return user
     
+class registerTeatroSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(required=True, validators=[UniqueValidator(queryset=clapsUser.objects.all())])
+    email = serializers.EmailField(required=True, validators=[UniqueValidator(queryset=clapsUser.objects.all())])
+    direction = serializers.CharField(max_length=120)
+    password = serializers.CharField(write_only=True, required=True, validators=[validate_password], min_length=8)
+    password2 = serializers.CharField(write_only=True, required=True)
+
+    class Meta:
+        model = clapsUser
+        fields = ('username', 'password', 'password2', 'email', 'first_name', 'last_name', 'direction')
+        
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password2']:
+            raise serializers.ValidationError(
+            {"password": "Password fields didn't match."})
+        return attrs
+    
+    def create(self, validated_data):
+        user = User.objects.create(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
+            direction=validated_data['direction'],
+            is_teatro=True,
+            is_hall=False,
+            is_commonUser=False
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
+
+class registerHallSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(required=True, validators=[UniqueValidator(queryset=clapsUser.objects.all())])
+    email = serializers.EmailField(required=True, validators=[UniqueValidator(queryset=clapsUser.objects.all())])
+    direction = serializers.CharField(max_length=120)
+    password = serializers.CharField(write_only=True, required=True, validators=[validate_password], min_length=8)
+    password2 = serializers.CharField(write_only=True, required=True)
+
+    class Meta:
+        model = clapsUser
+        fields = ('username', 'password', 'password2', 'email', 'first_name', 'last_name','direction')
+        
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password2']:
+            raise serializers.ValidationError(
+            {"password": "Password fields didn't match."})
+        return attrs
+    
+    def create(self, validated_data):
+        user = User.objects.create(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
+            direction=validated_data['direction'],
+            is_teatro=False,
+            is_hall=True,
+            is_commonUser=False
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
+
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()

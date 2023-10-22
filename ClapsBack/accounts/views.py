@@ -1,7 +1,7 @@
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import customUserSerializer, registerSerializer, UserSerializer, LoginSerializer
+from .serializers import *
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model, login, logout
 from rest_framework.authentication import SessionAuthentication
@@ -13,13 +13,35 @@ class UserRegister(APIView):
     permission_classes = (permissions.AllowAny,)
     def post(self, request):
         userdata = custom_validation(request.data)
-        serializer = registerSerializer(data=userdata)
+        serializer = registercommonUserSerializer(data=userdata)
         if serializer.is_valid(raise_exception=True):
             user = serializer.create(userdata)
             if user:
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)    
         
+class HallRegister(APIView):
+    permission_classes = (permissions.AllowAny,)
+    def post(self, request):
+        userdata = custom_validation(request.data)
+        serializer = registerHallSerializer(data=userdata)
+        if serializer.is_valid(raise_exception=True):
+            user = serializer.create(userdata)
+            if user:
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)    
+
+class TeatroRegister(APIView):
+    permission_classes = (permissions.AllowAny,)
+    def post(self, request):
+        userdata = custom_validation(request.data)
+        serializer = registerTeatroSerializer(data=userdata)
+        if serializer.is_valid(raise_exception=True):
+            user = serializer.create(userdata)
+            if user:
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)    
+
 class UserLogin(APIView):
     permission_classes = (permissions.AllowAny,)
     authentication_classes = (SessionAuthentication,)
