@@ -52,7 +52,7 @@ const SignInScreen = () => {
 			}
 		).then(function(res){
 			setCurrentUser(true);
-			navigation.navigate('FormReview' as never);
+			navigation.navigate('HomeScreen' as never);
 		})
 		.catch((Error) =>   {
 			console.error(Error)
