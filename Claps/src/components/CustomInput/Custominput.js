@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     },
     input:{
         color: 'black',
-        textAlign: 'center',
+        textAlign: 'flex-start',
     },
 
 });

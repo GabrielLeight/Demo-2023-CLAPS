@@ -1,9 +1,12 @@
 import React from 'react'
+
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
+import SignUpTeatro from '../screens/SignUpTeatro';
+import SignUpCompany from '../screens/SignUpCompany';
 import ReviewScreen from '../screens/ReviewScreen';
 import ShowTeatro from '../screens/ShowTeatro';
-import SignUpTeatro from '../screens/SignUpTeatro';
+
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -29,7 +32,8 @@ return (
 	    <Stack.Navigator screenOptions ={{headerShown: false}}>
 	    	<Stack.Screen name="SignIn" component={SignInScreen} />
 			<Stack.Screen name="SignUp" component={SignUpScreen} />
-			<Stack.Screen name="SignT" component={SignUpTeatro} />
+			<Stack.Screen name="SignUpT" component={SignUpTeatro} />
+			<Stack.Screen name="SignUpC" component={SignUpCompany} />
 			<Stack.Screen name="HomeScreen" component={HomeScreen} />
 	    </Stack.Navigator>
 	</NavigationContainer>
