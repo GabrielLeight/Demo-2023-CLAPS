@@ -30,6 +30,9 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import SignInScreen from './src/screens/SignInScreen';
+import SignUpScreen from './src/screens/SignUpScreen';
+import FormReviewScreen from './src/screens/FormReviewScreen';
+import ShowTeatro from './src/screens/ShowTeatro';
 
 
 function App(): JSX.Element {
@@ -40,7 +43,7 @@ function App(): JSX.Element {
 
   return (
     <SafeAreaView style = {styles.root}>
-      <SignInScreen/>
+      <SignUpScreen/>
     </SafeAreaView>
   );
 }
@@ -57,10 +60,6 @@ const styles = StyleSheet.create({
     color: 'orange',
     fontWeight: 'bold',
   },
-  input:{
-    color: 'rgb(169, 27, 13)',
-    textAlign: 'center',
-},
 });
 
 export {styles};

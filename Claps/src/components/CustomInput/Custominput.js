@@ -1,9 +1,9 @@
 import React from "react";
 import { View, TextInput, StyleSheet } from 'react-native'
 
-const CustomInput = ({value, setValue, placeholder, secureTextEntry, bgColor}) => {
+const CustomInput = ({value, setValue, placeholder, secureTextEntry, bgColor, minWidth}) => {
     return (
-        <View style={[styles.container, {backgroundColor: bgColor}]}>
+        <View style={[styles.container, {backgroundColor: bgColor, minWidth: minWidth}]}>
             <TextInput
                 placeholder={placeholder}
                 style={styles.input}
@@ -17,11 +17,10 @@ const CustomInput = ({value, setValue, placeholder, secureTextEntry, bgColor}) =
 
 const styles = StyleSheet.create({
     container: {
-        minWidth: "70%",
         borderWidth: 1,
         borderColor: 'white',
         borderRadius: 10,
-        margin: 5,
+        marginBottom: 5,
     },
     input:{
         color: 'black',
