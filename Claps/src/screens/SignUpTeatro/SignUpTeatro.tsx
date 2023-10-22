@@ -4,15 +4,14 @@ import {
     View,
     Text,
     StyleSheet,
-    TextInput,
+    TextInput, 
+    Switch,
     Image,
-    SafeAreaView,
 } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import RNPickerSelect from 'react-native-picker-select';
+
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
-import SignUpTeatro from '../SignUpTeatro';
 const Logo = '../../../assets/images/Claps.png';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
@@ -24,7 +23,7 @@ const client  = axios.create({
 })
 
 // Agregar onpress submitForm
-function SignUpScreen() {
+function SignUpTeatro() {
   const [username, setUsername] = useState('');
   const [CurrentUser, setCurrentUser] = useState(false);
   const [email, setEmail] = useState('');
@@ -32,11 +31,13 @@ function SignUpScreen() {
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const [passwordRepeat, setPasswordRepeat] = useState('');
-  const [EsUsuario, setUsuario] = useState('');
-  const [EsHall, setHall] = useState('');
-  const [EsTeatro, setTeatro] = useState('');
+  const [EsUsuario, setUsuario] = useState(false);
+  const [EsHall, setHall] = useState(false);
+  const [EsTeatro, setTeatro] = useState(false);
   const [direccion, setDireccion] = useState('');
   
+  const toggleSwitchH = () => setHall(previousState => !previousState);
+  const toggleSwitchT = () => setTeatro(previousState => !previousState);
     const submitsignup= (event: React.FormEvent) => {
       event.preventDefault();  
       client.post(
@@ -58,73 +59,51 @@ function SignUpScreen() {
     };
 
 	const create = async () => {
-    if (EsUsuario){
-      try {
-      const response = await axios.post('YOUR_API_ENDPOINT', {
-        email,
-        password,
-        first_name: firstName,
-        last_name: lastName,
-        is_active: true, // Set this as needed
-      });
+        if (EsHall){
+            try {
+            const response = await axios.post('YOUR_API_ENDPOINT', {
+                email,
+                password,
+                first_name: firstName,
+                last_name: lastName,
+                direccion: direccion,
+                is_active: true, // Set this as needed
+            });
 
-      // Handle success, e.g., navigate to a new screen or display a success message
-      console.log('User registered:', response.data);
-      } catch (error) {
-      // Handle error, e.g., display an error message
-      console.error('Registration failed:', error);
-      }
+        // Handle success, e.g., navigate to a new screen or display a success message
+        console.log('User registered:', response.data);
+        } catch (error) {
+        // Handle error, e.g., display an error message
+        console.error('Registration failed:', error);
+        }
 
-    }
-    if (EsHall){
-      try {
-      const response = await axios.post('YOUR_API_ENDPOINT', {
-        email,
-        password,
-        first_name: firstName,
-        last_name: lastName,
-        is_active: true, // Set this as needed
-      });
+        }
+        if (EsTeatro){
+            try {
+            const response = await axios.post('YOUR_API_ENDPOINT', {
+                email,
+                password,
+                first_name: firstName,
+                last_name: lastName,
+                direccion: direccion,
+                is_active: true, // Set this as needed
+            });
 
-      // Handle success, e.g., navigate to a new screen or display a success message
-      console.log('User registered:', response.data);
-      } catch (error) {
-      // Handle error, e.g., display an error message
-      console.error('Registration failed:', error);
-      }
+        // Handle success, e.g., navigate to a new screen or display a success message
+        console.log('User registered:', response.data);
+        } catch (error) {
+        // Handle error, e.g., display an error message
+        console.error('Registration failed:', error);
+        }
 
-    }
-    if (EsTeatro){
-      try {
-      const response = await axios.post('YOUR_API_ENDPOINT', {
-        email,
-        password,
-        first_name: firstName,
-        last_name: lastName,
-        is_active: true, // Set this as needed
-      });
-
-      // Handle success, e.g., navigate to a new screen or display a success message
-      console.log('User registered:', response.data);
-      } catch (error) {
-      // Handle error, e.g., display an error message
-      console.error('Registration failed:', error);
-      }
-
-    }
+        }
 	};
-  const newteatro = async () => {
-    return(
-      <SafeAreaView style= {styles.root}>
-        <SignUpTeatro/>
-      </SafeAreaView>
-    );
-  };
+
 	if (CurrentUser){
 		return(
 		<Text style={styles.title}>""Habeis iniciado sesion :"\"</Text>
-		);
-	};
+		)
+	}
 
 	return (
 		<>
@@ -179,20 +158,28 @@ function SignUpScreen() {
 					bgColor = '#ffffff' 
 					minWidth="70%"
 				/>
-				<CustomButton
+                <CustomInput
+                    placeholder="Ingresa la direccion del teatro/Hall"
+                    setValue = {setDireccion}
+                    value={direccion}
+                    secureTextEntry={false}
+                    bgColor = '#ffffff' 
+                    minWidth="70%"
+				/>
+                <RNPickerSelect
+                    onValueChange={(value) => console.log(value)}
+                    items={[
+                        { label: 'Teatro', value: toggleSwitchT},
+                        { label: 'Hall', value: toggleSwitchH },
+                    ]}
+                />				
+                <CustomButton
 					text="Registrarse" 
 					onPress={create}
 					bgColor = "#FAE9EA"
 					fgColor ="#DD4D44"
 				/>
-        
 			</View>   
-      <CustomButton
-					text="Registrese como Teatro/Hall" 
-					onPress={newteatro}
-					bgColor = "#FAE9EA"
-					fgColor ="#DD4D44"
-				/>
 		</View>
 		</>
 	);
@@ -235,5 +222,5 @@ input:{
 	textAlign: 'center',
 },
 })
-export default SignUpScreen;
+export default SignUpTeatro;
     
