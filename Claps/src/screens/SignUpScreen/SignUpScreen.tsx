@@ -162,7 +162,6 @@ function SignUpScreen() {
 						/>
 					</View>
 				</View>
-				
 				<CustomInput
 					placeholder="Ingresa tu correo electrónico"
 					setValue ={setEmail}
@@ -185,14 +184,13 @@ function SignUpScreen() {
 					bgColor = "#FAE9EA"
 					fgColor ="#DD4D44"
 				/>
-        
-			</View>   
-      <CustomButton
+     			<CustomButton
 					text="Registrese como Teatro/Hall" 
 					onPress={newteatro}
 					bgColor = "#FAE9EA"
 					fgColor ="#DD4D44"
 				/>
+			</View>
 		</View>
 		</>
 	);

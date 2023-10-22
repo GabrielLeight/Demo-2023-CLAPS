@@ -19,6 +19,7 @@
 
 TAMBIEN INCLUIR 
 npm install @react-navigation/native
+npm install @react-navigation/bottom-tabs
 
 -> abrir sdk manager de android studio
     -> instalar 
