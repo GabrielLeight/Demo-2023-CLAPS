@@ -42,7 +42,6 @@ const SignInScreen = () => {
 			setSignInMessage(false)
 		}
 	}   
-    //FUNCION DE LOGIN ABAJO:::: V V V V V V V V 
     const onSignInPressed = (event: React.FormEvent) => {
 		event.preventDefault();  
 		client.post(
@@ -69,14 +68,12 @@ const SignInScreen = () => {
     return (
 		<View style ={styles.root}>
 			<Image style = {styles.tinyLogo} source = {require(Logo)}/>
-			
 			<CustomInput
 				placeholder="Ingresa tu correo electrónico"
 				setValue = {setUsername}
 				value={username}
 				secureTextEntry={false}
 				bgColor = '#ffffff'
-				
 			/>
 			<CustomInput
 				placeholder="Ingresa tu contraseña"
@@ -84,7 +81,6 @@ const SignInScreen = () => {
 				setValue = {setPassword}
 				value={password}
 				bgColor = '#ffffff'
-			
 			/>
 			<CustomButton
 				text="Iniciar Sesion" 
@@ -103,7 +99,7 @@ const SignInScreen = () => {
 			</View>						
 		</View>
 	);
-  }
+}
 
 const styles = StyleSheet.create({
 	root: {
@@ -113,7 +109,6 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
-
 	tinyLogo: {
 		width: Dimensions.get('window').width * 0.60, // Ajusta el factor según tus necesidades
 		height: Dimensions.get('window').height * 0.15, // Ajusta el factor según tus necesidades

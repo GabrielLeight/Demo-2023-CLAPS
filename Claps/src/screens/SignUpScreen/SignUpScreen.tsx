@@ -119,9 +119,7 @@ function SignUpScreen() {
 		);
 	};
 
-	return (
-	
-			
+	return (	
 		<View style ={styles.root}>
 			<Image style = {styles.tinyLogo} source = {require(Logo)}/>
 			<Text style={styles.title}>¡Registrate!</Text>
@@ -174,7 +172,6 @@ function SignUpScreen() {
 				bgColor = "#FAE9EA"
 				fgColor ="#DD4D44"
 			/>
-			
 		</View>
 		
 	);
