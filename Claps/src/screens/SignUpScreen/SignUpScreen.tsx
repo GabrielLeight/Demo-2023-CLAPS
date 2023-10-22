@@ -20,12 +20,16 @@ const client  = axios.create({
 function SignUpScreen() {
   const [username, setUsername] = useState('');
   const [CurrentUser, setCurrentUser] = useState(false);
-    const [email, setEmail] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordRepeat, setPasswordRepeat] = useState('');
-    
+  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordRepeat, setPasswordRepeat] = useState('');
+  const [EsUsuario, setUsuario] = useState('');
+  const [EsHall, setHall] = useState('');
+  const [EsTeatro, setTeatro] = useState('');
+  const [direccion, setDireccion] = useState('');
+  
     const submitsignup= (event: React.FormEvent) => {
       event.preventDefault();  
       client.post(

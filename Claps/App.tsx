@@ -30,14 +30,20 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import SignInScreen from './src/screens/SignInScreen';
+import MenuPrincipal from './src/screens/MenuPrincipal';
 
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+  const [CurrentUser, setCurrentUser] = useState(false);
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-
+  if (CurrentUser){
+    return (
+      <MenuPrincipal/>
+    )
+  }
   return (
     <SafeAreaView style = {styles.root}>
       <SignInScreen/>
