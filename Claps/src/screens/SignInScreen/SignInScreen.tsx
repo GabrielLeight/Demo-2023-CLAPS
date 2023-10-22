@@ -4,11 +4,12 @@ import {
     View,
     Text,
     StyleSheet,
-    Image
+    Image,
+	Dimensions,
 } from 'react-native';
-
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
+import { useNavigation } from '@react-navigation/native';
 const Logo = '../../../assets/images/Claps.png';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
@@ -19,7 +20,7 @@ const client  = axios.create({
     baseURL: "https://c1fd-2800-150-140-1edf-306e-8f66-7ec0-3852.ngrok-free.app"
 })
 // Agregar onpress submitForm
-function SignInScreen() {
+const SignInScreen = () => {
     const divRef = useRef<HTMLInputElement>();
     const [CurrentUser, setCurrentUser] = useState(false);
     const [email, setEmail] = useState('');
@@ -28,6 +29,9 @@ function SignInScreen() {
     const [SignInMessage, setSignInMessage] = useState(false);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+
+	const navigation = useNavigation();
+
 	function update_form_btn(){
 		if (SignInMessage){
 			divRef.current = 'SignIn'
@@ -39,7 +43,7 @@ function SignInScreen() {
 		}
 	}   
     //FUNCION DE LOGIN ABAJO:::: V V V V V V V V 
-    const submitsignin= (event: React.FormEvent) => {
+    const onSignInPressed = (event: React.FormEvent) => {
 		event.preventDefault();  
 		client.post(
 			"/login",     
@@ -49,31 +53,30 @@ function SignInScreen() {
 			}
 		).then(function(res){
 			setCurrentUser(true);
+			navigation.navigate('FormReview' as never);
 		})
 		.catch((Error) =>   {
 			console.error(Error)
 		});
     }
-    //const SignInMessage = () => {
-    //  console.warn('Iniciando sesión');
-    //};
-    if (CurrentUser){
-		return(
-			<Text style={styles.title}>Iniciaste sesión</Text>
-		)
-    }
-    
+	
+	
+	const onSignUpPressed = () => {
+		navigation.navigate('SignUp' as never);
+	}
+
+	
     return (
 		<View style ={styles.root}>
 			<Image style = {styles.tinyLogo} source = {require(Logo)}/>
-			{/* <Text style={styles.title}>Inicio de Sesion</Text> */}
+			
 			<CustomInput
 				placeholder="Ingresa tu correo electrónico"
 				setValue = {setUsername}
 				value={username}
 				secureTextEntry={false}
 				bgColor = '#ffffff'
-				minWidth="70%"
+				
 			/>
 			<CustomInput
 				placeholder="Ingresa tu contraseña"
@@ -81,24 +84,23 @@ function SignInScreen() {
 				setValue = {setPassword}
 				value={password}
 				bgColor = '#ffffff'
-				minWidth="70%"
+			
 			/>
 			<CustomButton
 				text="Iniciar Sesion" 
-				onPress={submitsignin}
-				bgColor = '#8c1a28'
+				onPress={onSignInPressed}
+				bgColor = '#bc2a3c'
 				fgColor = 'white'
-				
 			/>
-			{/*
-			<CustomButton
-			text="Registrarse" 
-			onPress={[submitsignup,update_form_btn]}
-			bgColor='#c12537'
-			// bgColor = '#9f2626'
-			fgColor ='white'  />
-			
-			*/}
+			<View style = {{flexDirection: 'row', marginTop: 2}}>
+				<Text>¿No tienes una cuenta? </Text>
+				<CustomButton
+					text="Regístrate" 
+					onPress={onSignUpPressed}
+					bgColor = 'transparent'
+					fgColor = 'red'
+				/>
+			</View>						
 		</View>
 	);
   }
@@ -106,19 +108,15 @@ function SignInScreen() {
 const styles = StyleSheet.create({
 	root: {
 		flex: 1,
-		padding: 10,
+		backgroundColor: '#f6f8fa',
+		padding: 20,
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
-	title: {
-		color: '#eb3838',
-		fontSize: 20,
-		fontWeight: 'bold',
 
-	},
 	tinyLogo: {
-		width: 120,
-		height: 55,
+		width: Dimensions.get('window').width * 0.60, // Ajusta el factor según tus necesidades
+		height: Dimensions.get('window').height * 0.15, // Ajusta el factor según tus necesidades
 	},
 })
 

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import {styles} from '../../../App';
 import axios from 'axios';
-import { View, TextInput,StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
 
@@ -48,30 +47,38 @@ const TheaterCriticsForm: React.FC = () => {
 	};
 	return (
 		<View style ={styles.root}>
-			<Text style={styles.title}>Review</Text>
+			<Text>Review</Text>
 			<CustomInput
 				placeholder="Rating"
 				secureTextEntry={true}
 				setValue = {setRating}
 				value={rating}
 				bgColor = '#ffffff'
-				minWidth="70%"
 			/>
 			<CustomInput
 				placeholder="InserteComentarios finales"
 				secureTextEntry={true}
 				setValue = {setComments}
 				value={comments}
-				bgColor = '#ffffff'
-				minWidth="70%"
+				bgColor = '#ffffff'	
 			/>
 			<CustomButton
-			text="Enviar" 
-			onPress={Enviar}
-			bgColor = "#FAE9EA"
-			fgColor ="#DD4D44"
+				text="Enviar" 
+				onPress={Enviar}
+				bgColor = "#FAE9EA"
+				fgColor ="#DD4D44"
 			/>
 	</View>
 	);
 };
+const styles = StyleSheet.create({
+	root: {
+		flex: 1,
+		padding: 20,
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: '#f6f8fa',
+	},
+	
+	})
 export default TheaterCriticsForm;

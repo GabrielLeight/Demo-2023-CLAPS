@@ -4,15 +4,12 @@ import {
     View,
     Text,
     StyleSheet,
-    TextInput,
     Image,
-    SafeAreaView,
+	Dimensions,
 } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
-import SignUpTeatro from '../SignUpTeatro';
+import { useNavigation } from '@react-navigation/native';
 const Logo = '../../../assets/images/Claps.png';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
@@ -35,9 +32,10 @@ function SignUpScreen() {
 	const [EsUsuario, setUsuario] = useState('');
 	const [EsHall, setHall] = useState('');
 	const [EsTeatro, setTeatro] = useState('');
-	const [direccion, setDireccion] = useState('');
-  
-    const submitsignup= (event: React.FormEvent) => {
+	const [address, setAddress] = useState('');
+
+	const navigator = useNavigation();
+    const onSignUpPressedNormal = (event: React.FormEvent) => {
       event.preventDefault();  
       client.post(
         "/api/register",
@@ -111,13 +109,10 @@ function SignUpScreen() {
 		}
     }
 	};
-	const newteatro = async () => {
-		return(
-			<SafeAreaView style= {styles.root}>
-				<SignUpTeatro/>
-			</SafeAreaView>
-		);
-	};
+	const onNewHallPressed = () => { // Acá deberia crearse un register para el teatro o hall
+		navigator.navigate('ShowTeatro' as never)
+	}
+	
 	if (CurrentUser){
 		return(
 			<Text style={styles.title}>""Habeis iniciado sesion :"\"</Text>
@@ -125,92 +120,79 @@ function SignUpScreen() {
 	};
 
 	return (
-		<>
-			<View style ={styles.root}>
-				<Image style = {styles.tinyLogo} source = {require(Logo)}/>
-				<Text style={styles.title}>¡Registrate!</Text>
-				<View>
-					<CustomInput
-						placeholder="Nombre de usuario"
-						setValue ={setUsername}
-						value={username}
-						secureTextEntry={false}
-						bgColor = '#ffffff'
-						minWidth="70%"
-					/>
-					<View style ={styles.flexRow}>
-						<View style = {styles.inputContainer}>
-							<CustomInput
-								placeholder="Nombre"
-								setValue ={setFirstName}
-								value={firstName}
-								secureTextEntry={false}
-								bgColor = '#ffffff'
-								minWidth="35%"
-							/>
-						</View>
-						<View style = {styles.inputContainer}>
-							<CustomInput
-								placeholder="Apellido"
-								setValue ={setLastName}
-								value={lastName}
-								secureTextEntry={false}
-								bgColor = '#ffffff'
-								minWidth="35%"
-							/>
-						</View>
-					</View>
-					<CustomInput
-						placeholder="Ingresa tu correo electrónico"
-						setValue ={setEmail}
-						value={email}
-						secureTextEntry={false}
-						bgColor = '#ffffff'
-						minWidth="70%"
-					/>
-					<CustomInput
-						placeholder="Ingresa tu contraseña"
-						setValue = {setPassword}
-						value={password}
-						secureTextEntry={true}
-						bgColor = '#ffffff' 
-						minWidth="70%"
-					/>
-					<CustomButton
-						text="Registrarse" 
-						onPress={create}
-						bgColor = "#FAE9EA"
-						fgColor ="#DD4D44"
-					/>
-					<CustomButton
-						text="Registrese como Teatro/Hall" 
-						onPress={newteatro}
-						bgColor = "#FAE9EA"
-						fgColor ="#DD4D44"
-					/>
-				</View>
+	
+			
+		<View style ={styles.root}>
+			<Image style = {styles.tinyLogo} source = {require(Logo)}/>
+			<Text style={styles.title}>¡Registrate!</Text>
+			<CustomInput
+				placeholder="Nombre de usuario"
+				setValue ={setUsername}
+				value={username}
+				secureTextEntry={false}
+				bgColor = '#ffffff'
+			/>
+			<View style = {styles.row}>
+				<CustomInput
+					placeholder="Nombre"
+					setValue ={setUsername}
+					value={username}
+					secureTextEntry={false}
+					bgColor = '#ffffff'		
+				/>
+				<CustomInput
+					placeholder="Apellido"
+					setValue ={setUsername}
+					value={username}
+					secureTextEntry={false}
+					bgColor = '#ffffff'
+				/>
 			</View>
-		</>
+			<CustomInput
+				placeholder="Ingresa tu correo electrónico"
+				setValue ={setEmail}
+				value={email}
+				secureTextEntry={false}
+				bgColor = '#ffffff'
+			/>
+			<CustomInput
+				placeholder="Ingresa tu contraseña"
+				setValue = {setPassword}
+				value={password}
+				secureTextEntry={true}
+				bgColor = '#ffffff' 
+			/>
+			<CustomButton
+				text="Registrarse" 
+				onPress={onSignUpPressedNormal}
+				bgColor = "#bc2a3c"
+				fgColor ="white"
+			/>
+			<CustomButton
+				text="Regístrese como Teatro - Hall" 
+				onPress={onNewHallPressed}
+				bgColor = "#FAE9EA"
+				fgColor ="#DD4D44"
+			/>
+			
+		</View>
+		
 	);
 }
 
 const styles = StyleSheet.create({
 root: {
 	flex: 1,
-	padding: 10,
+	padding: 20,
 	alignItems: 'center',
-	backgroundColor: '',
 	justifyContent: 'center',
+	backgroundColor: '#f6f8fa',
 },
 
-inputContainer:{
-	marginHorizontal: 2,
-	flex: 1,
-},
-
-flexRow: {
-	flexDirection: 'row', // Esto hará que los elementos se alineen en una fila horizontal
-	alignItems: 'center',// Esto alineará los elementos verticalmente en el centro
+row: {
+	width: '50%',
+	flexDirection: 'row',
+	alignItems: 'center',
 	justifyContent: 'center',
 },
 
@@ -222,14 +204,10 @@ title: {
 },
 
 tinyLogo: {
-	width: 120,
-	height: 55,
+	width: Dimensions.get('window').width * 0.60, // Ajusta el factor según tus necesidades
+	height: Dimensions.get('window').height * 0.15, // Ajusta el factor según tus necesidades
 },
 
-input:{
-	color: 'rgb(169, 27, 13)',
-	textAlign: 'center',
-},
 })
 export default SignUpScreen;
     
