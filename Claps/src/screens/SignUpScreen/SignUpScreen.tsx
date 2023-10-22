@@ -25,17 +25,17 @@ const client  = axios.create({
 
 // Agregar onpress submitForm
 function SignUpScreen() {
-  const [username, setUsername] = useState('');
-  const [CurrentUser, setCurrentUser] = useState(false);
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordRepeat, setPasswordRepeat] = useState('');
-  const [EsUsuario, setUsuario] = useState('');
-  const [EsHall, setHall] = useState('');
-  const [EsTeatro, setTeatro] = useState('');
-  const [direccion, setDireccion] = useState('');
+	const [username, setUsername] = useState('');
+	const [CurrentUser, setCurrentUser] = useState(false);
+	const [email, setEmail] = useState('');
+	const [firstName, setFirstName] = useState('');
+	const [lastName, setLastName] = useState('');
+	const [password, setPassword] = useState('');
+	const [passwordRepeat, setPasswordRepeat] = useState('');
+	const [EsUsuario, setUsuario] = useState('');
+	const [EsHall, setHall] = useState('');
+	const [EsTeatro, setTeatro] = useState('');
+	const [direccion, setDireccion] = useState('');
   
     const submitsignup= (event: React.FormEvent) => {
       event.preventDefault();  
@@ -77,121 +77,119 @@ function SignUpScreen() {
 
     }
     if (EsHall){
-      try {
-      const response = await axios.post('YOUR_API_ENDPOINT', {
-        email,
-        password,
-        first_name: firstName,
-        last_name: lastName,
-        is_active: true, // Set this as needed
-      });
+		try {
+		const response = await axios.post('YOUR_API_ENDPOINT', {
+			email,
+			password,
+			first_name: firstName,
+			last_name: lastName,
+			is_active: true, // Set this as needed
+		});
 
-      // Handle success, e.g., navigate to a new screen or display a success message
-      console.log('User registered:', response.data);
-      } catch (error) {
-      // Handle error, e.g., display an error message
-      console.error('Registration failed:', error);
-      }
-
+		// Handle success, e.g., navigate to a new screen or display a success message
+		console.log('User registered:', response.data);
+		} catch (error) {
+		// Handle error, e.g., display an error message
+		console.error('Registration failed:', error);
+		}
     }
     if (EsTeatro){
-      try {
-      const response = await axios.post('YOUR_API_ENDPOINT', {
-        email,
-        password,
-        first_name: firstName,
-        last_name: lastName,
-        is_active: true, // Set this as needed
-      });
+		try {
+			const response = await axios.post('YOUR_API_ENDPOINT', {
+				email,
+				password,
+				first_name: firstName,
+				last_name: lastName,
+				is_active: true, // Set this as needed
+			});
 
-      // Handle success, e.g., navigate to a new screen or display a success message
-      console.log('User registered:', response.data);
-      } catch (error) {
-      // Handle error, e.g., display an error message
-      console.error('Registration failed:', error);
-      }
-
+			// Handle success, e.g., navigate to a new screen or display a success message
+			console.log('User registered:', response.data);
+		} catch (error) {
+			// Handle error, e.g., display an error message
+			console.error('Registration failed:', error);
+		}
     }
 	};
-  const newteatro = async () => {
-    return(
-      <SafeAreaView style= {styles.root}>
-        <SignUpTeatro/>
-      </SafeAreaView>
-    );
-  };
+	const newteatro = async () => {
+		return(
+			<SafeAreaView style= {styles.root}>
+				<SignUpTeatro/>
+			</SafeAreaView>
+		);
+	};
 	if (CurrentUser){
 		return(
-		<Text style={styles.title}>""Habeis iniciado sesion :"\"</Text>
+			<Text style={styles.title}>""Habeis iniciado sesion :"\"</Text>
 		);
 	};
 
 	return (
 		<>
-		<View style ={styles.root}>
-			<Image style = {styles.tinyLogo} source = {require(Logo)}/>
-			<Text style={styles.title}>¡Registrate!</Text>
-			<View>
-				<CustomInput
-					placeholder="Nombre de usuario"
-					setValue ={setUsername}
-					value={username}
-					secureTextEntry={false}
-					bgColor = '#ffffff'
-					minWidth="70%"
-				/>
-				<View style ={styles.flexRow}>
-					<View style = {styles.inputContainer}>
-						<CustomInput
-							placeholder="Nombre"
-							setValue ={setFirstName}
-							value={firstName}
-							secureTextEntry={false}
-							bgColor = '#ffffff'
-							minWidth="35%"
-						/>
+			<View style ={styles.root}>
+				<Image style = {styles.tinyLogo} source = {require(Logo)}/>
+				<Text style={styles.title}>¡Registrate!</Text>
+				<View>
+					<CustomInput
+						placeholder="Nombre de usuario"
+						setValue ={setUsername}
+						value={username}
+						secureTextEntry={false}
+						bgColor = '#ffffff'
+						minWidth="70%"
+					/>
+					<View style ={styles.flexRow}>
+						<View style = {styles.inputContainer}>
+							<CustomInput
+								placeholder="Nombre"
+								setValue ={setFirstName}
+								value={firstName}
+								secureTextEntry={false}
+								bgColor = '#ffffff'
+								minWidth="35%"
+							/>
+						</View>
+						<View style = {styles.inputContainer}>
+							<CustomInput
+								placeholder="Apellido"
+								setValue ={setLastName}
+								value={lastName}
+								secureTextEntry={false}
+								bgColor = '#ffffff'
+								minWidth="35%"
+							/>
+						</View>
 					</View>
-					<View style = {styles.inputContainer}>
-						<CustomInput
-							placeholder="Apellido"
-							setValue ={setLastName}
-							value={lastName}
-							secureTextEntry={false}
-							bgColor = '#ffffff'
-							minWidth="35%"
-						/>
-					</View>
+					<CustomInput
+						placeholder="Ingresa tu correo electrónico"
+						setValue ={setEmail}
+						value={email}
+						secureTextEntry={false}
+						bgColor = '#ffffff'
+						minWidth="70%"
+					/>
+					<CustomInput
+						placeholder="Ingresa tu contraseña"
+						setValue = {setPassword}
+						value={password}
+						secureTextEntry={true}
+						bgColor = '#ffffff' 
+						minWidth="70%"
+					/>
+					<CustomButton
+						text="Registrarse" 
+						onPress={create}
+						bgColor = "#FAE9EA"
+						fgColor ="#DD4D44"
+					/>
+					<CustomButton
+						text="Registrese como Teatro/Hall" 
+						onPress={newteatro}
+						bgColor = "#FAE9EA"
+						fgColor ="#DD4D44"
+					/>
 				</View>
-				<CustomInput
-					placeholder="Ingresa tu correo electrónico"
-					setValue ={setEmail}
-					value={email}
-					secureTextEntry={false}
-					bgColor = '#ffffff'
-					minWidth="70%"
-				/>
-				<CustomInput
-					placeholder="Ingresa tu contraseña"
-					setValue = {setPassword}
-					value={password}
-					secureTextEntry={true}
-					bgColor = '#ffffff' 
-					minWidth="70%"
-				/>
-				<CustomButton
-					text="Registrarse" 
-					onPress={create}
-					bgColor = "#FAE9EA"
-					fgColor ="#DD4D44"
-				/>
-     			<CustomButton
-					text="Registrese como Teatro/Hall" 
-					onPress={newteatro}
-					bgColor = "#FAE9EA"
-					fgColor ="#DD4D44"
-				/>
 			</View>
-		</View>
 		</>
 	);
 }

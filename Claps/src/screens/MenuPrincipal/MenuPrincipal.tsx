@@ -7,30 +7,30 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
 function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
-    </View>
-  );
+	return (
+		<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+		<Text>Home!</Text>
+		</View>
+	);
 }
 
 function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
-  );
+	return (
+		<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+		<Text>Settings!</Text>
+		</View>
+	);
 }
   
 const Tab = createBottomTabNavigator();
 
 export default function MenuPrincipal() {
-  return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
-  );
+	return (
+		<NavigationContainer>
+		<Tab.Navigator>
+			<Tab.Screen name="Home" component={HomeScreen} />
+			<Tab.Screen name="Settings" component={SettingsScreen} />
+		</Tab.Navigator>
+		</NavigationContainer>
+	);
 }

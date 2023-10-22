@@ -24,38 +24,38 @@ const client  = axios.create({
 
 // Agregar onpress submitForm
 function SignUpTeatro() {
-  const [username, setUsername] = useState('');
-  const [CurrentUser, setCurrentUser] = useState(false);
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordRepeat, setPasswordRepeat] = useState('');
-  const [EsUsuario, setUsuario] = useState(false);
-  const [EsHall, setHall] = useState(false);
-  const [EsTeatro, setTeatro] = useState(false);
-  const [direccion, setDireccion] = useState('');
-  
-  const toggleSwitchH = () => setHall(previousState => !previousState);
-  const toggleSwitchT = () => setTeatro(previousState => !previousState);
-    const submitsignup= (event: React.FormEvent) => {
-      event.preventDefault();  
-      client.post(
-        "/api/register",
-      {
-        email: email,
-        password: password 
-      }).then(function(res){
-        client.post(
-          "/api/login",     
-          {
-            email: email,
-            password: password 
-          }
-        ).then(function(res){
-          setCurrentUser(true);
-        });
-      });
+	const [username, setUsername] = useState('');
+	const [CurrentUser, setCurrentUser] = useState(false);
+	const [email, setEmail] = useState('');
+	const [firstName, setFirstName] = useState('');
+	const [lastName, setLastName] = useState('');
+	const [password, setPassword] = useState('');
+	const [passwordRepeat, setPasswordRepeat] = useState('');
+	const [EsUsuario, setUsuario] = useState(false);
+	const [EsHall, setHall] = useState(false);
+	const [EsTeatro, setTeatro] = useState(false);
+	const [direccion, setDireccion] = useState('');
+
+	const toggleSwitchH = () => setHall(previousState => !previousState);
+	const toggleSwitchT = () => setTeatro(previousState => !previousState);
+	const submitsignup= (event: React.FormEvent) => {
+		event.preventDefault();  
+		client.post(
+		"/api/register",
+		{
+		email: email,
+		password: password 
+		}).then(function(res){
+			client.post(
+				"/api/login",     
+				{
+				email: email,
+				password: password 
+				}
+			).then(function(res){
+				setCurrentUser(true);
+			});
+		});
     };
 
 	const create = async () => {
@@ -101,7 +101,7 @@ function SignUpTeatro() {
 
 	if (CurrentUser){
 		return(
-		<Text style={styles.title}>""Habeis iniciado sesion :"\"</Text>
+			<Text style={styles.title}>""Habeis iniciado sesion :"\"</Text>
 		)
 	}
 

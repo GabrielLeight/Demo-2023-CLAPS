@@ -19,7 +19,6 @@ const client  = axios.create({
     baseURL: "https://c1fd-2800-150-140-1edf-306e-8f66-7ec0-3852.ngrok-free.app"
 })
 // Agregar onpress submitForm
-
 function SignInScreen() {
     const divRef = useRef<HTMLInputElement>();
     const [CurrentUser, setCurrentUser] = useState(false);
@@ -38,10 +37,7 @@ function SignInScreen() {
 			divRef.current = 'Login'
 			setSignInMessage(false)
 		}
-	}
-
-    //FUNCION DE SIGN UP ABAJO (COPIAR A SIGNUPSCREEN):::: V V V V V V V V 
-    
+	}   
     //FUNCION DE LOGIN ABAJO:::: V V V V V V V V 
     const submitsignin= (event: React.FormEvent) => {
 		event.preventDefault();  
@@ -63,7 +59,7 @@ function SignInScreen() {
     //};
     if (CurrentUser){
 		return(
-			<Text style={styles.title}>Habeis iniciado sesion</Text>
+			<Text style={styles.title}>Iniciaste sesión</Text>
 		)
     }
     
@@ -103,29 +99,27 @@ function SignInScreen() {
 			fgColor ='white'  />
 			
 			*/}
-			
-		
 		</View>
 	);
   }
 
 const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    padding: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-     color: '#eb3838',
-     fontSize: 20,
-     fontWeight: 'bold',
+	root: {
+		flex: 1,
+		padding: 10,
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	title: {
+		color: '#eb3838',
+		fontSize: 20,
+		fontWeight: 'bold',
 
-  },
-  tinyLogo: {
-    width: 120,
-    height: 55,
-  },
+	},
+	tinyLogo: {
+		width: 120,
+		height: 55,
+	},
 })
 
 export default SignInScreen;
