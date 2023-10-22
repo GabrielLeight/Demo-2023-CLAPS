@@ -110,14 +110,13 @@ function SignUpTeatro() {
 		<View style ={styles.root}>
 			<Image style = {styles.tinyLogo} source = {require(Logo)}/>
 			<Text style={styles.title}>¡Registrate!</Text>
-			<View>
 				<CustomInput
-					placeholder="Nombre de usuario"
+					placeholder="    Nombre del teatro/Hall    "
 					setValue ={setUsername}
 					value={username}
 					secureTextEntry={false}
 					bgColor = '#ffffff'
-					minWidth="70%"
+
 				/>
 				<View style ={styles.flexRow}>
 					<View style = {styles.inputContainer}>
@@ -127,7 +126,7 @@ function SignUpTeatro() {
 							value={firstName}
 							secureTextEntry={false}
 							bgColor = '#ffffff'
-							minWidth="35%"
+
 						/>
 					</View>
 					<View style = {styles.inputContainer}>
@@ -137,7 +136,7 @@ function SignUpTeatro() {
 							value={lastName}
 							secureTextEntry={false}
 							bgColor = '#ffffff'
-							minWidth="35%"
+
 						/>
 					</View>
 				</View>
@@ -148,7 +147,7 @@ function SignUpTeatro() {
 					value={email}
 					secureTextEntry={false}
 					bgColor = '#ffffff'
-					minWidth="70%"
+
 				/>
 				<CustomInput
 					placeholder="Ingresa tu contraseña"
@@ -156,7 +155,7 @@ function SignUpTeatro() {
 					value={password}
 					secureTextEntry={true}
 					bgColor = '#ffffff' 
-					minWidth="70%"
+
 				/>
                 <CustomInput
                     placeholder="Ingresa la direccion del teatro/Hall"
@@ -164,22 +163,14 @@ function SignUpTeatro() {
                     value={direccion}
                     secureTextEntry={false}
                     bgColor = '#ffffff' 
-                    minWidth="70%"
-				/>
-                <RNPickerSelect
-                    onValueChange={(value) => console.log(value)}
-                    items={[
-                        { label: 'Teatro', value: toggleSwitchT},
-                        { label: 'Hall', value: toggleSwitchH },
-                    ]}
-                />				
+
+				/>		
                 <CustomButton
 					text="Registrarse" 
 					onPress={create}
 					bgColor = "#FAE9EA"
 					fgColor ="#DD4D44"
-				/>
-			</View>   
+				/>  
 		</View>
 		</>
 	);

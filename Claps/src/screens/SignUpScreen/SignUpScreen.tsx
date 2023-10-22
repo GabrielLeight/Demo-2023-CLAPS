@@ -110,7 +110,7 @@ function SignUpScreen() {
     }
 	};
 	const onNewHallPressed = () => { // Acá deberia crearse un register para el teatro o hall
-		navigator.navigate('ShowTeatro' as never)
+		navigator.navigate('SignT' as never)
 	}
 	
 	if (CurrentUser){

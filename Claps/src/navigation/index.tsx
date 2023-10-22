@@ -8,6 +8,7 @@ import ShowTeatro from '../screens/ShowTeatro';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import SignUpTeatro from '../screens/SignUpTeatro';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +20,7 @@ return (
 			<Stack.Screen name="SignUp" component={SignUpScreen} />
 			<Stack.Screen name="FormReview" component={FormReviewScreen} />
 			<Stack.Screen name="ShowTeatro" component={ShowTeatro} />
+			<Stack.Screen name="SignT" component={SignUpTeatro} />
 	    </Stack.Navigator>
 	</NavigationContainer>
 );
