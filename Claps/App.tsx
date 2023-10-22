@@ -37,35 +37,35 @@ import ShowTeatro from './src/screens/ShowTeatro';
 
 
 function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  const [CurrentUser, setCurrentUser] = useState(false);
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-  if (CurrentUser){
-    return (
-      <MenuPrincipal/>
-    )
-  }
-  return (
-    <SafeAreaView style = {styles.root}>
-      <SignUpScreen/>
-    </SafeAreaView>
-  );
+	const isDarkMode = useColorScheme() === 'dark';
+	const [CurrentUser, setCurrentUser] = useState(false);
+	const backgroundStyle = {
+		backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+	};
+	if (CurrentUser){
+		return (
+		<MenuPrincipal/>
+		)
+	}
+	return (
+		<SafeAreaView style = {styles.root}>
+			<SignUpScreen/>
+		</SafeAreaView>
+	);
 }
 
 const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: 'rgba(255, 116, 94, 0.05)',
-    alignItems: 'center',
-  },
-  title: {
-    textAlign: 'center',
-    fontSize: 20,
-    color: 'orange',
-    fontWeight: 'bold',
-  },
+	root: {
+		flex: 1,
+		backgroundColor: 'rgba(255, 116, 94, 0.05)',
+		alignItems: 'center',
+	},
+	title: {
+		textAlign: 'center',
+		fontSize: 20,
+		color: 'orange',
+		fontWeight: 'bold',
+	},
 });
 
 export {styles};
