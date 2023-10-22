@@ -12,24 +12,22 @@ const TheaterCriticsForm: React.FC = () => {
     const [comments, setComments] = useState('');
 
     const handleSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
-      
-      // Here, you can send the form data to your backend or perform any other action.
-      // For now, we'll just log the data to the console.
-      console.log('Critic Name:', criticName);
-      console.log('Performance Title:', performanceTitle);
-      console.log('Rating:', rating);
-      console.log('Comments:', comments);
+		e.preventDefault();	
+		// Here, you can send the form data to your backend or perform any other action.
+		// For now, we'll just log the data to the console.
+		console.log('Critic Name:', criticName);
+		console.log('Performance Title:', performanceTitle);
+		console.log('Rating:', rating);
+		console.log('Comments:', comments);
 
-
-      const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-          setUsername(criticName);
-        };
-      // You can also reset the form fields after submission.
-      setUsername('');
-      setPerformanceTitle('');
-      setRating(5);
-      setComments('');
+		const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+			setUsername(criticName);
+		};
+		// You can also reset the form fields after submission.
+		setUsername('');
+		setPerformanceTitle('');
+		setRating(5);
+		setComments('');
     };
 	const Enviar = async () => {
 		try {
