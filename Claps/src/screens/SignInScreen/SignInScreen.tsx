@@ -17,7 +17,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
 
 const client  = axios.create({
-    baseURL: "https://c1fd-2800-150-140-1edf-306e-8f66-7ec0-3852.ngrok-free.app"
+    baseURL: "https://3634-2800-150-140-1edf-25b3-fdbc-86bb-250b.ngrok-free.app"
 })
 // Agregar onpress submitForm
 const SignInScreen = () => {
@@ -27,8 +27,6 @@ const SignInScreen = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [SignInMessage, setSignInMessage] = useState(false);
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
 
 	const navigation = useNavigation();
 
@@ -59,12 +57,10 @@ const SignInScreen = () => {
 		});
     }
 	
-	
 	const onSignUpPressed = () => {
 		navigation.navigate('SignUp' as never);
 	}
 
-	
     return (
 		<View style ={styles.root}>
 			<Image style = {styles.tinyLogo} source = {require(Logo)}/>
