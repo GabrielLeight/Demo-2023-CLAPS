@@ -62,8 +62,9 @@ function SignUpTeatro() {
         if (EsHall){
             try {
             const response = await axios.post('YOUR_API_ENDPOINT', {
-                email,
-                password,
+				username: username,
+                email: email,
+                password: password,
                 first_name: firstName,
                 last_name: lastName,
                 direccion: direccion,
