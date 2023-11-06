@@ -6,7 +6,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model, login, logout
 from rest_framework.authentication import SessionAuthentication
 from rest_framework import generics, viewsets, permissions, status
+from django.db.models.base import ObjectDoesNotExist
 from .validation import *
+from django.http import JsonResponse
+from rest_framework_simplejwt.tokens import RefreshToken
+
 User = get_user_model()
 
 class UserRegister(APIView):
@@ -20,7 +24,7 @@ class UserRegister(APIView):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)    
         
-class HallRegister(APIView):
+class companyRegister(APIView):
     permission_classes = (permissions.AllowAny,)
     def post(self, request):
         userdata = custom_validation(request.data)
@@ -52,8 +56,14 @@ class UserLogin(APIView):
         serializer = LoginSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             user = serializer.check_user(data)
-            login(request, user)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            #login(request, user)
+            refresh = RefreshToken.for_user(user)
+            return JsonResponse(
+                {
+                    'refresh':str(refresh),
+                    'access':str(refresh.access_token)
+                }
+            )
         return Response(status=status.HTTP_400_BAD_REQUEST) 
     
 
@@ -64,28 +74,23 @@ class UserLogout(APIView):
     
 class UserView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
-    authentication_classes = (SessionAuthentication,)
-    def get(self, request):
+    def get(self, request, format=None):
         serializer = UserSerializer(request.user)
         return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+        #return JsonResponse({
+        #    "allowance":'allowed'
+        #})
+class newShowView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (SessionAuthentication,)
+    
+    def post(self,request):
+        serializer = auxQueryShowSerializer(request.data)
+        if serializer.is_valid(raise_exception=True):
+            try:
+                q = clapsUser.objects.get(username=request.user)
+                Response({'data': q.data}, status=status.HTTP_200_OK)
+            except ObjectDoesNotExist:
+                return Response({'Error': 'User does not exist'})
+            
 
-
-#DON'T USE, JUST FOR LEARNING PURPOSES
-'''
-class UserDetailAPI(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (AllowAny,)
-    def get(self,request,*args,**kwargs):
-        user = User.objects.get(id=request.user.id)
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
-
-class RegisterUserAPIView(generics.CreateAPIView):
-    permission_classes = (AllowAny,)
-    serializer_class = registerSerializer
-
-
-class CurrentUserViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = customUserSerializer
-'''

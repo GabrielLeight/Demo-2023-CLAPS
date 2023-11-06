@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-5a6wcvyerj4@r(6bfq&2kp_*x6%^c5#b-^s&*@33$gt47jivu#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["c1fd-2800-150-140-1edf-306e-8f66-7ec0-3852.ngrok-free.app","127.0.0.1","localhost"]
+ALLOWED_HOSTS = ["3634-2800-150-140-1edf-25b3-fdbc-86bb-250b.ngrok-free.app","127.0.0.1","localhost"]
 
 CORS_ALLOWED_ORIGINS = ['http://localhost:8080']
 
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'accounts',
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt',
     'corsheaders'
 ]
 
@@ -131,7 +133,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.TokenAuthentication",
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
 
+}
+
+SIMPLE_JWT = {
+    'USER_ID_FIELD': 'username',
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=15),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=15)
 }
