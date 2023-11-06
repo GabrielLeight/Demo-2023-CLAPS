@@ -50,7 +50,7 @@ npm install @react-navigation/native-stack
 Django Dependencies:
     pip install django
     pip install djangorestframework
-    pip install django-rest-framework-simplejwt
+    pip install djangorestframework-simplejwt
     pip install django-cors-headers
 
 

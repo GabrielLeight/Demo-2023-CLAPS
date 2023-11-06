@@ -164,16 +164,31 @@ class UserSerializer(serializers.ModelSerializer):
 class auxQueryShowSerializer(serializers.ModelSerializer):
     titulo = serializers.CharField()
     teatro = serializers.CharField()
-    company = serializers.CharField()
     sinopsis = serializers.CharField()
     trailer_url = serializers.CharField()
     fecha_show = serializers.DateTimeField()
 
     class Meta:
-        model = critica
-    def query_teatro(self, validated_data):
-        q = clapsUser.objects.get(username=validated_data["teatro"])
-        print(q)
+        model = show
+        fields = ["titulo","teatro","sinopsis","trailer_url","fecha_show"]
+    def createShow(self, validated_data,username):
+        queryTeatro = clapsUser.objects.get(username=validated_data["teatro"])
+        queryCompany = clapsUser.objects.get(username=username)
+        print(queryCompany)
+        if (queryTeatro and queryCompany):
+            newshow = show.objects.create(
+                titulo = validated_data["titulo"],
+                teatro = queryTeatro,
+                company = queryCompany,
+                sinopsis = validated_data["sinopsis"],
+                trailer_url = validated_data["trailer_url"],
+                fecha_show = validated_data["fecha_show"],
+                avg_rating = 0
+            )
+            newshow.save()
+
+
+
 
 class registerShowSerializer(serializers.ModelSerializer):
     titulo = serializers.CharField()

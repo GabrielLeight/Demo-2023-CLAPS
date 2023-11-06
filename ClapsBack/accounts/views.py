@@ -82,14 +82,14 @@ class UserView(APIView):
         #})
 class newShowView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
-    authentication_classes = (SessionAuthentication,)
     
     def post(self,request):
-        serializer = auxQueryShowSerializer(request.data)
+        serializer = auxQueryShowSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             try:
-                q = clapsUser.objects.get(username=request.user)
-                Response({'data': q.data}, status=status.HTTP_200_OK)
+                #print(request.user.username)
+                serializer.createShow(request.data,request.user.username)
+                return Response({'confirmation':"Show created succesfully"})
             except ObjectDoesNotExist:
                 return Response({'Error': 'User does not exist'})
             
