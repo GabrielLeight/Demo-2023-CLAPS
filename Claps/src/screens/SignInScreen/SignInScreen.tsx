@@ -17,7 +17,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
 
 const client  = axios.create({
-    baseURL: "https://c1fd-2800-150-140-1edf-306e-8f66-7ec0-3852.ngrok-free.app"
+    baseURL: "https://3634-2800-150-140-1edf-25b3-fdbc-86bb-250b.ngrok-free.app"
 })
 // Agregar onpress submitForm
 const SignInScreen = () => {
@@ -27,8 +27,6 @@ const SignInScreen = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [SignInMessage, setSignInMessage] = useState(false);
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
 
 	const navigation = useNavigation();
 
@@ -42,7 +40,6 @@ const SignInScreen = () => {
 			setSignInMessage(false)
 		}
 	}   
-    //FUNCION DE LOGIN ABAJO:::: V V V V V V V V 
     const onSignInPressed = (event: React.FormEvent) => {
 		event.preventDefault();  
 		client.post(
@@ -53,30 +50,26 @@ const SignInScreen = () => {
 			}
 		).then(function(res){
 			setCurrentUser(true);
-			navigation.navigate('FormReview' as never);
+			navigation.navigate('HomeScreen' as never);
 		})
 		.catch((Error) =>   {
 			console.error(Error)
 		});
     }
 	
-	
 	const onSignUpPressed = () => {
 		navigation.navigate('SignUp' as never);
 	}
 
-	
     return (
 		<View style ={styles.root}>
 			<Image style = {styles.tinyLogo} source = {require(Logo)}/>
-			
 			<CustomInput
 				placeholder="Ingresa tu correo electrónico"
 				setValue = {setUsername}
 				value={username}
 				secureTextEntry={false}
 				bgColor = '#ffffff'
-				
 			/>
 			<CustomInput
 				placeholder="Ingresa tu contraseña"
@@ -84,7 +77,6 @@ const SignInScreen = () => {
 				setValue = {setPassword}
 				value={password}
 				bgColor = '#ffffff'
-			
 			/>
 			<CustomButton
 				text="Iniciar Sesion" 
@@ -103,7 +95,7 @@ const SignInScreen = () => {
 			</View>						
 		</View>
 	);
-  }
+}
 
 const styles = StyleSheet.create({
 	root: {
@@ -113,7 +105,6 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
-
 	tinyLogo: {
 		width: Dimensions.get('window').width * 0.60, // Ajusta el factor según tus necesidades
 		height: Dimensions.get('window').height * 0.15, // Ajusta el factor según tus necesidades

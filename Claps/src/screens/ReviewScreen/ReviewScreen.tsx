@@ -4,7 +4,7 @@ import { View, StyleSheet, Text } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
 
-const TheaterCriticsForm: React.FC = () => {
+const ReviewScreen: React.FC = () => {
     const [criticName, setUsername] = useState('');
     const [performanceTitle, setPerformanceTitle] = useState('');
     const [rating, setRating] = useState(5); // Default rating
@@ -81,4 +81,4 @@ const styles = StyleSheet.create({
 	},
 	
 	})
-export default TheaterCriticsForm;
+export default ReviewScreen;

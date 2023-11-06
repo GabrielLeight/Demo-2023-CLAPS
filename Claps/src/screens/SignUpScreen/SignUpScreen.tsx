@@ -29,52 +29,31 @@ function SignUpScreen() {
 	const [lastName, setLastName] = useState('');
 	const [password, setPassword] = useState('');
 	const [passwordRepeat, setPasswordRepeat] = useState('');
-	const [EsUsuario, setUsuario] = useState('');
-	const [EsHall, setHall] = useState('');
-	const [EsTeatro, setTeatro] = useState('');
-	const [address, setAddress] = useState('');
 
 	const navigator = useNavigation();
     const onSignUpPressedNormal = (event: React.FormEvent) => {
-      event.preventDefault();  
-      client.post(
-        "/api/register",
-      {
-        email: email,
-        password: password 
-      }).then(function(res){
-        client.post(
-          "/api/login",     
-          {
-            email: email,
-            password: password 
-          }
-        ).then(function(res){
-          setCurrentUser(true);
-        });
-      });
+		event.preventDefault();  
+		client.post(
+			"/api/register",
+		{
+			email: email,
+			password: password 
+		}).then(function(res){
+			client.post(
+			"/api/login",     
+			{
+				email: email,
+				password: password 
+			}
+			).then(function(res){
+				setCurrentUser(true);
+				navigator.navigate('SignIn' as never)
+			
+			});
+		});
     };
-
+	// Crea un usuario normal
 	const create = async () => {
-    if (EsUsuario){
-      try {
-      const response = await axios.post('YOUR_API_ENDPOINT', {
-        email,
-        password,
-        first_name: firstName,
-        last_name: lastName,
-        is_active: true, // Set this as needed
-      });
-
-      // Handle success, e.g., navigate to a new screen or display a success message
-      console.log('User registered:', response.data);
-      } catch (error) {
-      // Handle error, e.g., display an error message
-      console.error('Registration failed:', error);
-      }
-
-    }
-    if (EsHall){
 		try {
 		const response = await axios.post('YOUR_API_ENDPOINT', {
 			email,
@@ -90,41 +69,44 @@ function SignUpScreen() {
 		// Handle error, e.g., display an error message
 		console.error('Registration failed:', error);
 		}
-    }
-    if (EsTeatro){
-		try {
-			const response = await axios.post('YOUR_API_ENDPOINT', {
-				email,
-				password,
-				first_name: firstName,
-				last_name: lastName,
-				is_active: true, // Set this as needed
-			});
+	}
 
-			// Handle success, e.g., navigate to a new screen or display a success message
-			console.log('User registered:', response.data);
-		} catch (error) {
-			// Handle error, e.g., display an error message
-			console.error('Registration failed:', error);
-		}
-    }
-	};
-	const onNewHallPressed = () => { // Acá deberia crearse un register para el teatro o hall
-		navigator.navigate('SignT' as never)
+    // Navega al register de los teatros
+	const onNewHallPressed = () => { 
+		navigator.navigate('SignUpT' as never)
 	}
 	
+	const onNewCompanyPressed = () => {
+		navigator.navigate('SignUpC' as never)
+	}
+	const onSignInPressed = () => {
+		navigator.navigate('SignIn' as never)
+	}
+
 	if (CurrentUser){
 		return(
-			<Text style={styles.title}>""Habeis iniciado sesion :"\"</Text>
+			<Text style={styles.title}>Iniciaste sesión!</Text>
 		);
 	};
 
-	return (
-	
-			
+	return (	
 		<View style ={styles.root}>
 			<Image style = {styles.tinyLogo} source = {require(Logo)}/>
-			<Text style={styles.title}>¡Registrate!</Text>
+			<Text style={styles.title}>Create una cuenta</Text>
+			<CustomInput
+				placeholder="Nombre"
+				setValue ={setUsername}
+				value={username}
+				secureTextEntry={false}
+				bgColor = '#ffffff'		
+			/>
+			<CustomInput
+					placeholder="Apellido"
+					setValue ={setUsername}
+					value={username}
+					secureTextEntry={false}
+					bgColor = '#ffffff'
+			/>
 			<CustomInput
 				placeholder="Nombre de usuario"
 				setValue ={setUsername}
@@ -132,31 +114,15 @@ function SignUpScreen() {
 				secureTextEntry={false}
 				bgColor = '#ffffff'
 			/>
-			<View style = {styles.row}>
-				<CustomInput
-					placeholder="Nombre"
-					setValue ={setUsername}
-					value={username}
-					secureTextEntry={false}
-					bgColor = '#ffffff'		
-				/>
-				<CustomInput
-					placeholder="Apellido"
-					setValue ={setUsername}
-					value={username}
-					secureTextEntry={false}
-					bgColor = '#ffffff'
-				/>
-			</View>
 			<CustomInput
-				placeholder="Ingresa tu correo electrónico"
+				placeholder="Correo electrónico"
 				setValue ={setEmail}
 				value={email}
 				secureTextEntry={false}
 				bgColor = '#ffffff'
 			/>
 			<CustomInput
-				placeholder="Ingresa tu contraseña"
+				placeholder="Contraseña"
 				setValue = {setPassword}
 				value={password}
 				secureTextEntry={true}
@@ -165,16 +131,31 @@ function SignUpScreen() {
 			<CustomButton
 				text="Registrarse" 
 				onPress={onSignUpPressedNormal}
-				bgColor = "#bc2a3c"
+				bgColor = "#266797"
 				fgColor ="white"
 			/>
+			{/* Los teatros deben subir obras? o solamente los claps company? */}
 			<CustomButton
 				text="Regístrese como Teatro - Hall" 
 				onPress={onNewHallPressed}
-				bgColor = "#FAE9EA"
-				fgColor ="#DD4D44"
+				bgColor = "#bfd6e9"
+				fgColor ="#266797"
 			/>
-			
+			<CustomButton
+				text="Regístrese como Claps Company" 
+				onPress={onNewCompanyPressed}
+				bgColor = "#e7e7e7"
+				fgColor ="#727678"
+			/>
+			<View style = {{flexDirection: 'row', marginTop: 2}}>
+				<Text>¿Ya tienes cuenta? </Text>
+				<CustomButton
+					text="Entra aquí" 
+					onPress={onSignInPressed}
+					bgColor = 'transparent'
+					fgColor = '#266797'
+				/>
+			</View>	
 		</View>
 		
 	);
@@ -197,7 +178,7 @@ row: {
 },
 
 title: {
-	color: '#eb3838',
+	color: '#266797',
 	fontSize: 20,
 	fontWeight: 'bold',
 	marginBottom: 3,

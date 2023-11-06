@@ -10,6 +10,7 @@ import {
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
 import { useNavigation } from '@react-navigation/native';
+
 const Logo = '../../../assets/images/Claps.png';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
@@ -21,7 +22,7 @@ const client  = axios.create({
 })
 
 // Agregar onpress submitForm
-function SignUpTeatro() {
+function SignUpCompany() {
 	const [username, setUsername] = useState('');
 	const [CurrentUser, setCurrentUser] = useState(false);
 	const [email, setEmail] = useState('');
@@ -62,9 +63,8 @@ function SignUpTeatro() {
         if (EsHall){
             try {
             const response = await axios.post('YOUR_API_ENDPOINT', {
-				username: username,
-                email: email,
-                password: password,
+                email,
+                password,
                 first_name: firstName,
                 last_name: lastName,
                 direccion: direccion,
@@ -106,6 +106,7 @@ function SignUpTeatro() {
 			<Text style={styles.title}>""Habeis iniciado sesion :"\"</Text>
 		)
 	}
+
 	const onSignInPressed = () => {
 		navigator.navigate('SignIn' as never)
 	}
@@ -113,30 +114,23 @@ function SignUpTeatro() {
 		<>
 		<View style ={styles.root}>
 			<Image style = {styles.tinyLogo} source = {require(Logo)}/>
-			<Text style={styles.title}>¡Registra tu teatro!</Text>
+			<Text style={styles.title}>¡Registra tu Claps Company!</Text>
 				<CustomInput
-					placeholder="Nombre del teatro"
+					placeholder="Nombre de la Claps Company"
 					setValue ={setUsername}
 					value={username}
 					secureTextEntry={false}
 					bgColor = '#ffffff'
 				/>
 				<CustomInput
-                    placeholder="Ingresa la dirección del teatro"
-                    setValue = {setDireccion}
-                    value={direccion}
-                    secureTextEntry={false}
-                    bgColor = '#ffffff' 
-				/>		
-				<CustomInput
-					placeholder="Ingresa tu correo electrónico"
+					placeholder="Ingresar correo electrónico"
 					setValue ={setEmail}
 					value={email}
 					secureTextEntry={false}
 					bgColor = '#ffffff'
 				/>
 				<CustomInput
-					placeholder="Ingresa tu contraseña"
+					placeholder="Ingresar contraseña"
 					setValue = {setPassword}
 					value={password}
 					secureTextEntry={true}
@@ -163,40 +157,40 @@ function SignUpTeatro() {
 }
 
 const styles = StyleSheet.create({
-root: {
-	flex: 1,
-	backgroundColor: '#f6f8fa',
-	padding: 20,
-	alignItems: 'center',
-	justifyContent: 'center',
-},
+    root: {
+        flex: 1,
+        backgroundColor: '#f6f8fa',
+        padding: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 
-inputContainer:{
-	marginHorizontal: 2,
-	flex: 1,
-},
+    inputContainer:{
+        marginHorizontal: 2,
+        flex: 1,
+    },
 
-flexRow: {
-	flexDirection: 'row', // Esto hará que los elementos se alineen en una fila horizontal
-	alignItems: 'center',// Esto alineará los elementos verticalmente en el centro
-	justifyContent: 'center',
-},
+    flexRow: {
+        flexDirection: 'row', // Esto hará que los elementos se alineen en una fila horizontal
+        alignItems: 'center',// Esto alineará los elementos verticalmente en el centro
+        justifyContent: 'center',
+    },
 
-title: {
-	color: '#266797',
-	fontSize: 20,
-	fontWeight: 'bold',
-	marginBottom: 3,
-},
+    title: {
+        color: '#266797',
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 3,
+    },
 
-tinyLogo: {
-	width: Dimensions.get('window').width * 0.60, // Ajusta el factor según tus necesidades
-	height: Dimensions.get('window').height * 0.15, // Ajusta el factor según tus necesidades
-},
-input:{
-	color: 'rgb(169, 27, 13)',
-	textAlign: 'center',
-},
+    tinyLogo: {
+        width: Dimensions.get('window').width * 0.60, // Ajusta el factor según tus necesidades
+        height: Dimensions.get('window').height * 0.15, // Ajusta el factor según tus necesidades
+    },
+    input:{
+        color: 'rgb(169, 27, 13)',
+        textAlign: 'center',
+    },
 })
-export default SignUpTeatro;
-    
+export default SignUpCompany;
+        
