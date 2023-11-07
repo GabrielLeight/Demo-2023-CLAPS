@@ -6,6 +6,7 @@ import {
     StyleSheet,
     Image,
 	Dimensions,
+	AsyncStorage,
 } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
@@ -49,6 +50,8 @@ const SignInScreen = () => {
 			password: password 
 			}
 		).then(function(res){
+			const token = res.data.access;
+			AsyncStorage.setItem('authToken', token);
 			setCurrentUser(true);
 			navigation.navigate('HomeScreen' as never);
 		})
