@@ -30,7 +30,7 @@ const ReviewScreen: React.FC = () => {
     };
 	const Enviar = async () => {
 		try {
-		const response = await axios.post('YOUR_API_ENDPOINT', {
+		const response = await axios.post('/newreview', {
 			criticName,
 			performanceTitle,
 			rating: rating,

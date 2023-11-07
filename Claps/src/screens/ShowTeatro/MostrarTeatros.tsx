@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { View, StyleSheet, Text, FlatList, ActivityIndicator } from 'react-native';
-
+import getAuthToken from '../authToken/getAuthToken';
 const ShowTeatro: React.FC = () => {
   const [theaters, setTheaters] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const token = getAuthToken();
   useEffect(() => {
-    // Fetch theaters when the component mounts
     axios
       .get('YOUR_API_ENDPOINT/theaters') // Replace with your API endpoint
       .then((response) => {

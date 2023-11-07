@@ -6,8 +6,8 @@ import {
     StyleSheet,
     Image,
 	Dimensions,
-	AsyncStorage,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
 import { useNavigation } from '@react-navigation/native';
