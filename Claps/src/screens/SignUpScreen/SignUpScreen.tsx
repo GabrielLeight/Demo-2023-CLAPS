@@ -33,8 +33,8 @@ function SignUpScreen() {
 	const navigator = useNavigation();
     const onSignUpPressedNormal = (event: React.FormEvent) => {
 		event.preventDefault();  
-		client.post(
-			"/api/register",
+		try(		client.post(
+			"/api/registerUser",
 		{
 			email: email,
 			password: password 
@@ -50,7 +50,8 @@ function SignUpScreen() {
 				navigator.navigate('SignIn' as never)
 			
 			});
-		});
+		});)
+
     };
 	// Crea un usuario normal
 	const create = async () => {

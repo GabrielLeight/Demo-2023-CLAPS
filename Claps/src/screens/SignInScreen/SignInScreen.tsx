@@ -44,7 +44,7 @@ const SignInScreen = () => {
     const onSignInPressed = (event: React.FormEvent) => {
 		event.preventDefault();  
 		client.post(
-			"/login",     
+			"api/login",     
 			{
 			username: username,
 			password: password 

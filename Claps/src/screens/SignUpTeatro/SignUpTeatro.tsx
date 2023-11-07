@@ -61,7 +61,7 @@ function SignUpTeatro() {
 	const create = async () => {
         if (EsHall){
             try {
-            const response = await axios.post('YOUR_API_ENDPOINT', {
+            const response = await axios.post('registerCompany', {
 				username: username,
                 email: email,
                 password: password,
@@ -81,9 +81,9 @@ function SignUpTeatro() {
         }
         if (EsTeatro){
             try {
-            const response = await axios.post('YOUR_API_ENDPOINT', {
-                email,
-                password,
+            const response = await axios.post('registerTeatro', {
+                email: email,
+                password: password,
                 first_name: firstName,
                 last_name: lastName,
                 direccion: direccion,
