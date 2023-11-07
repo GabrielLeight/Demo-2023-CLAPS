@@ -93,4 +93,14 @@ class newShowView(APIView):
             except ObjectDoesNotExist:
                 return Response({'Error': 'User does not exist'})
             
+class newCrit(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
 
+    def post(self,request):
+        serializer = CritSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            try:
+                serializer.create(request.data,request.user.username)
+                return Response({'confirmation':"Review posted succesfully"})
+            except ObjectDoesNotExist:
+                return Response({'Error': 'User does not exist'})

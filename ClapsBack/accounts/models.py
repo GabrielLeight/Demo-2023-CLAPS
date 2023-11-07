@@ -79,12 +79,6 @@ class show(models.Model):
 
     def __str__(self):
         return self.titulo
-    
-    #def calc_avgRating (self):
-    #    average_rate = 
-    #    return average_rate 
-#
- #   def save(self, *args, **kwargs):
 
 class critica(models.Model):
     id_crit = models.AutoField(primary_key=True)
