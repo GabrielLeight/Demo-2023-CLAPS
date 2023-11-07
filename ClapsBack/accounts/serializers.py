@@ -5,51 +5,9 @@ from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.password_validation import validate_password
 from .models import *
 from rest_framework.validators import UniqueValidator
-
+from django.db.models import Avg
 User = get_user_model()
 
-''' 
-class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(
-        write_only = True,
-        min_length = 8,
-        error_messages={
-            "min_length": "contraseña debe tener al menos 8 caracteres"
-        }
-    )
-
-    password2 = serializers.CharField(
-        write_only = True,
-        min_length = 8,
-        error_messages={
-            "min_length": "contraseña debe tener al menos 8 caracteres"
-        }
-    )
-
-    class Meta:
-        model = User
-        fields = "__all__"
-        extra_kwargs = {"password": {"error_messages": {"required": "Give yourself a username"}}}
-
-    def validate(self, data):
-        if data["password"] != data["password2"]:
-            raise serializers.ValidationError("las contraseñas no coinciden")
-        return super().validate(data)
-        
-    def create(self, validated_data):
-        user = User.objects.create(
-            username=validated_data["username"],
-            email = validated_data["email"],
-            first_name=validated_data["first_name"],
-            last_name = validated_data["last_name"],
-            is_active=validated_data["is_active"]
-        )
-
-        user.set_password(validated_data["password"])
-        user.save()
-
-        return user
-'''
 class registercommonUserSerializer(serializers.ModelSerializer):
     username = serializers.CharField(required=True, validators=[UniqueValidator(queryset=clapsUser.objects.all())])
     email = serializers.EmailField(required=True, validators=[UniqueValidator(queryset=clapsUser.objects.all())])
@@ -187,35 +145,29 @@ class auxQueryShowSerializer(serializers.ModelSerializer):
             )
             newshow.save()
 
+class CritSerializer(serializers.ModelSerializer):
+    cuerpo_crit = serializers.CharField()
+    rating = serializers.IntegerField()
+    
+    class Meta:
+        model = critica
+        fields = ['cuerpo_crit', 'rating', 'id_show']
 
-
-
-class registerShowSerializer(serializers.ModelSerializer):
-    titulo = serializers.CharField()
-    teatro = serializers.IntegerField()
-    company = serializers.IntegerField()
-    sinopsis = serializers.CharField()
-    trailer_url = serializers.CharField()
-    fecha_show = serializers.DateTimeField()
-
-    def create(self, validated_data):
-        critica = critica.objects.create(
-            titulo = validated_data["titulo"],
-            teatro = validated_data["teatro"],
-            company = validated_data["company"],
-            sinopsis = validated_data["sinopsis"],
-            trailer_url = validated_data["trailer_url"],
-            fecha_show = validated_data["fecha_show"]
-        )
-        critica.save()
-
-#class CritSerializer(serializers.ModelSerializer):
-#    cuerpo_crit = serializers.CharField()
-#    rating = serializers.IntegerField()
-#    
-#    class Meta:
-#        model = critica
-#        fields = ['cuerpo_crit', 'rating', 'id_show', 'author']
-#
-#    def create(self, validated_data):
+    def create(self, validated_data,username):
+        queryUser = clapsUser.objects.get(username=username)
+        queryShow = show.objects.get(id_show=validated_data["id_show"])
         
+        if (queryUser):
+            newCrit = critica.objects.create(
+                cuerpo_crit = validated_data["cuerpo_crit"],
+                rating = validated_data["rating"],
+                id_show = queryShow,
+                author = queryUser
+            )
+            newCrit.save()
+            queryCrits = critica.objects.all().filter(id_show=validated_data["id_show"])
+            avg = queryCrits.aggregate(Avg("rating", default=0))['rating__avg']
+            print(avg)
+            queryShow.avg_rating = avg
+            queryShow.save(update_fields=['avg_rating'])
+
