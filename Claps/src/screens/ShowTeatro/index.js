@@ -1,1 +1,1 @@
-export { default } from "./ShowTeatro";
+export { default } from "./MostrarTeatros";
