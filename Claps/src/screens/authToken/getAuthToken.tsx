@@ -14,7 +14,4 @@ const getAuthToken = async () => {
       console.error(error);
     }
   };
-  
-  // Call this function wherever you need to access the token
-  getAuthToken();
 export default getAuthToken
