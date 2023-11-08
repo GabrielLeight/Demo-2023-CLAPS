@@ -30,10 +30,12 @@ function Navigation() {
 return (
 	<NavigationContainer>
 	    <Stack.Navigator screenOptions ={{headerShown: false}}>
+			
 	    	<Stack.Screen name="SignIn" component={SignInScreen} />
 			<Stack.Screen name="SignUp" component={SignUpScreen} />
 			<Stack.Screen name="SignUpT" component={SignUpTeatro} />
 			<Stack.Screen name="SignUpC" component={SignUpCompany} />
+			<Stack.Screen name="Show" component={ShowTeatro} />
 			<Stack.Screen name="HomeScreen" component={HomeScreen} />
 	    </Stack.Navigator>
 	</NavigationContainer>
