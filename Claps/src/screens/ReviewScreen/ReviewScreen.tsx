@@ -5,36 +5,18 @@ import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
 
 const ReviewScreen: React.FC = () => {
-    const [criticName, setUsername] = useState('');
-    const [performanceTitle, setPerformanceTitle] = useState('');
-    const [rating, setRating] = useState(5); // Default rating
+    const [id_show, setshowName] = useState('');
+    const [author, setAuthor] = useState('');
+    const [rating, setRating] = useState(1); // Default rating
     const [comments, setComments] = useState('');
 
-    const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();	
-		// Here, you can send the form data to your backend or perform any other action.
-		// For now, we'll just log the data to the console.
-		console.log('Critic Name:', criticName);
-		console.log('Performance Title:', performanceTitle);
-		console.log('Rating:', rating);
-		console.log('Comments:', comments);
-
-		const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-			setUsername(criticName);
-		};
-		// You can also reset the form fields after submission.
-		setUsername('');
-		setPerformanceTitle('');
-		setRating(5);
-		setComments('');
-    };
 	const Enviar = async () => {
 		try {
-		const response = await axios.post('/newreview', {
-			criticName,
-			performanceTitle,
+		const response = await axios.post('newReview', {
+			id_show: id_show,
+			performanceTitle: author,
 			rating: rating,
-			comments: comments,
+			cuerpo_crit: comments,
 			is_active: true, // Set this as needed
 		});
 
@@ -47,20 +29,20 @@ const ReviewScreen: React.FC = () => {
 	};
 	return (
 		<View style ={styles.root}>
-			<Text>Review</Text>
+			<Text>¡De rienda suelta a sus emociones!</Text>
 			<CustomInput
-				placeholder="Rating"
-				secureTextEntry={true}
-				setValue = {setRating}
-				value={rating}
-				bgColor = '#ffffff'
-			/>
-			<CustomInput
-				placeholder="InserteComentarios finales"
-				secureTextEntry={true}
+				placeholder=""
+				secureTextEntry={false}
 				setValue = {setComments}
 				value={comments}
 				bgColor = '#ffffff'	
+			/>			
+			<CustomInput
+				placeholder="Rating"
+				secureTextEntry={false}
+				setValue = {setRating}
+				value={rating}
+				bgColor = '#ffffff'
 			/>
 			<CustomButton
 				text="Enviar" 

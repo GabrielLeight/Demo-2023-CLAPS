@@ -6,6 +6,7 @@ import SignUpTeatro from '../screens/SignUpTeatro';
 import SignUpCompany from '../screens/SignUpCompany';
 import ReviewScreen from '../screens/ReviewScreen';
 import ShowTeatro from '../screens/ShowTeatro';
+import CreateShows from '../screens/CreateShows';
 
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -31,7 +32,7 @@ return (
 	<NavigationContainer>
 	    <Stack.Navigator screenOptions ={{headerShown: false}}>
 			
-	    	<Stack.Screen name="SignIn" component={SignInScreen} />
+	    	<Stack.Screen name="SignIn" component={SignInScreen} /><Stack.Screen name="CreateShows" component={CreateShows} />
 			<Stack.Screen name="SignUp" component={SignUpScreen} />
 			<Stack.Screen name="SignUpT" component={SignUpTeatro} />
 			<Stack.Screen name="SignUpC" component={SignUpCompany} />
