@@ -24,21 +24,22 @@ function SignUpCompany() {
 	const [CurrentUser, setCurrentUser] = useState(false);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [passwordRepeat, setPasswordRepeat] = useState('');
+	const [password2, setPasswordRepeat] = useState('');
 
 
 	const navigator = useNavigation();
 
-	const create = async () => {
+	const create = async (event: React.FormEvent) => {
 
 		try {
-		const response = await client.post("registerCompany", {
-			email: email,
-			password: password,
-			password2:passwordRepeat,
-			username: username,
-			is_active: true, // Set this as needed
-		});
+			const response = await client.post('registerCompany', {
+				username: username,
+				password: password,
+				password2: password2,
+				email: email
+				
+				
+			});
 
         // Handle success, e.g., navigate to a new screen or display a success message
         console.log('User registered:', response.data);
@@ -47,9 +48,6 @@ function SignUpCompany() {
         console.error('Registration failed:', error);
         }
 
-        
-       
-		navigator.navigate('HomeScreen' as never)
         }
 	
 
@@ -92,7 +90,7 @@ function SignUpCompany() {
 				<CustomInput
 					placeholder="Ingresar contraseña"
 					setValue = {setPasswordRepeat}
-					value={passwordRepeat}
+					value={password2}
 					secureTextEntry={true}
 					bgColor = '#ffffff' 
 				/>
