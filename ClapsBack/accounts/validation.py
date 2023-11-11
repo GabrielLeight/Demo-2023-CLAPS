@@ -24,10 +24,16 @@ def validate_email(data):
         raise ValidationError('an email is needed')
     return True
 
-def validate_username(data):
+def validate_username_reg(data):
     username = data['username'].strip()
     if not username:
         raise ValidationError('choose another username')
+    return True
+
+def validate_username_login(data):
+    username = data['username'].strip()
+    if not username:
+        raise ValidationError('username empty or wrong')
     return True
 
 def validate_password(data):

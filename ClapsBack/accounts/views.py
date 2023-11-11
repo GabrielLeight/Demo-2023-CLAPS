@@ -22,7 +22,7 @@ class UserRegister(APIView):
             user = serializer.create(userdata)
             if user:
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(status=status.HTTP_400_BAD_REQUEST)    
+        return Response(status=status.HTTP_400_BAD_REQUEST)
         
 class companyRegister(APIView):
     permission_classes = (permissions.AllowAny,)
@@ -41,6 +41,7 @@ class TeatroRegister(APIView):
         userdata = custom_validation(request.data)
         serializer = registerTeatroSerializer(data=userdata)
         if serializer.is_valid(raise_exception=True):
+            print("a")
             user = serializer.create(userdata)
             if user:
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -51,12 +52,20 @@ class UserLogin(APIView):
     authentication_classes = (SessionAuthentication,)
     def post(self,request):
         data = request.data
-        assert validate_username(data)
-        assert validate_password(data)
+        try:
+            assert validate_username_login(data)
+        except ValidationError:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        
+        try:
+            assert validate_password(data)
+        except ValidationError:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        
+        
         serializer = LoginSerializer(data=data)
-        if serializer.is_valid(raise_exception=True):
-            user = serializer.check_user(data)
-            #login(request, user)
+        if serializer.is_valid(raise_exception=False):
+            user = serializer.check_user(clean_data=data)
             refresh = RefreshToken.for_user(user)
             return JsonResponse(
                 {

@@ -4,6 +4,7 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.password_validation import validate_password
 from .models import *
+from .utils import get_geocod
 from rest_framework.validators import UniqueValidator
 from django.db.models import Avg
 User = get_user_model()
@@ -44,13 +45,14 @@ class registercommonUserSerializer(serializers.ModelSerializer):
 class registerTeatroSerializer(serializers.ModelSerializer):
     username = serializers.CharField(required=True, validators=[UniqueValidator(queryset=clapsUser.objects.all())])
     email = serializers.EmailField(required=True, validators=[UniqueValidator(queryset=clapsUser.objects.all())])
-    direction = serializers.CharField(max_length=120)
+    direction = serializers.CharField(max_length=120, required=True)
+    city = serializers.CharField(max_length=100, required=True)
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password], min_length=8)
     password2 = serializers.CharField(write_only=True, required=True)
 
     class Meta:
         model = clapsUser
-        fields = ('username', 'password', 'password2', 'email', 'first_name', 'last_name', 'direction')
+        fields = ('username', 'password', 'password2', 'email', 'direction','city')
         
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
@@ -59,12 +61,14 @@ class registerTeatroSerializer(serializers.ModelSerializer):
         return attrs
     
     def create(self, validated_data):
+        lat,lng = get_geocod(validated_data['direction'] + ", " + validated_data['city'])
+        print(lat,lng)
         user = User.objects.create(
             username=validated_data['username'],
             email=validated_data['email'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
             direction=validated_data['direction'],
+            latit = lat,
+            longit = lng,
             is_teatro=True,
             is_company=False,
             is_commonUser=False
@@ -108,10 +112,14 @@ class registerHallSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
+    class Meta:
+        model = clapsUser
+        fields = ['username', 'password']
+
     def check_user(self, clean_data):
         user = authenticate(username=clean_data['username'], password=clean_data['password'])
         if not user:
-            raise serializers.ValidationError('user not found')
+            raise serializers.ValidationError('user or password wrong')
         return user 
     
 class UserSerializer(serializers.ModelSerializer):
