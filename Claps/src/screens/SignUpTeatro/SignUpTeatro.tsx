@@ -10,13 +10,13 @@ import {
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
 import { useNavigation } from '@react-navigation/native';
-import client from '../../components/client';
+
 const Logo = '../../../assets/images/Claps.png';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
-
+import client from '../../components/client';
 // Agregar onpress submitForm
 function SignUpTeatro() {
 	const [username, setUsername] = useState('');
@@ -27,7 +27,7 @@ function SignUpTeatro() {
 	const [password, setPassword] = useState('');
 	const [passwordRepeat, setPasswordRepeat] = useState('');
 	const [EsUsuario, setUsuario] = useState(false);
-	const [EsTeatro, setTeatro] = useState(true);
+	const [City, setCity] = useState('');
 	const [direccion, setDireccion] = useState('');
 
 
@@ -36,24 +36,28 @@ function SignUpTeatro() {
 	const create = async () => {
        
         try {
-            const response = await axios.post('registerTeatro', {
+            const response = await client.post('registerTeatro', {
 				username: username,
                 email: email,
+				city: City,
                 password: password,
+				password2: passwordRepeat,
                 first_name: firstName,
                 last_name: lastName,
-                direccion: direccion,
+                direction: direccion,
                 is_active: true, // Set this as needed
             });
 
         // Handle success, e.g., navigate to a new screen or display a success message
+		
         console.log('User registered:', response.data);
+		navigator.navigate('HomeScreen' as never)
         } catch (error) {
         // Handle error, e.g., display an error message
         console.error('Registration failed:', error);
         }
 
-		navigator.navigate('HomeScreen' as never)
+		
         
 	};
 
@@ -85,6 +89,13 @@ function SignUpTeatro() {
                     bgColor = '#ffffff' 
 				/>		
 				<CustomInput
+                    placeholder="Ingresa la ciudad"
+                    setValue = {setCity}
+                    value={City}
+                    secureTextEntry={false}
+                    bgColor = '#ffffff' 
+				/>		
+				<CustomInput
 					placeholder="Ingresa tu correo electrónico"
 					setValue ={setEmail}
 					value={email}
@@ -95,6 +106,13 @@ function SignUpTeatro() {
 					placeholder="Ingresa tu contraseña"
 					setValue = {setPassword}
 					value={password}
+					secureTextEntry={true}
+					bgColor = '#ffffff' 
+				/>
+				<CustomInput
+					placeholder="Ingresa tu contraseña"
+					setValue = {setPasswordRepeat}
+					value={passwordRepeat}
 					secureTextEntry={true}
 					bgColor = '#ffffff' 
 				/>
