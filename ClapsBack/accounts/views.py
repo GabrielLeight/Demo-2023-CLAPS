@@ -27,9 +27,12 @@ class UserRegister(APIView):
 class companyRegister(APIView):
     permission_classes = (permissions.AllowAny,)
     def post(self, request):
+        print(request.body)
         userdata = custom_validation(request.data)
         serializer = registerHallSerializer(data=userdata)
+        print(request.data)
         if serializer.is_valid(raise_exception=True):
+            print(request.data)
             user = serializer.create(userdata)
             if user:
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -113,3 +116,17 @@ class newCrit(APIView):
                 return Response({'confirmation':"Review posted succesfully"})
             except ObjectDoesNotExist:
                 return Response({'Error': 'User does not exist'})
+            
+class getShows(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def get(self, request):
+        queryShows = show.objects.all()
+        serializer = auxQueryShowSerializer(queryShows, many=True)
+        if queryShows:
+            return Response(serializer.data)
+        else:
+            return Response({"None":"no shows found"})
+        
+
+
