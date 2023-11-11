@@ -18,7 +18,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
 
 const client  = axios.create({
-    baseURL: "https://3634-2800-150-140-1edf-25b3-fdbc-86bb-250b.ngrok-free.app"
+    baseURL: "http://2a1a-2800-150-140-1edf-25f2-8e65-b2d9-da1b.ngrok-free.app"
 })
 // Agregar onpress submitForm
 const SignInScreen = () => {
@@ -28,7 +28,7 @@ const SignInScreen = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [SignInMessage, setSignInMessage] = useState(false);
-
+	const [error, setError] = useState('');
 	const navigation = useNavigation();
 
 	function update_form_btn(){
@@ -41,23 +41,23 @@ const SignInScreen = () => {
 			setSignInMessage(false)
 		}
 	}   
-    const onSignInPressed = (event: React.FormEvent) => {
+    const onSignInPressed = async (event: React.FormEvent) => {
 		event.preventDefault();  
-		client.post(
-			"api/login",     
+
+		const registerResponse = await client.post(
+			"login",     
 			{
 			username: username,
 			password: password 
 			}
-		).then(function(res){
-			const token = res.data.access;
+		).then((response) =>{
+			const token = response.data.access;
 			AsyncStorage.setItem('authToken', token);
 			setCurrentUser(true);
 			navigation.navigate('HomeScreen' as never);
 		})
-		.catch((Error) =>   {
-			console.error(Error)
-		});
+		.catch((Error)=>{setError("Error de Registro, por favor inserte otro Usuario o Contraseña");} )
+		
     }
 	
 	const onSignUpPressed = () => {
@@ -68,7 +68,7 @@ const SignInScreen = () => {
 		<View style ={styles.root}>
 			<Image style = {styles.tinyLogo} source = {require(Logo)}/>
 			<CustomInput
-				placeholder="Ingresa tu correo electrónico"
+				placeholder="Ingresa tu nombre de usuario"
 				setValue = {setUsername}
 				value={username}
 				secureTextEntry={false}
@@ -96,6 +96,7 @@ const SignInScreen = () => {
 					fgColor = 'red'
 				/>
 			</View>						
+			{error && <Text style={{ color: 'red' }}>{error}</Text>}
 		</View>
 	);
 }

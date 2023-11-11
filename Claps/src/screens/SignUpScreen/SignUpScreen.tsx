@@ -1,4 +1,5 @@
 import React,  { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {
     View,
@@ -17,7 +18,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
 
 const client  = axios.create({
-  baseURL: "http://127.0.0.1:8000"
+  baseURL: "https://2a1a-2800-150-140-1edf-25f2-8e65-b2d9-da1b.ngrok-free.app/"
 })
 
 // Agregar onpress submitForm
@@ -28,32 +29,41 @@ function SignUpScreen() {
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
 	const [password, setPassword] = useState('');
-	const [passwordRepeat, setPasswordRepeat] = useState('');
+	const [password2, setPassword2] = useState('');
 
 	const navigator = useNavigation();
-    const onSignUpPressedNormal = (event: React.FormEvent) => {
+    const onSignUpPressedNormal =  async (event: React.FormEvent) => {
 		event.preventDefault();  
-		try {		client.post(
-			"/api/registerUser",
-		{
+		try{
+		const registerResponse = await client.post(
+			"registerUser",
+		{	
+			username: username,
+			first_name: username,
+			last_name: username,
 			email: email,
-			password: password 
-		}).then(function(res){
-			client.post(
-			"/api/login",     
-			{
-				email: email,
+			password: password,
+			password2: password2
+		}).then(res =>{
+			console.log('User registered:', res.data);
+			const registerResponse =client.post(
+			"login",     
+			{	
+				username: username,
 				password: password 
 			}
 			).then(function(res){
+				const token = res.data.access;
+				AsyncStorage.setItem('authToken', token);
 				setCurrentUser(true);
-				navigator.navigate('SignIn' as never)
+				navigator.navigate('HomeScreen' as never);
 			
-			});
-		});}catch{
-			
+			})
+		}).catch((Error) =>   {
+			console.error(Error)
+		});
 		}
-
+		catch(res){ }
     };
 	// Crea un usuario normal
 	const create = async () => {
@@ -98,15 +108,15 @@ function SignUpScreen() {
 			<Text style={styles.title}>Create una cuenta</Text>
 			<CustomInput
 				placeholder="Nombre"
-				setValue ={setUsername}
-				value={username}
+				setValue ={setFirstName}
+				value={firstName}
 				secureTextEntry={false}
 				bgColor = '#ffffff'		
 			/>
 			<CustomInput
 					placeholder="Apellido"
-					setValue ={setUsername}
-					value={username}
+					setValue ={setLastName}
+					value={lastName}
 					secureTextEntry={false}
 					bgColor = '#ffffff'
 			/>
@@ -124,10 +134,18 @@ function SignUpScreen() {
 				secureTextEntry={false}
 				bgColor = '#ffffff'
 			/>
+
 			<CustomInput
 				placeholder="Contraseña"
 				setValue = {setPassword}
 				value={password}
+				secureTextEntry={true}
+				bgColor = '#ffffff' 
+			/>
+			<CustomInput
+				placeholder="Contraseña"
+				setValue = {setPassword2}
+				value={password2}
 				secureTextEntry={true}
 				bgColor = '#ffffff' 
 			/>

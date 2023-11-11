@@ -16,7 +16,7 @@ const CreateShows: React.FC = () => {
   
 	const Enviar = async () => {
 		try {
-		const response = await axios.post('createShow', {
+		const response = await axios.post('newShow', {
 			titulo: showName,
 			sinopsos: sinopsis,
 			trailer_url: trailer,

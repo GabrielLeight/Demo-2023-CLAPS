@@ -17,7 +17,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
 
 const client  = axios.create({
-  baseURL: "http://127.0.0.1:8000"
+  baseURL: "https://2a1a-2800-150-140-1edf-25f2-8e65-b2d9-da1b.ngrok-free.app/"
 })
 
 // Agregar onpress submitForm
@@ -30,38 +30,16 @@ function SignUpTeatro() {
 	const [password, setPassword] = useState('');
 	const [passwordRepeat, setPasswordRepeat] = useState('');
 	const [EsUsuario, setUsuario] = useState(false);
-	const [EsHall, setHall] = useState(false);
-	const [EsTeatro, setTeatro] = useState(false);
+	const [EsTeatro, setTeatro] = useState(true);
 	const [direccion, setDireccion] = useState('');
 
-	const toggleSwitchH = () => setHall(previousState => !previousState);
-	const toggleSwitchT = () => setTeatro(previousState => !previousState);
 
 	const navigator = useNavigation();
-	const submitsignup= (event: React.FormEvent) => {
-		event.preventDefault();  
-		client.post(
-		"/api/register",
-		{
-		email: email,
-		password: password 
-		}).then(function(res){
-			client.post(
-				"/api/login",     
-				{
-				email: email,
-				password: password 
-				}
-			).then(function(res){
-				setCurrentUser(true);
-			});
-		});
-    };
 
 	const create = async () => {
-        if (EsHall){
+       
             try {
-            const response = await axios.post('registerCompany', {
+            const response = await axios.post('registerTeatro', {
 				username: username,
                 email: email,
                 password: password,
@@ -78,27 +56,8 @@ function SignUpTeatro() {
         console.error('Registration failed:', error);
         }
 
-        }
-        if (EsTeatro){
-            try {
-            const response = await axios.post('registerTeatro', {
-                email: email,
-                password: password,
-                first_name: firstName,
-                last_name: lastName,
-                direccion: direccion,
-                is_active: true, // Set this as needed
-            });
-
-        // Handle success, e.g., navigate to a new screen or display a success message
-        console.log('User registered:', response.data);
-        } catch (error) {
-        // Handle error, e.g., display an error message
-        console.error('Registration failed:', error);
-        }
-
-		navigator.navigate('SignIn' as never)
-        }
+		navigator.navigate('HomeScreen' as never)
+        
 	};
 
 	if (CurrentUser){
