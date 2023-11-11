@@ -10,16 +10,13 @@ import {
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
 import { useNavigation } from '@react-navigation/native';
+import client from '../../components/client';
 
 const Logo = '../../../assets/images/Claps.png';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
-
-const client  = axios.create({
-  baseURL: "http://127.0.0.1:8000"
-})
 
 // Agregar onpress submitForm
 function SignUpCompany() {

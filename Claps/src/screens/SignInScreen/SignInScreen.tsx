@@ -11,15 +11,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
 import { useNavigation } from '@react-navigation/native';
+import client from '../../components/client';
 const Logo = '../../../assets/images/Claps.png';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
 
-const client  = axios.create({
-    baseURL: "http://2a1a-2800-150-140-1edf-25f2-8e65-b2d9-da1b.ngrok-free.app"
-})
 // Agregar onpress submitForm
 const SignInScreen = () => {
     const divRef = useRef<HTMLInputElement>();
