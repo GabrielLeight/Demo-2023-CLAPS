@@ -9,7 +9,7 @@ const ShowTeatro: React.FC = () => {
     const token = getAuthToken();
     useEffect(() => {
         axios
-        .get('teatroscercanos') // Replace with your API endpoint
+        .get('getShows') // Replace with your API endpoint
         .then((response) => {
             setTheaters(response.data);
             setLoading(false);

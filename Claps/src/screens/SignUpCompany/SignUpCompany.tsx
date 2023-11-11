@@ -23,50 +23,22 @@ function SignUpCompany() {
 	const [username, setUsername] = useState('');
 	const [CurrentUser, setCurrentUser] = useState(false);
 	const [email, setEmail] = useState('');
-	const [firstName, setFirstName] = useState('');
-	const [lastName, setLastName] = useState('');
 	const [password, setPassword] = useState('');
 	const [passwordRepeat, setPasswordRepeat] = useState('');
-	const [EsUsuario, setUsuario] = useState(false);
-	const [EsHall, setHall] = useState(false);
-	const [EsTeatro, setTeatro] = useState(false);
-	const [direccion, setDireccion] = useState('');
 
-	const toggleSwitchH = () => setHall(previousState => !previousState);
-	const toggleSwitchT = () => setTeatro(previousState => !previousState);
 
 	const navigator = useNavigation();
-	const submitsignup= (event: React.FormEvent) => {
-		event.preventDefault();  
-		client.post(
-		"/api/register",
-		{
-		email: email,
-		password: password 
-		}).then(function(res){
-			client.post(
-				"/api/login",     
-				{
-				email: email,
-				password: password 
-				}
-			).then(function(res){
-				setCurrentUser(true);
-			});
-		});
-    };
 
 	const create = async () => {
-        if (EsHall){
-            try {
-            const response = await axios.post('YOUR_API_ENDPOINT', {
-                email,
-                password,
-                first_name: firstName,
-                last_name: lastName,
-                direccion: direccion,
-                is_active: true, // Set this as needed
-            });
+
+		try {
+		const response = await client.post("registerCompany", {
+			email: email,
+			password: password,
+			password2:passwordRepeat,
+			username: username,
+			is_active: true, // Set this as needed
+		});
 
         // Handle success, e.g., navigate to a new screen or display a success message
         console.log('User registered:', response.data);
@@ -75,28 +47,11 @@ function SignUpCompany() {
         console.error('Registration failed:', error);
         }
 
+        
+       
+		navigator.navigate('HomeScreen' as never)
         }
-        if (EsTeatro){
-            try {
-            const response = await axios.post('YOUR_API_ENDPOINT', {
-                email,
-                password,
-                first_name: firstName,
-                last_name: lastName,
-                direccion: direccion,
-                is_active: true, // Set this as needed
-            });
-
-        // Handle success, e.g., navigate to a new screen or display a success message
-        console.log('User registered:', response.data);
-        } catch (error) {
-        // Handle error, e.g., display an error message
-        console.error('Registration failed:', error);
-        }
-
-		navigator.navigate('SignIn' as never)
-        }
-	};
+	
 
 	if (CurrentUser){
 		return(
@@ -126,10 +81,18 @@ function SignUpCompany() {
 					secureTextEntry={false}
 					bgColor = '#ffffff'
 				/>
+
 				<CustomInput
 					placeholder="Ingresar contraseña"
 					setValue = {setPassword}
 					value={password}
+					secureTextEntry={true}
+					bgColor = '#ffffff' 
+				/>
+				<CustomInput
+					placeholder="Ingresar contraseña"
+					setValue = {setPasswordRepeat}
+					value={passwordRepeat}
 					secureTextEntry={true}
 					bgColor = '#ffffff' 
 				/>
