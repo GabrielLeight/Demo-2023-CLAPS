@@ -10,25 +10,24 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
-import { useNavigation } from '@react-navigation/native';
 import client from '../../components/client';
+import { useNavigation } from '@react-navigation/native';
+
 const Logo = '../../../assets/images/Claps.png';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
 
-// Agregar onpress submitForm
 const SignInScreen = () => {
     const divRef = useRef<HTMLInputElement>();
-    const [CurrentUser, setCurrentUser] = useState(false);
-    const [email, setEmail] = useState('');
+    const [CurrentUser, setCurrentUser] = useState(false); // Se debe agregar un currentUser
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [SignInMessage, setSignInMessage] = useState(false);
 	const [error, setError] = useState('');
-	const navigation = useNavigation();
 
+	const navigation = useNavigation();
 	function update_form_btn(){
 		if (SignInMessage){
 			divRef.current = 'SignIn'
@@ -41,8 +40,7 @@ const SignInScreen = () => {
 	}   
     const onSignInPressed = async (event: React.FormEvent) => {
 		event.preventDefault();  
-
-		const registerResponse = await client.post(
+		await client.post(
 			"login",     
 			{
 			username: username,
