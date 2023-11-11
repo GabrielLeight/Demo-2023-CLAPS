@@ -30,7 +30,6 @@ function SignUpCompany() {
 	const navigator = useNavigation();
 
 	const create = async (event: React.FormEvent) => {
-
 		try {
 			const response = await client.post('registerCompany', {
 				username: username,
@@ -40,7 +39,6 @@ function SignUpCompany() {
 				
 				
 			});
-
         // Handle success, e.g., navigate to a new screen or display a success message
         console.log('User registered:', response.data);
         } catch (error) {
@@ -53,7 +51,7 @@ function SignUpCompany() {
 
 	if (CurrentUser){
 		return(
-			<Text style={styles.title}>""Habeis iniciado sesion :"\"</Text>
+			<Text style={styles.title}>"Iniciaste sesión!"</Text>
 		)
 	}
 
