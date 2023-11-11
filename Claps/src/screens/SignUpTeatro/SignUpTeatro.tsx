@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
+import client from '../../components/client';
 import { useNavigation } from '@react-navigation/native';
 
 const Logo = '../../../assets/images/Claps.png';
@@ -16,54 +17,42 @@ const Logo = '../../../assets/images/Claps.png';
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
-import client from '../../components/client';
-// Agregar onpress submitForm
+
+
 function SignUpTeatro() {
 	const [username, setUsername] = useState('');
-	const [CurrentUser, setCurrentUser] = useState(false);
+	const [CurrentUser, setCurrentUser] = useState(false); // Se debe agregar para utilizar
 	const [email, setEmail] = useState('');
-	const [firstName, setFirstName] = useState('');
-	const [lastName, setLastName] = useState('');
 	const [password, setPassword] = useState('');
 	const [passwordRepeat, setPasswordRepeat] = useState('');
-	const [EsUsuario, setUsuario] = useState(false);
-	const [City, setCity] = useState('');
+	const [city, setCity] = useState('');
 	const [direccion, setDireccion] = useState('');
-
 
 	const navigator = useNavigation();
 
 	const create = async () => {
-       
         try {
             const response = await client.post('registerTeatro', {
 				username: username,
                 email: email,
-				city: City,
+				city: city,
                 password: password,
 				password2: passwordRepeat,
-                first_name: firstName,
-                last_name: lastName,
                 direction: direccion,
                 is_active: true, // Set this as needed
             });
-
         // Handle success, e.g., navigate to a new screen or display a success message
-		
         console.log('User registered:', response.data);
 		navigator.navigate('HomeScreen' as never)
         } catch (error) {
-        // Handle error, e.g., display an error message
-        console.error('Registration failed:', error);
+			// Handle error, e.g., display an error message
+			console.error('Registration failed:', error);
         }
-
-		
-        
 	};
 
 	if (CurrentUser){
 		return(
-			<Text style={styles.title}>""Habeis iniciado sesion :"\"</Text>
+			<Text style={styles.title}>"Iniciaste sesión"</Text>
 		)
 	}
 	const onSignInPressed = () => {
@@ -91,7 +80,7 @@ function SignUpTeatro() {
 				<CustomInput
                     placeholder="Ingresa la ciudad"
                     setValue = {setCity}
-                    value={City}
+                    value={city}
                     secureTextEntry={false}
                     bgColor = '#ffffff' 
 				/>		
