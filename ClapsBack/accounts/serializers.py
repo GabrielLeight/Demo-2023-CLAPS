@@ -80,13 +80,12 @@ class registerTeatroSerializer(serializers.ModelSerializer):
 class registerHallSerializer(serializers.ModelSerializer):
     username = serializers.CharField(required=True, validators=[UniqueValidator(queryset=clapsUser.objects.all())])
     email = serializers.EmailField(required=True, validators=[UniqueValidator(queryset=clapsUser.objects.all())])
-    direction = serializers.CharField(max_length=120)
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password], min_length=8)
     password2 = serializers.CharField(write_only=True, required=True)
 
     class Meta:
         model = clapsUser
-        fields = ('username', 'password', 'password2', 'email', 'first_name', 'last_name','direction')
+        fields = ('username', 'password', 'password2', 'email')
         
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
@@ -98,9 +97,6 @@ class registerHallSerializer(serializers.ModelSerializer):
         user = User.objects.create(
             username=validated_data['username'],
             email=validated_data['email'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
-            direction=validated_data['direction'],
             is_teatro=False,
             is_company=True,
             is_commonUser=False
