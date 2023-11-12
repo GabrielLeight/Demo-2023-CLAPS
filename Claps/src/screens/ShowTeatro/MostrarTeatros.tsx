@@ -33,21 +33,31 @@ const ShowTeatro: React.FC = () => {
 
     return (
         <View style={styles.root}>
-        <Text style={styles.title}>Theaters</Text>
-        <FlatList
-            data={theaters}
-            keyExtractor={(item) => (item.id ? item.id.toString() : Math.random().toString())}
-            renderItem={({ item }) => (
-                <View style={styles.theaterCard}>
-                    {item ? (
-                        <Text>{item.username}</Text>
-                        // Render other theater information here
-                    ) : (
-                        <Text>Error: Invalid Data</Text>
-                    )}
-                </View>
-            )}
-        />
+            <FlatList
+                data={theaters}
+                keyExtractor={(item) => (item.titulo ? item.titulo.toString() : Math.random().toString())}
+                renderItem={({ item }) => (
+                    <View style={styles.theaterCard}>
+                        <Text style={styles.title}>Title: {item.titulo}</Text>
+
+                        <Text >Theater:</Text>
+                        <Text>{item.teatro}</Text>
+
+                        <Text >Synopsis:</Text>
+                        <Text>{item.sinopsis}</Text>
+
+                        <Text >Trailer URL:</Text>
+                        <Text>{item.trailer_url}</Text>
+
+                        <Text >Show Date:</Text>
+                        <Text>{item.fecha_show}</Text>
+
+                        {/* Add more attributes as needed */}
+
+                        {/* Render other theater information here */}
+                    </View>
+                )}
+            />
         </View>
     );
 };
@@ -66,8 +76,8 @@ const styles = StyleSheet.create({
         color: 'red',
     },
     theaterCard: {
-        borderWidth: 10,
-        borderColor: 'gray',
+        borderWidth: 1,
+        borderColor: 'yellow',
         padding: 10,
         margin: 5,
     },
