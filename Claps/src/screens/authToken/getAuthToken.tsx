@@ -4,7 +4,7 @@ const getAuthToken = async () => {
       const token = await AsyncStorage.getItem('authToken');
       if (token !== null) {
         // Token found, you can use it as needed
-        console.log('Token:', token);
+        return token
       } else {
         // Token not found
         console.log('Token not found');
