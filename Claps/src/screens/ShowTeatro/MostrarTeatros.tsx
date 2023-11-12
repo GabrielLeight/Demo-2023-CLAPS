@@ -7,41 +7,47 @@ import client from '../../components/client';
 const ShowTeatro: React.FC = () => {
     const [theaters, setTheaters] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
-    const token = getAuthToken();
+
     useEffect(() => {
-        client
-        .post('getShows', null, {
-            headers: {
-                access_token: `Bearer ${token}`
+        const fetchData = async () => {
+            try {
+                const token = await getAuthToken();
+
+                const response = await client.get('getShows', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                setTheaters(response.data);
+            } catch (error) {
+                console.error('Failed to fetch theaters:', error);
+            } finally {
+                setLoading(false);
             }
-        }) // Replace with your API endpoint
-        .then((response) => {
-            setTheaters(response.data);
-            setLoading(false);
-        })
-        .catch((error) => {
-            console.error('Failed to fetch theaters:', error);
-            setLoading(false);
-        });
-    }, []); // Empty dependency array to fetch data only once when the component mounts
+        };
+
+        fetchData();
+    }, []);
+
 
     return (
         <View style={styles.root}>
         <Text style={styles.title}>Theaters</Text>
-        {loading ? (
-            <ActivityIndicator size="large" color="red" />
-        ) : (
-            <FlatList
+        <FlatList
             data={theaters}
-            keyExtractor={(item:any) => item.id.toString()}
+            keyExtractor={(item) => (item.id ? item.id.toString() : Math.random().toString())}
             renderItem={({ item }) => (
                 <View style={styles.theaterCard}>
-                <Text>{item.name}</Text>
-                {/* Render other theater information here */}
+                    {item ? (
+                        <Text>{item.username}</Text>
+                        // Render other theater information here
+                    ) : (
+                        <Text>Error: Invalid Data</Text>
+                    )}
                 </View>
             )}
-            />
-        )}
+        />
         </View>
     );
 };
@@ -60,7 +66,7 @@ const styles = StyleSheet.create({
         color: 'red',
     },
     theaterCard: {
-        borderWidth: 1,
+        borderWidth: 10,
         borderColor: 'gray',
         padding: 10,
         margin: 5,
