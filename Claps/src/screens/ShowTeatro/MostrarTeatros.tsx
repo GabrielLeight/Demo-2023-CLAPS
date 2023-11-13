@@ -37,20 +37,18 @@ const ShowTeatro: React.FC = () => {
                 data={theaters}
                 keyExtractor={(item) => (item.titulo ? item.titulo.toString() : Math.random().toString())}
                 renderItem={({ item }) => (
-                    <View style={styles.theaterCard}>
-                        <Text style={styles.title}>Title: {item.titulo}</Text>
+                    <View style={styles.container}>
+                        <Text style={styles.label}>Theater: <Text style={styles.text}>{item.teatro}</Text></Text>
+                        
 
-                        <Text >Theater:</Text>
-                        <Text>{item.teatro}</Text>
+                        <Text style={styles.label}>Synopsis:</Text>
+                        <Text style={styles.text}>{item.sinopsis}</Text>
 
-                        <Text >Synopsis:</Text>
-                        <Text>{item.sinopsis}</Text>
+                        <Text style={styles.label}>Trailer URL:</Text>
+                        <Text style={styles.text}>{item.trailer_url}</Text>
 
-                        <Text >Trailer URL:</Text>
-                        <Text>{item.trailer_url}</Text>
-
-                        <Text >Show Date:</Text>
-                        <Text>{item.fecha_show}</Text>
+                        <Text style={styles.label}>Show Date:</Text>
+                        <Text style={styles.text}>{item.fecha_show}</Text>
 
                         {/* Add more attributes as needed */}
 
@@ -75,12 +73,23 @@ const styles = StyleSheet.create({
         fontSize: 22,
         color: 'red',
     },
-    theaterCard: {
-        borderWidth: 1,
-        borderColor: 'yellow',
+    container: {
         padding: 10,
-        margin: 5,
-    },
+        backgroundColor: '#f0f0f0',
+        borderRadius: 8,
+        margin: 10,
+      },
+      label: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: 5,
+      },
+      text: {
+        fontSize: 14,
+        color: '#666',
+        marginBottom: 10,
+      },
 });
 
 export default ShowTeatro;
