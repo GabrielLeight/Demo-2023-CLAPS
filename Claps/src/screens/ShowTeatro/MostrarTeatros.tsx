@@ -3,7 +3,7 @@ import axios from 'axios';
 import { View, StyleSheet, Text, FlatList, ActivityIndicator } from 'react-native';
 import getAuthToken from '../authToken/getAuthToken';
 import client from '../../components/client';
-
+import { HomeScreen } from '../../navigation';
 const ShowTeatro: React.FC = () => {
     const [theaters, setTheaters] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
@@ -30,7 +30,6 @@ const ShowTeatro: React.FC = () => {
         fetchData();
     }, []);
 
-
     return (
         <View style={styles.root}>
             <FlatList
@@ -55,8 +54,10 @@ const ShowTeatro: React.FC = () => {
                         {/* Render other theater information here */}
                     </View>
                 )}
-            />
+            /> 
+            <HomeScreen></HomeScreen>
         </View>
+       
     );
 };
 

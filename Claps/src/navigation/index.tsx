@@ -16,7 +16,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function HomeScreen() {
+export function HomeScreen() {
 	return (
 		<Tab.Navigator 
 		initialRouteName='FormReview'
