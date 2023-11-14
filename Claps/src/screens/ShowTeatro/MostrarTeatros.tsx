@@ -4,6 +4,9 @@ import { View, StyleSheet, Text, FlatList, ActivityIndicator } from 'react-nativ
 import getAuthToken from '../authToken/getAuthToken';
 import client from '../../components/client';
 import { HomeScreen } from '../../navigation';
+import cambiarFecha from '../../components/formatFecha/formatFecha';
+import YoutubeIframe from 'react-native-youtube-iframe';
+import urlToID from '../../components/urltoID/urltoID';
 const ShowTeatro: React.FC = () => {
     const [theaters, setTheaters] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
@@ -30,32 +33,29 @@ const ShowTeatro: React.FC = () => {
         fetchData();
     }, []);
 
+    const [playing, setPlaying] = useState(false)
+
     return (
         <View style={styles.root}>
+            <Text style={styles.title}>Eventos</Text>
             <FlatList
                 data={theaters}
                 keyExtractor={(item) => (item.titulo ? item.titulo.toString() : Math.random().toString())}
                 renderItem={({ item }) => (
                     <View style={styles.container}>
-                        <Text style={styles.label}>Theater: <Text style={styles.text}>{item.teatro}</Text></Text>
-                        
-
-                        <Text style={styles.label}>Synopsis:</Text>
+                        <Text style={styles.text}>{cambiarFecha(item.fecha_show)}</Text>
+                        <Text style={styles.label}>"{item.titulo}"</Text>
+                        <Text style={styles.label2}>Teatro {item.teatro}</Text>
                         <Text style={styles.text}>{item.sinopsis}</Text>
-
-                        <Text style={styles.label}>Trailer URL:</Text>
-                        <Text style={styles.text}>{item.trailer_url}</Text>
-
-                        <Text style={styles.label}>Show Date:</Text>
-                        <Text style={styles.text}>{item.fecha_show}</Text>
-
-                        {/* Add more attributes as needed */}
-
-                        {/* Render other theater information here */}
+                        <YoutubeIframe
+                            videoId = { urlToID(item.trailer_url) }
+                            height={200}
+                            play={playing}
+                        />
                     </View>
                 )}
             /> 
-            <HomeScreen></HomeScreen>
+            
         </View>
        
     );
@@ -65,14 +65,16 @@ const styles = StyleSheet.create({
     root: {
         flex: 1,
         padding: 20,
-        alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#f6f8fa',
+    },
+    background: {
+        backgroundColor: 'red',
     },
     title: {
         fontWeight: 'bold',
         fontSize: 22,
-        color: 'red',
+        color: 'black',
     },
     container: {
         padding: 10,
@@ -81,7 +83,7 @@ const styles = StyleSheet.create({
         margin: 10,
       },
       label: {
-        fontSize: 16,
+        fontSize: 22,
         fontWeight: 'bold',
         color: '#333',
         marginBottom: 5,
@@ -90,6 +92,12 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#666',
         marginBottom: 10,
+      },
+      label2: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#333',
+
       },
 });
 
