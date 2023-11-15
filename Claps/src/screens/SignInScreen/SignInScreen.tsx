@@ -49,6 +49,8 @@ const SignInScreen = () => {
 		).then((response) =>{
 			const token = response.data.access;
 			AsyncStorage.setItem('authToken', token);
+			
+			AsyncStorage.setItem('username',username);
 			setCurrentUser(true);
 			navigation.navigate('HomeScreen' as never);
 		})

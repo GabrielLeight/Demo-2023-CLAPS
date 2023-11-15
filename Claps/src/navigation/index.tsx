@@ -7,6 +7,7 @@ import SignUpCompany from '../screens/SignUpCompany';
 import ReviewScreen from '../screens/ReviewScreen';
 import ShowTeatro from '../screens/ShowTeatro';
 import CreateShows from '../screens/CreateShows';
+import UserScreen from '../screens/UserScreen';
 
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -24,6 +25,7 @@ export function HomeScreen() {
 		>
 			<Tab.Screen name="Usuario" component={ReviewScreen} />
 			<Tab.Screen name="Teatros" component={ShowTeatro} />
+			<Tab.Screen name="Perfil" component={UserScreen}/>
 		</Tab.Navigator>
 	)
 }
@@ -39,6 +41,7 @@ return (
 			<Stack.Screen name="CreateShows" component={CreateShows} />
 			<Stack.Screen name="Show" component={ShowTeatro} />
 			<Stack.Screen name="HomeScreen" component={HomeScreen} />
+			<Stack.Screen name="UserScreen" component={UserScreen} />
 	    </Stack.Navigator>
 	</NavigationContainer>
 );
