@@ -7,10 +7,20 @@ import { HomeScreen } from '../../navigation';
 import cambiarFecha from '../../components/formatFecha/formatFecha';
 import YoutubeIframe from 'react-native-youtube-iframe';
 import urlToID from '../../components/urltoID/urltoID';
+
+import getPosition from '../../components/getPosition/getPosition';
 const ShowTeatro: React.FC = () => {
+    const [latitude, setLatitude] = useState(0);
     const [theaters, setTheaters] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
-
+    getPosition().then(({ latitude, longitude }: { latitude: number; longitude: number }) => {
+        // Do something with latitude and longitude
+        console.log('Received latitude:', latitude);
+        console.log('Received longitude:', longitude);
+    }).catch(error => {
+        // Handle errors
+        console.error('Error:', error);
+    });
     useEffect(() => {
         const fetchData = async () => {
             try {
