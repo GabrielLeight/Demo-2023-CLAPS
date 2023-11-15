@@ -27,13 +27,14 @@ Antes:
     npm install react-native-screens react-native-safe-area-context
     npm install @react-navigation/stack
     npm install @react-navigation/native-stack
-    npm i @react-native-community/geolocation
 10/11/2023:
     npm install react-native-date-picker
     npm i @react-native-async-storage/async-storage
 13/11/2023:
     npm install react-native-webview
     npm install react-native-youtube-iframe
+15/11/2023:
+    npm i @react-native-community/geolocation
 /---------------------------------------------------------------------------------------------------------------------------/
 
 -> Abrir SDK Manager de android studio
