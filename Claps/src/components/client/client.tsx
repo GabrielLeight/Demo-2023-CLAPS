@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const client  = axios.create({
-    baseURL: "https://b54f-2800-150-140-1edf-25f2-8e65-b2d9-da1b.ngrok-free.app"
+    baseURL: "https://f4a1-2800-150-140-1edf-b002-21a8-34a5-107f.ngrok-free.app/"
 })
 
 export default client

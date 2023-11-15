@@ -31,6 +31,9 @@ Antes:
 10/11/2023:
     npm install react-native-date-picker
     npm i @react-native-async-storage/async-storage
+13/11/2023:
+    npm install react-native-webview
+    npm install react-native-youtube-iframe
 /---------------------------------------------------------------------------------------------------------------------------/
 
 -> Abrir SDK Manager de android studio
