@@ -13,6 +13,7 @@ const ShowTeatro: React.FC = () => {
     const [latitude, setLatitude] = useState(0);
     const [theaters, setTheaters] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    
     getPosition().then(({ latitude, longitude }: { latitude: number; longitude: number }) => {
         // Do something with latitude and longitude
         console.log('Received latitude:', latitude);
@@ -21,6 +22,7 @@ const ShowTeatro: React.FC = () => {
         // Handle errors
         console.error('Error:', error);
     });
+
     useEffect(() => {
         const fetchData = async () => {
             try {

@@ -5,8 +5,8 @@ import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-
-
+import client from '../../components/client';
+import getAuthToken from '../authToken/getAuthToken';
 
 const UserScreen = () =>{
 
@@ -19,10 +19,15 @@ const UserScreen = () =>{
       }, []);
 
     const retrieveData = async () => {
-        const email = await AsyncStorage.getItem('email');
-        const username = await AsyncStorage.getItem('username');
-        setUsername(username);
-        setEmail(email);
+      const token = getAuthToken()
+        const user = await client.get(
+          "user", {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).catch();
+        setUsername(user.data.username);
+        setEmail(user.data.email);
     };
 
     const Logoff = async () => {
