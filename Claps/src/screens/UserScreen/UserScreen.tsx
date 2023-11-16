@@ -35,6 +35,22 @@ const UserScreen = () =>{
         navigation.navigate('SignIn' as never)
     }
 
+    const deleteUser = async () => {
+      await client.post(
+        "deleteUser",
+        {
+          username: username
+        }
+      ).then(() => {
+        console.log("User deleted");
+        AsyncStorage.removeItem('authToken');
+        navigation.navigate("SignIn" as never);
+      }).catch((Error) => {
+        console.error(Error);
+      })
+    }
+
+
     return (
       <View style = {styles.root}>
         <Text>Username: {username}</Text>
@@ -47,7 +63,7 @@ const UserScreen = () =>{
 			  />
         <CustomButton
           text="Delete Account" 
-          onPress={null}
+          onPress={deleteUser}
 				  bgColor = "#red"
 				  fgColor ="#DD4D44"
 			  />
