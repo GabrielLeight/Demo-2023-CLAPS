@@ -48,7 +48,7 @@ const ReviewScreen: React.FC = () => {
 		}
 	};
 	return (
-		<View>
+		<View style={styles.root}>
 		<Animated.View style={[styles.wrapper, { transform: [{ translateY }] }]}> 
 		</Animated.View>
 		<Text>¡De rienda suelta a sus emociones!</Text>
@@ -87,6 +87,13 @@ const styles = StyleSheet.create({
 	  alignItems: 'center',
 	  perspective: '1000px',
 	  perspectiveOrigin: '50% 50%',
+	},
+	root: {
+		flex: 1,
+		padding: 20,
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: '#f6f8fa',
 	},
   });
 export default ReviewScreen;

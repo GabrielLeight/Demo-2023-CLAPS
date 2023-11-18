@@ -33,7 +33,7 @@ function Navigation() {
 return (
 	<NavigationContainer>
 	    <Stack.Navigator screenOptions ={{headerShown: false}}>
-			<Stack.Screen name="UserScreen" component={UserScreen} />
+			
 	    	<Stack.Screen name="SignIn" component={SignInScreen} />
 			<Stack.Screen name="SignUp" component={SignUpScreen} />
 			<Stack.Screen name="SignUpT" component={SignUpTeatro} />
@@ -41,7 +41,7 @@ return (
 			<Stack.Screen name="CreateShows" component={CreateShows} />
 			<Stack.Screen name="Show" component={ShowTeatro} />
 			<Stack.Screen name="HomeScreen" component={HomeScreen} />
-			
+			<Stack.Screen name="UserScreen" component={UserScreen} />
 	    </Stack.Navigator>
 	</NavigationContainer>
 );
