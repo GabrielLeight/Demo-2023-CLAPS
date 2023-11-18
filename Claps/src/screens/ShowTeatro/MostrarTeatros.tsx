@@ -96,9 +96,8 @@ const ShowTeatro: React.FC = () => {
 const styles = StyleSheet.create({
     root: {
         flex: 1,
-        padding: 20,
         justifyContent: 'center',
-        backgroundColor: '#f6f8fa',
+        backgroundColor: '#75b9b4',
     },
     background: {
         backgroundColor: 'red',
@@ -106,13 +105,30 @@ const styles = StyleSheet.create({
     title: {
         fontWeight: 'bold',
         fontSize: 22,
-        color: 'black',
+        color: '#f',
+        borderColor: "#dcf7f4",
+        borderBottomWidth: 3,
+        backgroundColor: '#33b8ae',
+        textAlign: 'center',
+        justifyContent: 'center',
+        padding: 10,
+        borderBottomEndRadius: 7 ,
+        shadowColor: "#425451",
+        shadowOpacity: 1,  // Opacity of the shadow
+        shadowRadius: 50,     // Radius of the shadow
+        shadowOffset: {
+            width: 10,
+            height: 20,
+        },
+        elevation: 10,         // E
+        
     },
     container: {
         padding: 10,
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#dcf7f4',
         borderRadius: 8,
         margin: 10,
+        marginHorizontal: 29
       },
       label: {
         fontSize: 22,
