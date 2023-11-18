@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { View, StyleSheet, Text } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
-
+interface ReviewScreenProps {
+	itemId: number;
+	// Add other necessary properties here based on your actual use case
+  }
 const ReviewScreen: React.FC = () => {
     const [id_show, setshowName] = useState('');
     const [author, setAuthor] = useState('');
     const [rating, setRating] = useState(1); // Default rating
     const [comments, setComments] = useState('');
-
+	const route = useRoute();
+	const params = route.params as ReviewScreenProps | undefined;
 	const Enviar = async () => {
 		try {
 		const response = await axios.post('newReview', {
-			id_show: id_show,
+			id_show: params?.itemId,
 			performanceTitle: author,
 			rating: rating,
 			cuerpo_crit: comments,
