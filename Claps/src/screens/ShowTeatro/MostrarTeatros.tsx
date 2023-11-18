@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { View, StyleSheet, Text, FlatList, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Text, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { useNavigation, RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import getAuthToken from '../authToken/getAuthToken';
 import client from '../../components/client';
 import { HomeScreen } from '../../navigation';
@@ -9,11 +11,19 @@ import YoutubeIframe from 'react-native-youtube-iframe';
 import urlToID from '../../components/urltoID/urltoID';
 
 import getPosition from '../../components/getPosition/getPosition';
+import { RootStackParamList } from '../types/types';
+type YourComponentProps = {
+    item: { id: string; /* other properties */ };
+    navigation: StackNavigationProp<RootStackParamList, 'YourComponent'>;
+  };
+type YourComponentNavigationProp = StackNavigationProp<RootStackParamList, 'YourComponent'>;
+
 const ShowTeatro: React.FC = () => {
     const [latitude, setLatitude] = useState(0);
     const [longitude, setLongitude] = useState(0);
     const [theaters, setTheaters] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const navigation = useNavigation<YourComponentNavigationProp>();
     
     getPosition().then(({ latitude, longitude }: { latitude: number; longitude: number }) => {
         // Do something with latitude and longitude
@@ -23,7 +33,12 @@ const ShowTeatro: React.FC = () => {
         // Handle errors
         console.error('Error:', error);
     });
-
+    const handleReviewPress = (item: YourComponentProps['item']) => {
+        // Navigate to the review screen and pass the item ID as a parameter
+        if (item) {
+            navigation.navigate('ReviewScreen', { itemId: item.id });
+          }
+      };
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -47,7 +62,7 @@ const ShowTeatro: React.FC = () => {
     }, []);
 
     const [playing, setPlaying] = useState(false)
-
+    
     return (
         <View style={styles.root}>
             <Text style={styles.title}>Eventos</Text>
@@ -55,6 +70,7 @@ const ShowTeatro: React.FC = () => {
                 data={theaters}
                 keyExtractor={(item) => (item.titulo ? item.titulo.toString() : Math.random().toString())}
                 renderItem={({ item }) => (
+                    
                     <View style={styles.container}>
                         <Text style={styles.text}>{cambiarFecha(item.fecha_show)}</Text>
                         <Text style={styles.label}>"{item.titulo}"</Text>
@@ -65,6 +81,9 @@ const ShowTeatro: React.FC = () => {
                             height={200}
                             play={playing}
                         />
+                         <TouchableOpacity onPress={() => handleReviewPress(item)}>
+                            <Text style={styles.reviewLink}>¡Registra una crítica a esta obra!</Text>
+                        </TouchableOpacity>
                     </View>
                 )}
             /> 
@@ -107,6 +126,12 @@ const styles = StyleSheet.create({
         marginBottom: 10,
       },
       label2: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#333',
+
+      },
+      reviewLink: {
         fontSize: 16,
         fontWeight: 'bold',
         color: '#333',

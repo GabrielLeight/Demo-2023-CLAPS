@@ -35,6 +35,7 @@ Antes:
     npm install react-native-youtube-iframe
 15/11/2023:
     npm i @react-native-community/geolocation
+
 /---------------------------------------------------------------------------------------------------------------------------/
 
 -> Abrir SDK Manager de android studio
