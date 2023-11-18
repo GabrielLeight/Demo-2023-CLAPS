@@ -13,7 +13,7 @@ import urlToID from '../../components/urltoID/urltoID';
 import getPosition from '../../components/getPosition/getPosition';
 import { RootStackParamList } from '../types/types';
 type YourComponentProps = {
-    item: { id: string; /* other properties */ };
+    item: { id: number; /* other properties */ };
     navigation: StackNavigationProp<RootStackParamList, 'YourComponent'>;
   };
 type YourComponentNavigationProp = StackNavigationProp<RootStackParamList, 'YourComponent'>;
