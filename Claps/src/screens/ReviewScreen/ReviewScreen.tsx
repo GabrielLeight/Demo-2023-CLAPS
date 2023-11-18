@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useRef, useState,useEffect } from 'react';
 import axios from 'axios';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Animated,  Text } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
@@ -13,8 +13,23 @@ const ReviewScreen: React.FC = () => {
     const [author, setAuthor] = useState('');
     const [rating, setRating] = useState(1); // Default rating
     const [comments, setComments] = useState('');
+	const scrollY = useRef(new Animated.Value(0)).current;
 	const route = useRoute();
 	const params = route.params as ReviewScreenProps | undefined;
+	useEffect(() => {
+		Animated.loop(
+		  Animated.timing(scrollY, {
+			toValue: 1,
+			duration: 10000, // Adjust the duration as needed
+			useNativeDriver: true,
+		  })
+		).start();
+	  }, [scrollY]);
+	
+	  const translateY = scrollY.interpolate({
+		inputRange: [0, 1],
+		outputRange: [0, -400], // Adjust the distance to scroll
+	  });
 	const Enviar = async () => {
 		try {
 		const response = await axios.post('newReview', {
@@ -33,39 +48,45 @@ const ReviewScreen: React.FC = () => {
 		}
 	};
 	return (
-		<View style ={styles.root}>
-			<Text>¡De rienda suelta a sus emociones!</Text>
-			<CustomInput
-				placeholder=""
-				secureTextEntry={false}
-				setValue = {setComments}
-				value={comments}
-				bgColor = '#ffffff'	
-			/>			
-			<CustomInput
-				placeholder="Rating"
-				secureTextEntry={false}
-				setValue = {setRating}
-				value={rating}
-				bgColor = '#ffffff'
-			/>
-			<CustomButton
-				text="Enviar" 
-				onPress={Enviar}
-				bgColor = "#FAE9EA"
-				fgColor ="#DD4D44"
-			/>
-	</View>
+		<View>
+		<Animated.View style={[styles.wrapper, { transform: [{ translateY }] }]}> 
+		</Animated.View>
+		<Text>¡De rienda suelta a sus emociones!</Text>
+		<CustomInput
+		  placeholder=""
+		  secureTextEntry={false}
+		  setValue={() => {}} // Add your implementation
+		  value=""
+		  bgColor="#ffffff"
+		/>
+		<CustomInput
+		  placeholder="Rating"
+		  secureTextEntry={false}
+		  setValue={() => {}} // Add your implementation
+		  value=""
+		  bgColor="#ffffff"
+		/>
+		<CustomButton
+		  text="Enviar"
+		  onPress={() => {}} // Add your implementation
+		  bgColor="#FAE9EA"
+		  fgColor="#DD4D44"
+		/>
+	 	</View>
 	);
 };
 const styles = StyleSheet.create({
-	root: {
-		flex: 1,
-		padding: 20,
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: '#f6f8fa',
+	wrapper: {
+	  background: '#111111',
+	  color: '#eee',
+	  height: 300, // Adjust the height as needed
+	  minWidth: 360,
+	  width: '100%',
+	  display: 'flex',
+	  justifyContent: 'center',
+	  alignItems: 'center',
+	  perspective: '1000px',
+	  perspectiveOrigin: '50% 50%',
 	},
-	
-	})
+  });
 export default ReviewScreen;
