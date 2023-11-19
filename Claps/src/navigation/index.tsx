@@ -9,24 +9,58 @@ import ShowTeatro from '../screens/ShowTeatro';
 import CreateShows from '../screens/CreateShows';
 import UserScreen from '../screens/UserScreen';
 
-
+import { Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+const Logo = '../../assets/images/Claps.png';
 
 export function HomeScreen() {
 	return (
 		<Tab.Navigator 
 		initialRouteName='FormReview'
 		screenOptions={{headerShown: false}}
-		>
-			<Tab.Screen name="Usuario" component={ReviewScreen} />
-			<Tab.Screen name="Teatros" component={ShowTeatro} />
-			<Tab.Screen name="Perfil" component={UserScreen}/>
-		</Tab.Navigator>
+	  >
+		<Tab.Screen
+		  name="Usuario"
+		  component={ReviewScreen}
+		  options={{
+			tabBarIcon: ({ color, size }) => (
+			  <Image
+				source={require(Logo)}
+				style={{ width: size, height: size, tintColor: color }}
+			  />
+			),
+		  }}
+		/>
+		<Tab.Screen
+		  name="Teatros"
+		  component={ShowTeatro}
+		  options={{
+			tabBarIcon: ({ color, size }) => (
+			  <Image
+				source={require(Logo)}
+				style={{ width: size, height: size, tintColor: color }}
+			  />
+			),
+		  }}
+		/>
+		<Tab.Screen
+		  name="Perfil"
+		  component={UserScreen}
+		  options={{
+			tabBarIcon: ({ color, size }) => (
+			  <Image
+				source={require(Logo)}
+				style={{ width: size*1.5, height: size*0.5, tintColor: color }}
+			  />
+			),
+		  }}
+		/>
+	  </Tab.Navigator>
 	)
 }
 function Navigation() {

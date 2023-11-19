@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import client from '../../components/client';
 import getAuthToken from '../authToken/getAuthToken';
-const Logo = '../../../assets/images/mask.png';
+const mask = '../../../assets/images/mask.png';
 
 const UserScreen = () =>{
     const [email, setEmail] = useState<string | null>(null);
@@ -57,33 +57,32 @@ const UserScreen = () =>{
 
     return (
       <View style = {styles.root}>
-		<Image style = {styles.tinyLogo} source = {require(Logo)}/>
-		<View style = {styles.cuadrado}>
-			<Text style = {styles.title}>¡Saludos {username}!</Text>
-			<Text style = {styles.texto}>Tus datos son:</Text>
-			<Text style = {styles.texto}> Nombre de usuario: {username}</Text>
-			<Text style = {styles.texto}> Correo electrónico: {email}</Text>
+		<View style = {styles.container}>
+			<Image style = {styles.tinyLogo} source = {require(mask)}/>
+			<View style = {styles.cuadrado}>
+				<Text style = {styles.title}>¡Saludos {username}!</Text>
+				<Text style = {styles.texto}> Nombre de usuario: {username}</Text>
+				<Text style = {styles.texto}> Correo electrónico: {email}</Text>
+			</View>	
 		</View>
-	
-        <CustomButton
-			text="Eliminar cuenta" 
+		
+		<CustomButton
+			text="Eliminar cuenta"
 			onPress={deleteUser}
-			bgColor = "#red"
-			fgColor ="#DD4D44"
+			bgColor="red"
+			fgColor="white"
 		/>
 		<CustomButton
-			text="Salir de la cuenta" 
+			text="Salir de la cuenta"
 			onPress={Logoff}
-			bgColor = "#FAE9EA"
-			fgColor ="#DD4D44"
+			bgColor="#FAE9EA"
+			fgColor="#DD4D44"
 		/>
-      </View>
+        
+       
+	</View>
     );
-    }
-
-
-
-
+}
 
 const styles = StyleSheet.create({
 	root: {
@@ -91,23 +90,37 @@ const styles = StyleSheet.create({
 		padding: 20,
 		alignItems: 'center',
 		justifyContent: 'center',
-		// backgroundColor: 'grey', // #f6f8fa
+		backgroundColor: '#75b9b4',
+		
 	},
+	container: {
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+
 	title:{
 		fontSize: 22,
 		color: 'black',
 		fontWeight: 'bold',
+		textAlign: 'center',
 	},
 	texto: {
 		color: 'black',
 		fontSize: 16,
 	},
 	cuadrado: {
-		backgroundColor: 'light-blue',
+		
+		marginVertical: 10,
+        backgroundColor: '#e8fffd',
+        borderRadius: 8,
+		paddingVertical: 10,
+		paddingHorizontal: 20,
+        
 	},
+	
 	tinyLogo: {
 		width: Dimensions.get('window').width * 0.6, // Ajusta el factor según tus necesidades
 		height: Dimensions.get('window').height * 0.30, // Ajusta el factor según tus necesidades
 	},
-	})
+})
 export default UserScreen;

@@ -80,8 +80,8 @@ const ShowTeatro: React.FC = () => {
                             height={200}
                             play={playing}
                         />
-                         <TouchableOpacity onPress={() => handleReviewPress(item)}>
-                            <Text style={styles.reviewLink}>¡Registra una crítica a esta obra!</Text>
+                        <TouchableOpacity onPress={() => handleReviewPress(item)}>
+                            <Text style={styles.reviewLink}>¡Registra una crítica a esta obra aquí!</Text>
                         </TouchableOpacity>
                     </View>
                 )}
@@ -96,7 +96,8 @@ const styles = StyleSheet.create({
     root: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: '#75b9b4',
+        backgroundColor: '#75b9b4', //75b9b4
+        
     },
     background: {
         backgroundColor: 'red',
@@ -104,29 +105,19 @@ const styles = StyleSheet.create({
     title: {
         fontWeight: 'bold',
         fontSize: 22,
-        color: '#f',
-        borderColor: "#dcf7f4",
-        borderBottomWidth: 3,
-        backgroundColor: '#33b8ae',
+        color: '#ffffff',
+        backgroundColor: '#18827a',
         textAlign: 'center',
-        justifyContent: 'center',
         padding: 10,
-        borderBottomEndRadius: 7 ,
-        shadowColor: "#425451",
-        shadowOpacity: 1,  // Opacity of the shadow
-        shadowRadius: 50,     // Radius of the shadow
-        shadowOffset: {
-            width: 10,
-            height: 20,
-        },
-        elevation: 10,         // E
-        
+        marginBottom: 5,
     },
+
     container: {
         padding: 10,
-        backgroundColor: '#dcf7f4',
+        backgroundColor: '#e8fffd',
         borderRadius: 8,
-        margin: 10,
+        margin: 15,
+        
         marginHorizontal: 29
       },
       label: {
