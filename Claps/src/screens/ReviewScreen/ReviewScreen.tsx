@@ -1,9 +1,10 @@
 import React, { useRef, useState,useEffect } from 'react';
 import axios from 'axios';
-import { View, StyleSheet, Animated,  Text } from 'react-native';
+import { View, StyleSheet,Image, Animated,  Text } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
+const Logo = '../../../assets/images/rana2.png';
 interface ReviewScreenProps {
 	itemId: number;
 	// Add other necessary properties here based on your actual use case
@@ -17,18 +18,30 @@ const ReviewScreen: React.FC = () => {
 	const route = useRoute();
 	const params = route.params as ReviewScreenProps | undefined;
 	useEffect(() => {
-		Animated.loop(
-		  Animated.timing(scrollY, {
-			toValue: 1,
-			duration: 10000, // Adjust the duration as needed
-			useNativeDriver: true,
-		  })
-		).start();
+		const loopAnimation = Animated.loop(
+		  Animated.sequence([
+			Animated.timing(scrollY, {
+			  toValue: 1,
+			  duration: 5000, // Adjust the duration as needed
+			  useNativeDriver: true,
+			}),
+			Animated.timing(scrollY, {
+			  toValue: 0,
+			  duration: 5000, // Adjust the duration as needed
+			  useNativeDriver: true,
+			}),
+		  ])
+		);
+	
+		loopAnimation.start();
+	
+		// Don't forget to clean up the animation when the component unmounts
+		return () => loopAnimation.stop();
 	  }, [scrollY]);
 	
 	  const translateY = scrollY.interpolate({
 		inputRange: [0, 1],
-		outputRange: [0, -400], // Adjust the distance to scroll
+		outputRange: [0, 400], // Adjust the distance to scroll
 	  });
 	const Enviar = async () => {
 		try {
@@ -49,9 +62,9 @@ const ReviewScreen: React.FC = () => {
 	};
 	return (
 		<View style={styles.root}>
-		<Animated.View style={[styles.wrapper, { transform: [{ translateY }] }]}> 
-		</Animated.View>
-		<Text>¡De rienda suelta a sus emociones!</Text>
+
+		<Animated.Image style={[styles.wrapper, { transform: [{ translateY }] }]} source = {require(Logo)} />
+		{/* <Text>¡De rienda suelta a sus emociones!</Text> 
 		<CustomInput
 		  placeholder=""
 		  secureTextEntry={false}
@@ -71,7 +84,7 @@ const ReviewScreen: React.FC = () => {
 		  onPress={() => {}} // Add your implementation
 		  bgColor="#FAE9EA"
 		  fgColor="#DD4D44"
-		/>
+		/>*/}
 	 	</View>
 	);
 };
@@ -89,7 +102,7 @@ const styles = StyleSheet.create({
 	  perspectiveOrigin: '50% 50%',
 	},
 	root: {
-		flex: 1,
+
 		padding: 20,
 		alignItems: 'center',
 		justifyContent: 'center',
