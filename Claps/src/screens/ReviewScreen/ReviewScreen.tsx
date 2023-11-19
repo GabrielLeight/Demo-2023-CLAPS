@@ -17,28 +17,45 @@ const ReviewScreen: React.FC = () => {
 	const scrollY = useRef(new Animated.Value(0)).current;
 	const route = useRoute();
 	const params = route.params as ReviewScreenProps | undefined;
+	const spinValue = useRef(new Animated.Value(0)).current;
+
 	useEffect(() => {
-		const loopAnimation = Animated.loop(
-		  Animated.sequence([
-			Animated.timing(scrollY, {
-			  toValue: 1,
-			  duration: 5000, // Adjust the duration as needed
-			  useNativeDriver: true,
-			}),
-			Animated.timing(scrollY, {
-			  toValue: 0,
-			  duration: 5000, // Adjust the duration as needed
-			  useNativeDriver: true,
-			}),
-		  ])
-		);
-	
-		loopAnimation.start();
-	
+	  // Spinning animation
+	  Animated.loop(
+		Animated.timing(spinValue, {
+		  toValue: 1,
+		  duration: 5000, // Adjust the duration as needed
+		  useNativeDriver: true,
+		})
+	  ).start();
+  
+	  // Scrolling animation
+	  const loopAnimation = Animated.loop(
+		Animated.sequence([
+		  Animated.timing(scrollY, {
+			toValue: 1,
+			duration: 5000, // Adjust the duration as needed
+			useNativeDriver: true,
+		  }),
+		  Animated.timing(scrollY, {
+			toValue: 0,
+			duration: 5000, // Adjust the duration as needed
+			useNativeDriver: true,
+		  }),
+		])
+	  );
+  
+	  loopAnimation.start();
 		// Don't forget to clean up the animation when the component unmounts
-		return () => loopAnimation.stop();
-	  }, [scrollY]);
-	
+		return () => {
+			loopAnimation.stop();
+			spinValue.setValue(0);
+		  };
+		}, [scrollY, spinValue]);
+		const spin = spinValue.interpolate({
+			inputRange: [0, 1],
+			outputRange: ['0deg', '360deg'],
+		  });
 	  const translateY = scrollY.interpolate({
 		inputRange: [0, 1],
 		outputRange: [0, 400], // Adjust the distance to scroll
@@ -63,8 +80,8 @@ const ReviewScreen: React.FC = () => {
 	return (
 		<View style={styles.root}>
 
-		<Animated.Image style={[styles.wrapper, { transform: [{ translateY }] }]} source = {require(Logo)} />
-		{/* <Text>¡De rienda suelta a sus emociones!</Text> 
+		<Animated.Image style={[styles.wrapper,  { transform: [{ translateY }, { rotate: spin }] }]} source = {require(Logo)} />
+		 <Text>¡De rienda suelta a sus emociones!</Text> 
 		<CustomInput
 		  placeholder=""
 		  secureTextEntry={false}
@@ -84,7 +101,7 @@ const ReviewScreen: React.FC = () => {
 		  onPress={() => {}} // Add your implementation
 		  bgColor="#FAE9EA"
 		  fgColor="#DD4D44"
-		/>*/}
+		/>
 	 	</View>
 	);
 };
