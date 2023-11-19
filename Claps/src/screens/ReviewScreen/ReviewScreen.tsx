@@ -4,7 +4,7 @@ import { View, StyleSheet,Image, Animated,  Text } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
-const Logo = '../../../assets/images/rana2.png';
+const Logo = '../../../assets/images/teatroxd.png';
 interface ReviewScreenProps {
 	itemId: number;
 	// Add other necessary properties here based on your actual use case
@@ -14,35 +14,76 @@ const ReviewScreen: React.FC = () => {
     const [author, setAuthor] = useState('');
     const [rating, setRating] = useState(1); // Default rating
     const [comments, setComments] = useState('');
-	const scrollY = useRef(new Animated.Value(0)).current;
+	
 	const route = useRoute();
 	const params = route.params as ReviewScreenProps | undefined;
+	const scrollY = useRef(new Animated.Value(0)).current;
+	const spinValueDown = useRef(new Animated.Value(0)).current;
+	const spinValueUp = useRef(new Animated.Value(0)).current;
+
 	useEffect(() => {
-		const loopAnimation = Animated.loop(
-		  Animated.sequence([
-			Animated.timing(scrollY, {
-			  toValue: 1,
-			  duration: 5000, // Adjust the duration as needed
-			  useNativeDriver: true,
-			}),
-			Animated.timing(scrollY, {
-			  toValue: 0,
-			  duration: 5000, // Adjust the duration as needed
-			  useNativeDriver: true,
-			}),
-		  ])
-		);
-	
-		loopAnimation.start();
-	
+	  // Spinning animation
+	  Animated.loop(
+		Animated.timing(spinValueDown, {
+		  toValue: 1,
+		  duration: 5000, // Adjust the duration as needed
+		  useNativeDriver: true,
+		})
+	  ).start();
+  
+	  // Spinning animation for the image going up
+	  Animated.loop(
+		Animated.timing(spinValueUp, {
+		  toValue: 1,
+		  duration: 5000, // Adjust the duration as needed
+		  useNativeDriver: true,
+		})
+	  ).start();
+  
+	  // Scrolling animation
+	  const loopAnimation = Animated.loop(
+		Animated.sequence([
+		  Animated.timing(scrollY, {
+			toValue: 1,
+			duration: 5000, // Adjust the duration as needed
+			useNativeDriver: true,
+		  }),
+		  Animated.timing(scrollY, {
+			toValue: 0,
+			duration: 5000, // Adjust the duration as needed
+			useNativeDriver: true,
+		  }),
+		])
+	  );
+  
+	  loopAnimation.start();
 		// Don't forget to clean up the animation when the component unmounts
-		return () => loopAnimation.stop();
-	  }, [scrollY]);
-	
-	  const translateY = scrollY.interpolate({
-		inputRange: [0, 1],
-		outputRange: [0, 400], // Adjust the distance to scroll
-	  });
+		return () => {
+			loopAnimation.stop();
+			spinValueDown.setValue(0);
+			spinValueUp.setValue(0);
+		  };
+		}, [scrollY, spinValueDown, spinValueUp]);
+
+
+		const spinDown = spinValueDown.interpolate({
+			inputRange: [0, 1],
+			outputRange: ['0deg', '360deg'],
+		  });
+		
+		  const spinUp = spinValueUp.interpolate({
+			inputRange: [0, 1],
+			outputRange: ['0deg', '-360deg'], // Negative value for opposite direction
+		  });
+		  const translateYDown = scrollY.interpolate({
+			inputRange: [0, 1],
+			outputRange: [0, 400], // Adjust to move down
+		  });
+		
+		  const translateYUp = scrollY.interpolate({
+			inputRange: [0, 1],
+			outputRange: [0, -400], // Adjust to move up
+		  });
 	const Enviar = async () => {
 		try {
 		const response = await axios.post('newReview', {
@@ -63,8 +104,8 @@ const ReviewScreen: React.FC = () => {
 	return (
 		<View style={styles.root}>
 
-		<Animated.Image style={[styles.wrapper, { transform: [{ translateY }] }]} source = {require(Logo)} />
-		{/* <Text>¡De rienda suelta a sus emociones!</Text> 
+		<Animated.Image style={[styles.wrapper,  { transform:  [{ translateY: translateYDown }, { rotate: spinDown }]  }]} source = {require(Logo)} />
+		 <Text>¡De rienda suelta a sus emociones!</Text> 
 		<CustomInput
 		  placeholder=""
 		  secureTextEntry={false}
@@ -79,13 +120,14 @@ const ReviewScreen: React.FC = () => {
 		  value=""
 		  bgColor="#ffffff"
 		/>
+
 		<CustomButton
 		  text="Enviar"
 		  onPress={() => {}} // Add your implementation
 		  bgColor="#FAE9EA"
 		  fgColor="#DD4D44"
-		/>*/}
-	 	</View>
+		/>
+		</View>
 	);
 };
 const styles = StyleSheet.create({
@@ -103,7 +145,6 @@ const styles = StyleSheet.create({
 	},
 	root: {
 
-		padding: 20,
 		alignItems: 'center',
 		justifyContent: 'center',
 		backgroundColor: '#f6f8fa',
