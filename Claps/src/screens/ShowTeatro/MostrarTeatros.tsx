@@ -27,7 +27,10 @@ interface Theater {
     // ... (other properties)
   }
 type YourComponentProps = {
-    item: { id: number; /* other properties */ };
+    item: { 
+        id: number; 
+        titulo: string;
+    };
     navigation: StackNavigationProp<RootStackParamList, 'YourComponent'>;
   };
 type YourComponentNavigationProp = StackNavigationProp<RootStackParamList, 'YourComponent'>;
@@ -62,7 +65,7 @@ const ShowTeatro: React.FC = () => {
     const handleReviewPress = (item: YourComponentProps['item']) => {
         // Navigate to the review screen and pass the item ID as a parameter
         if (item) {
-            navigation.navigate('ReviewScreen', { itemId: item.id });
+            navigation.navigate('ReviewScreen', { itemId: item.id,  titulo: item.titulo});
           }
       };
       useEffect(() => {

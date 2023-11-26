@@ -4,9 +4,11 @@ import { View, StyleSheet,Image, Animated,  Text } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
+import ExpandableTextInput from '../../components/CustomInput/ExpandableTextInput';
 const Logo = '../../../assets/images/teatroxd.png';
 interface ReviewScreenProps {
 	itemId: number;
+	titulo: string;
 	// Add other necessary properties here based on your actual use case
   }
 const ReviewScreen: React.FC = () => {
@@ -88,7 +90,7 @@ const ReviewScreen: React.FC = () => {
 		try {
 		const response = await axios.post('newReview', {
 			id_show: params?.itemId,
-			performanceTitle: author,
+			performanceTitle: params?.titulo,
 			rating: rating,
 			cuerpo_crit: comments,
 			is_active: true, // Set this as needed
@@ -105,25 +107,26 @@ const ReviewScreen: React.FC = () => {
 		<View style={styles.root}>
 
 		<Animated.Image style={[styles.wrapper,  { transform:  [{ translateY: translateYDown }, { rotate: spinDown }]  }]} source = {require(Logo)} />
-		 <Text>¡De rienda suelta a sus emociones!</Text> 
+		 	<Text>¡De rienda suelta a las emociones que le trajo esta obra!</Text> 
+		<ExpandableTextInput
+			placeholder=""
+			secureTextEntry={false}
+			setValue ={setComments}
+			value={comments}
+			bgColor="#ffffff"
+		/>	
+			<Text>Del 1 al 5, ¿Que tanto le gustó esta obra?</Text> 
 		<CustomInput
-		  placeholder=""
-		  secureTextEntry={false}
-		  setValue={() => {}} // Add your implementation
-		  value=""
-		  bgColor="#ffffff"
-		/>
-		<CustomInput
-		  placeholder="Rating"
-		  secureTextEntry={false}
-		  setValue={() => {}} // Add your implementation
-		  value=""
-		  bgColor="#ffffff"
+			placeholder="Rating"
+			secureTextEntry={false}
+			setValue ={setRating}
+			value={rating}
+			bgColor="#ffffff"
 		/>
 
 		<CustomButton
 		  text="Enviar"
-		  onPress={() => {}} // Add your implementation
+		  onPress={Enviar} // Add your implementation
 		  bgColor="#FAE9EA"
 		  fgColor="#DD4D44"
 		/>

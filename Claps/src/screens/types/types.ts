@@ -1,4 +1,4 @@
 export type RootStackParamList = {
     YourComponent: undefined;
-    ReviewScreen: { itemId: number }; // Define the type for itemId
+    ReviewScreen: { itemId: number; titulo: string  }; // Define the type for itemId
   };

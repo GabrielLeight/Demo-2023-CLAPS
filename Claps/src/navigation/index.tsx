@@ -67,7 +67,7 @@ function Navigation() {
 return (
 	<NavigationContainer>
 	    <Stack.Navigator screenOptions ={{headerShown: false}}>
-			
+		<Stack.Screen name="Review" component={ReviewScreen} />
 	    	<Stack.Screen name="SignIn" component={SignInScreen} />
 			<Stack.Screen name="SignUp" component={SignUpScreen} />
 			<Stack.Screen name="SignUpT" component={SignUpTeatro} />
