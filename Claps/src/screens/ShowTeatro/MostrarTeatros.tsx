@@ -12,6 +12,20 @@ import urlToID from '../../components/urltoID/urltoID';
 
 import getPosition from '../../components/getPosition/getPosition';
 import { RootStackParamList } from '../types/types';
+interface Theater {
+    id: number;
+    titulo: string;
+    teatro :  string;
+    sinopsis :  string;
+    trailer_url : string;
+    fecha_show : Date;
+
+    latitude: number;
+    longitude: number;
+
+    distance: number;
+    // ... (other properties)
+  }
 type YourComponentProps = {
     item: { id: number; /* other properties */ };
     navigation: StackNavigationProp<RootStackParamList, 'YourComponent'>;
@@ -56,19 +70,19 @@ const ShowTeatro: React.FC = () => {
           try {
             const token = await getAuthToken();
     
-            const response = await client.get('getShows', {
+            const response = await client.get<Theater[]>('getShows', {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
             });
     
             // Calculate distances and sort theaters based on proximity to your position
-            const theatersWithDistances = response.data.map((theater) => ({
+            const theatersWithDistances = response.data.map((theater: Theater) => ({
               ...theater,
               distance: calculateDistance(latitude, longitude, theater.latitude, theater.longitude),
             }));
     
-            const sortedTheaters = theatersWithDistances.sort((a: typeof theaters, b:typeof theaters) => a.distance - b.distance);
+            const sortedTheaters = theatersWithDistances.sort((a: Theater, b: Theater) => a.distance - b.distance);
     
             setTheaters(sortedTheaters);
           } catch (error) {
