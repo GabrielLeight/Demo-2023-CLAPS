@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import { View, StyleSheet, Text, Image, Dimensions, } from 'react-native';
+import { View, StyleSheet, Text, Image, Dimensions, Alert } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -10,6 +10,7 @@ const mask = '../../../assets/images/mask.png';
 const UserScreen = () =>{
     const [email, setEmail] = useState<string | null>(null);
     const [username, setUsername] = useState<string | null>(null);
+	const [isDeleting, setIsDeleting] = useState(false);
     const navigation = useNavigation();
 
 	useEffect(() => {
@@ -54,7 +55,23 @@ const UserScreen = () =>{
 			console.error(Error);
 		})
     }
-
+	const showDeleteConfirmation = () => {
+		Alert.alert(
+		  'Confirmación',
+		  '¿Estás seguro de que quieres eliminar tu cuenta?',
+		  [
+			{ text: 'Cancelar', style: 'cancel' },
+			{ text: 'Eliminar', onPress: () => handleDeleteAccount() },
+		  ],
+		  { cancelable: false }
+		);
+	  };
+	
+	  const handleDeleteAccount = () => {
+		// Perform the delete account logic
+		setIsDeleting(true); // You can use this state to show a loading indicator if needed
+		deleteUser(); // Assuming this function handles the deletion
+	  };
     return (
       <View style = {styles.root}>
 		<View style = {styles.container}>
@@ -68,7 +85,7 @@ const UserScreen = () =>{
 		
 		<CustomButton
 			text="Eliminar cuenta"
-			onPress={deleteUser}
+			onPress={showDeleteConfirmation}
 			bgColor="red"
 			fgColor="white"
 		/>

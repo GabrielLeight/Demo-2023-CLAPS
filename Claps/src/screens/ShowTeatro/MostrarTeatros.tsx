@@ -32,33 +32,54 @@ const ShowTeatro: React.FC = () => {
         // Handle errors
         console.error('Error:', error);
     });
+    const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+        // Function to calculate distance between two sets of coordinates using Haversine formula
+        const R = 6371; // Radius of the Earth in kilometers
+        const dLat = (lat2 - lat1) * (Math.PI / 180);
+        const dLon = (lon2 - lon1) * (Math.PI / 180);
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c;
+    
+        return distance;
+      };
     const handleReviewPress = (item: YourComponentProps['item']) => {
         // Navigate to the review screen and pass the item ID as a parameter
         if (item) {
             navigation.navigate('ReviewScreen', { itemId: item.id });
           }
       };
-    useEffect(() => {
+      useEffect(() => {
         const fetchData = async () => {
-            try {
-                const token = await getAuthToken();
-
-                const response = await client.get('getShows', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-
-                setTheaters(response.data);
-            } catch (error) {
-                console.error('Failed to fetch theaters:', error);
-            } finally {
-                setLoading(false);
-            }
+          try {
+            const token = await getAuthToken();
+    
+            const response = await client.get('getShows', {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+    
+            // Calculate distances and sort theaters based on proximity to your position
+            const theatersWithDistances = response.data.map((theater) => ({
+              ...theater,
+              distance: calculateDistance(latitude, longitude, theater.latitude, theater.longitude),
+            }));
+    
+            const sortedTheaters = theatersWithDistances.sort((a: typeof theaters, b:typeof theaters) => a.distance - b.distance);
+    
+            setTheaters(sortedTheaters);
+          } catch (error) {
+            console.error('Failed to fetch theaters:', error);
+          } finally {
+            setLoading(false);
+          }
         };
-
+    
         fetchData();
-    }, []);
+      }, [latitude, longitude]);
 
     const [playing, setPlaying] = useState(false)
     
