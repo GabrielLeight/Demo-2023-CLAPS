@@ -2,6 +2,8 @@ import React, { useRef, useState,useEffect } from 'react';
 import axios from 'axios';
 import { View, StyleSheet,Image, Animated,  Text, Dimensions, TouchableOpacity } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import getAuthToken from '../authToken/getAuthToken';
+import client from '../../components/client';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
 import ExpandableTextInput from '../../components/CustomInput/ExpandableTextInput';
@@ -21,17 +23,20 @@ const ReviewScreen: React.FC = () => {
 	const params = route.params as ReviewScreenProps | undefined;
 	
 	const EnviarCritica = async () => {
+		const token = getAuthToken()
 		try {
-			const response = await axios.post(
-				'newReview', 
-				{
-					id_show: params?.itemId,
-					rating: rating,
-					cuerpo_crit: comments
-				});
-			// Handle success
-			console.log('Crítica enviada:', response.data);
-			
+		const response = await client.post('newReview', {
+			headers: {
+			Authorization: `Bearer ${token}`,
+		  	},
+			id_show: params?.itemId,
+			performanceTitle: params?.titulo,
+			rating: rating,
+			cuerpo_crit: comments,
+			is_active: true, 
+		});
+		// Handle success
+		console.log('Critica enviada:', response.data);
 		} catch (error) {
 		// Handle error
 		console.error('Envío fallido de la crítica:', error);
