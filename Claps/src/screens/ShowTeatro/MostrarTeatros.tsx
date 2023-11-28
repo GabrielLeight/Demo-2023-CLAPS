@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import getAuthToken from '../authToken/getAuthToken';
 import client from '../../components/client';
-import { HomeScreen } from '../../navigation';
 import cambiarFecha from '../../components/formatFecha/formatFecha';
 import YoutubeIframe from 'react-native-youtube-iframe';
 import urlToID from '../../components/urltoID/urltoID';
-
 import getPosition from '../../components/getPosition/getPosition';
 import { RootStackParamList } from '../types/types';
+
 interface Theater {
     id_show: number;
     titulo: string;
@@ -21,7 +20,7 @@ interface Theater {
     latitude: number;
     longitude: number;
     distance: number;
-  }
+}
 type YourComponentProps = {
     item: { 
         id_show: number; 
@@ -65,37 +64,32 @@ const ShowTeatro: React.FC = () => {
 		}
     };
     useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const token = await getAuthToken();
-  
-          const response = await client.get<Theater[]>('getShows', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-  
-          // Calculate distances and sort theaters based on proximity to your position
-          const theatersWithDistances = response.data.map((theater: Theater) => ({
-            ...theater,
-            distance: calculateDistance(latitude, longitude, theater.latitude, theater.longitude),
-          }));
-  
-          const sortedTheaters = theatersWithDistances.sort((a: Theater, b: Theater) => a.distance - b.distance);
-  
-          setTheaters(sortedTheaters);
-        } catch (error) {
-          console.error('Failed to fetch theaters:', error);
-        } finally {
-          setLoading(false);
-        }
-      };
-  
-      fetchData();
+		const fetchData = async () => {
+			try {
+				const token = await getAuthToken();
+				const response = await client.get<Theater[]>('getShows', {
+					headers: {
+					Authorization: `Bearer ${token}`,
+					},
+				});
+				// Calculate distances and sort theaters based on proximity to your position
+				const theatersWithDistances = response.data.map((theater: Theater) => ({
+					...theater,
+					distance: calculateDistance(latitude, longitude, theater.latitude, theater.longitude),
+				}));
+		
+				const sortedTheaters = theatersWithDistances.sort((a: Theater, b: Theater) => a.distance - b.distance);
+				setTheaters(sortedTheaters);
+			} catch (error) {
+			console.error('Failed to fetch theaters:', error);
+			} finally {
+			setLoading(false);
+			}
+		};
+      	fetchData();
     }, [latitude, longitude]);
 
     const [playing, setPlaying] = useState(false)
-    
     return (
         <View style={styles.root}>
             <Text style={styles.title}>Eventos</Text>
@@ -120,9 +114,7 @@ const ShowTeatro: React.FC = () => {
                     </View>
                 )}
             /> 
-            
         </View>
-       
     );
 };
 
@@ -145,13 +137,11 @@ const styles = StyleSheet.create({
         padding: 10,
         marginBottom: 5,
     },
-
     container: {
         padding: 10,
         backgroundColor: '#e8fffd',
         borderRadius: 8,
         margin: 15,
-        
         marginHorizontal: 29
       },
       label: {
@@ -169,13 +159,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: '#333',
-
       },
       reviewLink: {
         fontSize: 16,
         fontWeight: 'bold',
         color: '#333',
-
       },
 });
 
