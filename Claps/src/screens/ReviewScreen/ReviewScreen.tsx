@@ -23,28 +23,23 @@ const ReviewScreen: React.FC = () => {
 	const params = route.params as ReviewScreenProps | undefined;
 	
 	const EnviarCritica = async () => {
-		const token = getAuthToken()
+		const token = await getAuthToken()
 		try {
-		const response = await client.post('newReview', {
-			headers: {
-			Authorization: `Bearer ${token}`,
-		  	},
-			id_show: params?.itemId,
-			performanceTitle: params?.titulo,
-			rating: rating,
-			cuerpo_crit: comments,
-			is_active: true, 
-		});
-		// Handle success
-		console.log('Critica enviada:', response.data);
+			const response = await client.post('newReview', {
+                id_show: params?.itemId,
+                performanceTitle: params?.titulo,
+                rating: rating,
+                cuerpo_crit: comments,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+			console.log('Crítica enviada:', response.data);
 		} catch (error) {
-		// Handle error
-		console.error('Envío fallido de la crítica:', error);
-		console.log('parametro id: ', params?.itemId);
-		console.log('parametro titulo: ', params?.titulo);
+			console.error('Envío fallido de la crítica:', error);
 		}
 	};
-
 
 	return (
 		<View style={styles.root}>
