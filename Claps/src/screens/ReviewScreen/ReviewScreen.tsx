@@ -2,6 +2,8 @@ import React, { useRef, useState,useEffect } from 'react';
 import axios from 'axios';
 import { View, StyleSheet,Image, Animated,  Text } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import getAuthToken from '../authToken/getAuthToken';
+import client from '../../components/client';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
 import ExpandableTextInput from '../../components/CustomInput/ExpandableTextInput';
@@ -87,8 +89,12 @@ const ReviewScreen: React.FC = () => {
 			outputRange: [0, -400], // Adjust to move up
 		  });
 	const Enviar = async () => {
+		const token = getAuthToken()
 		try {
-		const response = await axios.post('newReview', {
+		const response = await client.post('newReview', {
+			headers: {
+			Authorization: `Bearer ${token}`,
+		  	},
 			id_show: params?.itemId,
 			performanceTitle: params?.titulo,
 			rating: rating,
