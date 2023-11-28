@@ -15,25 +15,28 @@ interface ReviewScreenProps {
 const ReviewScreen: React.FC = () => {
     const [id_show, setshowName] = useState('');
     const [author, setAuthor] = useState('');
-    const [rating, setRating] = useState<number>(1); // Default rating
+    const [rating, setRating] = useState<number>(1); // Calificacion default en 1
     const [comments, setComments] = useState('');
 	const route = useRoute();
 	const params = route.params as ReviewScreenProps | undefined;
 	
-	const Enviar = async () => {
+	const EnviarCritica = async () => {
 		try {
-		const response = await axios.post('newReview', {
-			id_show: params?.itemId,
-			performanceTitle: params?.titulo,
-			rating: rating,
-			cuerpo_crit: comments,
-			is_active: true, 
-		});
-		// Handle success
-		console.log('Critica enviada:', response.data);
+			const response = await axios.post(
+				'newReview', 
+				{
+					id_show: params?.itemId,
+					rating: rating,
+					cuerpo_crit: comments
+				});
+			// Handle success
+			console.log('Crítica enviada:', response.data);
+			
 		} catch (error) {
 		// Handle error
-		console.error('Envio fallido de la critica:', error);
+		console.error('Envío fallido de la crítica:', error);
+		console.log('parametro id: ', params?.itemId);
+		console.log('parametro titulo: ', params?.titulo);
 		}
 	};
 
@@ -61,7 +64,7 @@ const ReviewScreen: React.FC = () => {
 				/>
 				<CustomButton
 					text="Enviar"
-					onPress={Enviar} 
+					onPress={EnviarCritica} 
 					bgColor="#446c69"
 					fgColor="#ffffff"
 				/>

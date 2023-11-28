@@ -23,8 +23,8 @@ export function HomeScreen() {
 		<Tab.Navigator 
 		initialRouteName='FormReview'
 		screenOptions={{headerShown: false}}
-	  >
-		<Tab.Screen
+	  	>
+		{/* <Tab.Screen
 		  name="Usuario"
 		  component={ReviewScreen}
 		  options={{
@@ -35,28 +35,28 @@ export function HomeScreen() {
 			  />
 			),
 		  }}
-		/>
+		/> */}
 		<Tab.Screen
-		  name="Teatros"
-		  component={ShowTeatro}
-		  options={{
+			name="Eventos"
+			component={ShowTeatro}
+			options={{
 			tabBarIcon: ({ color, size }) => (
-			  <Image
-				source={require(Logo)}
-				style={{ width: size, height: size, tintColor: color }}
-			  />
+				<Image
+					source={require(Logo)}
+					style={{ width: size, height: size, tintColor: color }}
+				/>
 			),
 		  }}
 		/>
 		<Tab.Screen
-		  name="Perfil"
-		  component={UserScreen}
-		  options={{
+			name="Perfil"
+			component={UserScreen}
+			options={{
 			tabBarIcon: ({ color, size }) => (
-			  <Image
-				source={require(Logo)}
-				style={{ width: size*1.5, height: size*0.5, tintColor: color }}
-			  />
+				<Image
+					source={require(Logo)}
+					style={{ width: size*1.5, height: size*0.5, tintColor: color }}
+				/>
 			),
 		  }}
 		/>
@@ -75,9 +75,7 @@ return (
 			<Stack.Screen name="Shows" component={ShowTeatro} />
 			<Stack.Screen name="HomeScreen" component={HomeScreen} />
 			<Stack.Screen name="UserScreen" component={UserScreen} />
-			<Stack.Screen name="Review" component={ReviewScreen} />
-			
-			
+			<Stack.Screen name="ReviewScreen" component={ReviewScreen} />
 	    </Stack.Navigator>
 	</NavigationContainer>
 );
