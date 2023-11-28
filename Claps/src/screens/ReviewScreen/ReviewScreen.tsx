@@ -1,6 +1,5 @@
-import React, { useRef, useState,useEffect } from 'react';
-import axios from 'axios';
-import { View, StyleSheet,Image, Animated,  Text, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet,Image,  Text, Dimensions} from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import getAuthToken from '../authToken/getAuthToken';
 import client from '../../components/client';
@@ -13,10 +12,7 @@ interface ReviewScreenProps {
 	itemId: number;
 	titulo: string;
 }
-
 const ReviewScreen: React.FC = () => {
-    const [id_show, setshowName] = useState('');
-    const [author, setAuthor] = useState('');
     const [rating, setRating] = useState<number>(1); // Calificacion default en 1
     const [comments, setComments] = useState('');
 	const route = useRoute();
