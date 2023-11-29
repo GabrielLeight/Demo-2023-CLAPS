@@ -25,7 +25,7 @@ function SignUpCompany() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [password2, setPasswordRepeat] = useState('');
-
+	const [error, setError] = useState('');
 
 	const navigator = useNavigation();
 
@@ -36,19 +36,17 @@ function SignUpCompany() {
 				password: password,
 				password2: password2,
 				email: email
-				
-				
 			});
-        // Handle success, e.g., navigate to a new screen or display a success message
-        console.log('User registered:', response.data);
+			// Handle success, e.g., navigate to a new screen or display a success message
+			console.log('User registered:', response.data);
+			navigator.navigate('SignIn' as never);
         } catch (error) {
-        // Handle error, e.g., display an error message
-        console.error('Registration failed:', error);
+        	// Handle error, e.g., display an error message
+       		console.error('Registration failed:', error);
+			setError("Error de registro, pruebe con otro email o contraseña válida");
         }
-
-        }
+	}
 	
-
 	if (CurrentUser){
 		return(
 			<Text style={styles.title}>"Iniciaste sesión!"</Text>
@@ -58,6 +56,7 @@ function SignUpCompany() {
 	const onSignInPressed = () => {
 		navigator.navigate('SignIn' as never)
 	}
+
 	return (
 		<>
 		<View style ={styles.root}>
@@ -107,6 +106,7 @@ function SignUpCompany() {
 						fgColor = '#266797'
 					/>
 				</View>	
+				{error && <Text style={{ color: 'red' }}>{error}</Text>}
 		</View>
 		</>
 	);

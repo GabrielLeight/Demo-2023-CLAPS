@@ -42,9 +42,8 @@ const ReviewScreen: React.FC = () => {
 			<View style={styles.container}>
 				<Image style = {styles.tinyLogo} source = {require(Logo)}/>
 				<Text style={styles.texto}>¡De rienda suelta a sus emociones!</Text> 
-				<Text style={styles.texto}>¿Qué le produjo esta obra?</Text> 
 				<ExpandableTextInput
-					placeholder=""
+					placeholder="¿Qué le produjo esta obra?"
 					secureTextEntry={false}
 					setValue ={setComments}
 					value={comments}
