@@ -21,21 +21,9 @@ const Logo = '../../assets/images/Claps.png';
 export function HomeScreen() {
 	return (
 		<Tab.Navigator 
-		initialRouteName='FormReview'
+		initialRouteName='Eventos'
 		screenOptions={{headerShown: false}}
 	  	>
-		{/* <Tab.Screen
-		  name="Usuario"
-		  component={ReviewScreen}
-		  options={{
-			tabBarIcon: ({ color, size }) => (
-			  <Image
-				source={require(Logo)}
-				style={{ width: size, height: size, tintColor: color }}
-			  />
-			),
-		  }}
-		/> */}
 		<Tab.Screen
 			name="Eventos"
 			component={ShowTeatro}

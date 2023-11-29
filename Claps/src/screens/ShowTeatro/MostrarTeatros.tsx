@@ -108,12 +108,10 @@ const ShowTeatro: React.FC = () => {
                             height={200}
                             play={playing}
                         />
-                        {/* <TouchableOpacity onPress={() => handleReviewPress(item)}>
-                            <Text style={styles.reviewLink}>¡Registra una crítica a esta obra aquí!</Text>
-                        </TouchableOpacity> */}
+                        
                         <CustomButton
                             text="¡Registra una crítica a esta obra aquí!" 
-                            onPress={handleReviewPress(item)}
+                            onPress={() => handleReviewPress(item)}
                             bgColor = 'transparent'
                             fgColor = '#75b9b4'
 					    />

@@ -166,7 +166,7 @@ root: {
 	padding: 20,
 	alignItems: 'center',
 	justifyContent: 'center',
-	backgroundColor: '#f6f8fa',
+	backgroundColor: '#d0e2e9',
 },
 
 row: {

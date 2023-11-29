@@ -115,7 +115,7 @@ function SignUpCompany() {
 const styles = StyleSheet.create({
     root: {
         flex: 1,
-        backgroundColor: '#f6f8fa',
+        backgroundColor: '#d0e2e9',
         padding: 20,
         alignItems: 'center',
         justifyContent: 'center',
