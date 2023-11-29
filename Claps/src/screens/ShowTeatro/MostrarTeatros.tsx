@@ -9,6 +9,7 @@ import YoutubeIframe from 'react-native-youtube-iframe';
 import urlToID from '../../components/urltoID/urltoID';
 import getPosition from '../../components/getPosition/getPosition';
 import { RootStackParamList } from '../types/types';
+import CustomButton from '../../components/CustomButton';
 
 interface Theater {
     id_show: number;
@@ -81,9 +82,9 @@ const ShowTeatro: React.FC = () => {
 				const sortedTheaters = theatersWithDistances.sort((a: Theater, b: Theater) => a.distance - b.distance);
 				setTheaters(sortedTheaters);
 			} catch (error) {
-			console.error('Failed to fetch theaters:', error);
+			    console.error('Failed to fetch theaters:', error);
 			} finally {
-			setLoading(false);
+			    setLoading(false);
 			}
 		};
       	fetchData();
@@ -97,7 +98,6 @@ const ShowTeatro: React.FC = () => {
                 data={theaters}
                 keyExtractor={(item) => (item.titulo ? item.titulo.toString() : Math.random().toString())}
                 renderItem={({ item }) => (
-                    
                     <View style={styles.container}>
                         <Text style={styles.text}>{cambiarFecha(item.fecha_show)}</Text>
                         <Text style={styles.label}>"{item.titulo}"</Text>
@@ -108,9 +108,15 @@ const ShowTeatro: React.FC = () => {
                             height={200}
                             play={playing}
                         />
-                        <TouchableOpacity onPress={() => handleReviewPress(item)}>
+                        {/* <TouchableOpacity onPress={() => handleReviewPress(item)}>
                             <Text style={styles.reviewLink}>¡Registra una crítica a esta obra aquí!</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
+                        <CustomButton
+                            text="¡Registra una crítica a esta obra aquí!" 
+                            onPress={handleReviewPress(item)}
+                            bgColor = 'transparent'
+                            fgColor = '#75b9b4'
+					    />
                     </View>
                 )}
             /> 
