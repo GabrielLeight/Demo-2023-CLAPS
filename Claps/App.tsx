@@ -10,6 +10,8 @@ import {
   SafeAreaView,
   StyleSheet,
   useColorScheme,
+  PermissionsAndroid,
+  TouchableOpacity
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';

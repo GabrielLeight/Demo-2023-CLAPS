@@ -49,6 +49,8 @@ const SignInScreen = () => {
 		).then((response) =>{
 			const token = response.data.access;
 			AsyncStorage.setItem('authToken', token);
+			
+			AsyncStorage.setItem('username',username);
 			setCurrentUser(true);
 			navigation.navigate('HomeScreen' as never);
 		})
@@ -62,37 +64,39 @@ const SignInScreen = () => {
 
     return (
 		<View style ={styles.root}>
-			<Image style = {styles.tinyLogo} source = {require(Logo)}/>
-			<CustomInput
-				placeholder="Ingresa tu nombre de usuario"
-				setValue = {setUsername}
-				value={username}
-				secureTextEntry={false}
-				bgColor = '#ffffff'
-			/>
-			<CustomInput
-				placeholder="Ingresa tu contraseña"
-				secureTextEntry={true}
-				setValue = {setPassword}
-				value={password}
-				bgColor = '#ffffff'
-			/>
-			<CustomButton
-				text="Iniciar Sesion" 
-				onPress={onSignInPressed}
-				bgColor = '#bc2a3c'
-				fgColor = 'white'
-			/>
-			<View style = {{flexDirection: 'row', marginTop: 2}}>
-				<Text>¿No tienes una cuenta? </Text>
-				<CustomButton
-					text="Regístrate" 
-					onPress={onSignUpPressed}
-					bgColor = 'transparent'
-					fgColor = 'red'
+			<View style = {styles.container}>
+				<Image style = {styles.tinyLogo} source = {require(Logo)}/>
+				<CustomInput
+					placeholder="Ingresa tu nombre de usuario"
+					setValue = {setUsername}
+					value={username}
+					secureTextEntry={false}
+					bgColor = '#ffffff'
 				/>
-			</View>						
-			{error && <Text style={{ color: 'red' }}>{error}</Text>}
+				<CustomInput
+					placeholder="Ingresa tu contraseña"
+					secureTextEntry={true}
+					setValue = {setPassword}
+					value={password}
+					bgColor = '#ffffff'
+				/>
+				<CustomButton
+					text="Iniciar Sesion" 
+					onPress={onSignInPressed}
+					bgColor = '#446c69'
+					fgColor = '#ffffff'
+				/>
+				<View style = {{flexDirection: 'row', marginTop: 2}}>
+					<Text>¿No tienes una cuenta? </Text>
+					<CustomButton
+						text="Regístrate" 
+						onPress={onSignUpPressed}
+						bgColor = 'transparent'
+						fgColor = '#25978e'
+					/>
+				</View>						
+				{error && <Text style={{ color: 'red' }}>{error}</Text>}
+			</View>
 		</View>
 	);
 }
@@ -100,10 +104,16 @@ const SignInScreen = () => {
 const styles = StyleSheet.create({
 	root: {
 		flex: 1,
-		backgroundColor: '#f6f8fa',
-		padding: 20,
+		backgroundColor: '#5db9b2', // #5fcbc3 // #75b9b4
+		justifyContent: 'center',
+	},
+	container: {
 		alignItems: 'center',
 		justifyContent: 'center',
+		padding: 20,
+		margin: 15,
+		borderRadius: 20,
+		backgroundColor: '#d0e2e9',
 	},
 	tinyLogo: {
 		width: Dimensions.get('window').width * 0.60, // Ajusta el factor según tus necesidades

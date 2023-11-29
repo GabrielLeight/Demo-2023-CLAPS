@@ -64,43 +64,22 @@ function SignUpScreen() {
 		}
 		catch(res){ }
     };
-	// Crea un usuario normal
-	const create = async () => {
-		try {
-		const response = await axios.post('YOUR_API_ENDPOINT', {
-			email,
-			password,
-			first_name: firstName,
-			last_name: lastName,
-			is_active: true, // Set this as needed
-		});
-
-		// Handle success, e.g., navigate to a new screen or display a success message
-		console.log('User registered:', response.data);
-		} catch (error) {
-		// Handle error, e.g., display an error message
-		console.error('Registration failed:', error);
-		}
-	}
-
     // Navega al register de los teatros
 	const onNewHallPressed = () => { 
 		navigator.navigate('SignUpT' as never)
 	}
-	
 	const onNewCompanyPressed = () => {
 		navigator.navigate('SignUpC' as never)
 	}
 	const onSignInPressed = () => {
 		navigator.navigate('SignIn' as never)
 	}
-
 	if (CurrentUser){
 		return(
 			<Text style={styles.title}>Iniciaste sesión!</Text>
 		);
 	};
-
+	
 	return (	
 		<View style ={styles.root}>
 			<Image style = {styles.tinyLogo} source = {require(Logo)}/>
