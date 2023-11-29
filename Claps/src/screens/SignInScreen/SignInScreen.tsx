@@ -104,7 +104,7 @@ const SignInScreen = () => {
 const styles = StyleSheet.create({
 	root: {
 		flex: 1,
-		backgroundColor: '#5db9b2', // #5fcbc3 // #75b9b4
+		backgroundColor: '#d0e2e9', // #5fcbc3 // #75b9b4
 		justifyContent: 'center',
 	},
 	container: {
