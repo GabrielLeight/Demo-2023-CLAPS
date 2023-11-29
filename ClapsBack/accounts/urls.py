@@ -17,5 +17,8 @@ urlpatterns = [
     path('login', views.UserLogin.as_view(),name='login'),
     path('logout', views.UserLogout.as_view(), name='logout'),
     path('user', views.UserView.as_view(), name='user'),
-    path('getShows', views.getShows.as_view(), name='getShows')
+    path('getShows', views.getShows.as_view(), name='getShows'),
+    path('deleteUser', views.deleteUser.as_view(), name='deleteUser'),
+    path('deleteCrit', views.deleteCrit.as_view(), name='deleteCrit'),
+    path('updateUser',views.updateUser.as_view(), name='updateUser')
 ]

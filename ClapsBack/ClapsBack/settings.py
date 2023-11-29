@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-5a6wcvyerj4@r(6bfq&2kp_*x6%^c5#b-^s&*@33$gt47jivu#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["b54f-2800-150-140-1edf-25f2-8e65-b2d9-da1b.ngrok-free.app","127.0.0.1","localhost"]
+ALLOWED_HOSTS = ["ZarcoPhage.pythonanywhere.com","127.0.0.1","localhost"]
 
 CORS_ALLOWED_ORIGINS = ['http://localhost:8080']
 
@@ -55,6 +55,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'clapsBack.urls'
@@ -122,6 +124,8 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

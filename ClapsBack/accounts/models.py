@@ -62,7 +62,7 @@ class clapsUser(AbstractBaseUser):
     objects = clapsUserManager()
 
     def __str__(self):
-        return self.email
+        return self.username
     
 class show(models.Model):
     id_show = models.AutoField(primary_key=True)
@@ -72,8 +72,9 @@ class show(models.Model):
     sinopsis = models.CharField(max_length=900)
     trailer_url = models.CharField(max_length=200)
     fecha_show = models.DateTimeField()
+    latitude = models.DecimalField(max_digits=15,decimal_places=10,null=True)
+    longitude = models.DecimalField(max_digits=15,decimal_places=10,null=True)
     avg_rating = models.DecimalField(max_digits=15,decimal_places=10)
-
 
     REQUIRED_FIELDS = ['titulo', 'fecha_show', 'teatro', 'company']
 
