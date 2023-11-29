@@ -21,6 +21,7 @@ interface Theater {
     latitude: number;
     longitude: number;
     distance: number;
+    avg_rating: number;
 }
 type YourComponentProps = {
     item: { 
@@ -36,7 +37,7 @@ const ShowTeatro: React.FC = () => {
     const [theaters, setTheaters] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const navigation = useNavigation<YourComponentNavigationProp>();
-    
+    const [token, setToken] = useState('');
     getPosition().then(({ latitude, longitude }: { latitude: number; longitude: number }) => {
         // Do something with latitude and longitude
         setLatitude(latitude);
@@ -78,7 +79,7 @@ const ShowTeatro: React.FC = () => {
 					...theater,
 					distance: calculateDistance(latitude, longitude, theater.latitude, theater.longitude),
 				}));
-		
+                setToken
 				const sortedTheaters = theatersWithDistances.sort((a: Theater, b: Theater) => a.distance - b.distance);
 				setTheaters(sortedTheaters);
 			} catch (error) {
@@ -108,12 +109,12 @@ const ShowTeatro: React.FC = () => {
                             height={200}
                             play={playing}
                         />
-                        
+                        <Text style={styles.label2}>Calificación: {Number(item.avg_rating).toFixed(1)}/5</Text>
                         <CustomButton
                             text="¡Registra una crítica a esta obra aquí!" 
                             onPress={() => handleReviewPress(item)}
                             bgColor = 'transparent'
-                            fgColor = '#75b9b4'
+                            fgColor = '#006d71'
 					    />
                     </View>
                 )}

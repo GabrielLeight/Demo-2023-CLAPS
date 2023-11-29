@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { View, StyleSheet,Image,  Text, Dimensions} from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, CommonActions } from '@react-navigation/native';
 import getAuthToken from '../authToken/getAuthToken';
 import client from '../../components/client';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
 import ExpandableTextInput from '../../components/CustomInput/ExpandableTextInput';
+import { useNavigation } from '@react-navigation/native';
 const Logo = '../../../assets/images/Claps.png';
 
 interface ReviewScreenProps {
@@ -17,7 +18,8 @@ const ReviewScreen: React.FC = () => {
     const [comments, setComments] = useState('');
 	const route = useRoute();
 	const params = route.params as ReviewScreenProps | undefined;
-	
+	const [msg, setMsg] = useState('');
+	const navigation = useNavigation();
 	const EnviarCritica = async () => {
 		const token = await getAuthToken()
 		try {
@@ -32,11 +34,27 @@ const ReviewScreen: React.FC = () => {
                 },
             });
 			console.log('Crítica enviada:', response.data);
+			setMsg("¡Gracias por enviar tu opinión!, puedes volver a los eventos haciendo click aquí")
+			
 		} catch (error) {
 			console.error('Envío fallido de la crítica:', error);
+			
 		}
 	};
 
+
+	const onEventsPressed = async () => {
+		navigation.dispatch(
+		  CommonActions.reset({
+			index: 0,
+			routes: [
+			  {
+				name: 'HomeScreen',
+			  },
+			],
+		  })
+		);
+	  };
 	return (
 		<View style={styles.root}>
 			<View style={styles.container}>
@@ -57,12 +75,23 @@ const ReviewScreen: React.FC = () => {
 					value={rating}
 					bgColor="#e8fffd"
 				/>
-				<CustomButton
-					text="Enviar"
-					onPress={EnviarCritica} 
-					bgColor="#446c69"
-					fgColor="#ffffff"
-				/>
+				{!msg &&
+					<CustomButton
+						text="Enviar"
+						onPress={EnviarCritica} 
+						bgColor="#446c69"
+						fgColor="#ffffff"
+					/>
+				}
+				{msg && <Text style={{ color: '#006d71' }}>{msg}</Text>}
+				{msg &&
+					<CustomButton
+						text="Ir a eventos"
+						onPress={() => onEventsPressed()} 
+						bgColor="#2a8c8f"
+						fgColor="#ffffff"
+					/>
+				}
 			</View>
 		</View>
 	);
