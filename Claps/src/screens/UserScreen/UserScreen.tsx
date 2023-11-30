@@ -20,7 +20,7 @@ const UserScreen = () =>{
 	const handleChanges = async () => {
 		const token = await getAuthToken()
 		try {
-			const response = await client.post('', { // Agregar aquí el endpoint please!
+			const response = await client.post('updateUser', { // Agregar aquí el endpoint please!
                 username: newusername,
 				email: newemail
             }, {
@@ -29,7 +29,8 @@ const UserScreen = () =>{
                 },
             });
 			console.log('Se aplicaron los cambios a la cuenta de forma exitosa:', response.data);
-			
+			await AsyncStorage.removeItem('authToken');
+			navigation.navigate('SignIn' as never)
 			
 		} catch (error) {
 			console.error('Error al aplicar cambios:', error);
