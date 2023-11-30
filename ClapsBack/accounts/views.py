@@ -10,6 +10,7 @@ from django.db.models.base import ObjectDoesNotExist
 from .validation import *
 from django.http import JsonResponse
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.db import transaction
 
 User = get_user_model()
 
@@ -106,9 +107,10 @@ class newShowView(APIView):
                 return Response({'Error': 'User does not exist'})
             
 class newCrit(APIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.AllowAny,)
 
     def post(self,request):
+        print(request.user)
         serializer = CritSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             try:
@@ -116,17 +118,77 @@ class newCrit(APIView):
                 return Response({'confirmation':"Review posted succesfully"})
             except ObjectDoesNotExist:
                 return Response({'Error': 'User does not exist'})
-            
+
+class deleteCrit(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self,request):
+        critSelected = critica.objects.get(id=request.data.id)
+        user = clapsUser.objects.get(username=user)
+        #serializer = CritSerializer(critSelected)
+        if ((critSelected.author_id == request.user) or user.is_teatro):
+            critSelected.delete()
+            return Response({'confirmation':"Erased Succesfully"})
+        else:
+            return Response({'Error':'user not authorized to delete this review'})
+        
+
 class getShows(APIView):
     permission_classes = (permissions.IsAuthenticated,)
     
     def get(self, request):
+        print(request.user)
         queryShows = show.objects.all()
-        serializer = auxQueryShowSerializer(queryShows, many=True)
+    
+        serializer = ShowSerializer(queryShows, many=True)
         if queryShows:
             return Response(serializer.data)
         else:
             return Response({"None":"no shows found"})
         
+class deleteUser(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
 
+    def post (self, request):
+        user = self.request.user
+        user.delete()
 
+        return Response({'confirmation':'User removed succesfully'})
+
+class updateUser(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post (self,request):
+        try:
+            data = request.data 
+            assert validate_username_reg(data)
+            assert validate_email(data)
+            queryNewUser = clapsUser.objects.filter(username=data['username'])
+            queryEmail = clapsUser.objects.filter(email=data['email'])
+            if (queryNewUser):
+                return Response({'Error':'Username already exists'})
+            if (queryEmail):
+                return Response({'Error':'Email already in user'})
+            queryUser = clapsUser.objects.filter(username=request.user)
+            if (queryUser):
+                with transaction.atomic():
+                    queryUser.update(
+                        username=data['username'],
+                        email=data['email']
+                    )
+                    queryShow = show.objects.filter(company_id=request.user)
+                    if (queryShow):
+                        for shows in queryShow:
+                            shows.update(
+                                company_id=data['username']
+                            )
+                    queryShow2 = show.objects.filter(teatro_id=request.user)
+                    if (queryShow2):
+                        for shows in queryShow2:
+                            shows.update(
+                                teatro_id=data['username']
+                            )
+                    critica.objects.filter(author_id=request.user).update(author_id=data['username'])
+                return Response({'User information updated succesfully'})
+        except ValidationError:
+            return Response({'Error':'information is not valid'})

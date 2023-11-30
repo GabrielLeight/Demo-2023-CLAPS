@@ -134,9 +134,10 @@ class auxQueryShowSerializer(serializers.ModelSerializer):
         model = show
         fields = ["titulo","teatro","sinopsis","trailer_url","fecha_show"]
     def createShow(self, validated_data,username):
+        
         queryTeatro = clapsUser.objects.get(username=validated_data["teatro"])
         queryCompany = clapsUser.objects.get(username=username)
-        print(queryCompany)
+        print(queryTeatro.latit)
         if (queryTeatro and queryCompany):
             newshow = show.objects.create(
                 titulo = validated_data["titulo"],
@@ -145,9 +146,25 @@ class auxQueryShowSerializer(serializers.ModelSerializer):
                 sinopsis = validated_data["sinopsis"],
                 trailer_url = validated_data["trailer_url"],
                 fecha_show = validated_data["fecha_show"],
+                latitude = queryTeatro.latit,
+                longitude = queryTeatro.longit,
                 avg_rating = 0
             )
             newshow.save()
+
+class ShowSerializer(serializers.ModelSerializer):
+    id_show = serializers.IntegerField()
+    titulo = serializers.CharField()
+    teatro = serializers.CharField()
+    sinopsis = serializers.CharField()
+    trailer_url = serializers.CharField()
+    fecha_show = serializers.DateTimeField()
+    latitude = serializers.FloatField()
+    longitude = serializers.FloatField()
+
+    class Meta:
+        model = show
+        fields = ["id_show","titulo","teatro","sinopsis","trailer_url","fecha_show","avg_rating","latitude","longitude"]
 
 class CritSerializer(serializers.ModelSerializer):
     cuerpo_crit = serializers.CharField()
@@ -159,8 +176,21 @@ class CritSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data,username):
         queryUser = clapsUser.objects.get(username=username)
-        queryShow = show.objects.get(id_show=validated_data["id_show"])
         
+        queryShow = show.objects.get(id_show=validated_data["id_show"])
+        queryCrit = critica.objects.filter(author_id=username, id_show_id=validated_data["id_show"])
+
+        if (queryCrit):
+            queryCrit.update(
+                cuerpo_crit = validated_data["cuerpo_crit"],
+                rating = validated_data["rating"],
+            )
+            queryCrits = critica.objects.all().filter(id_show=validated_data["id_show"])
+            avg = queryCrits.aggregate(Avg("rating", default=0))['rating__avg']
+            print(avg)
+            queryShow.avg_rating = avg
+            queryShow.save(update_fields=['avg_rating'])
+            return
         if (queryUser):
             newCrit = critica.objects.create(
                 cuerpo_crit = validated_data["cuerpo_crit"],
@@ -174,4 +204,3 @@ class CritSerializer(serializers.ModelSerializer):
             print(avg)
             queryShow.avg_rating = avg
             queryShow.save(update_fields=['avg_rating'])
-
