@@ -22,10 +22,14 @@ const ReviewScreen: React.FC = () => {
 	const navigation = useNavigation();
 	const EnviarCritica = async () => {
 		const token = await getAuthToken()
+		if (!msg){
+			console.error('Por favor, escriba qué le produjo la obra');
+			return
+		}
 		if (rating < 1 || rating > 5) {
 			console.error('El rating debe estar entre 1 y 5');
 			return;
-		  }
+		}
 		try {
 			const response = await client.post('newReview', {
                 id_show: params?.itemId,
