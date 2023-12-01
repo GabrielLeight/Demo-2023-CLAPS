@@ -120,21 +120,22 @@ class LoginSerializer(serializers.Serializer):
     
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = clapsUser
-        fields = ["email", "username", "first_name", "last_name", "is_teatro", "is_company", "is_commonUser"]
+        model = User
+        fields = ["username", "email", "first_name", "last_name", "is_teatro", "is_company", "is_commonUser", "is_superuser"]
 
 class auxQueryShowSerializer(serializers.ModelSerializer):
     titulo = serializers.CharField()
     teatro = serializers.CharField()
     sinopsis = serializers.CharField()
-    trailer_url = serializers.CharField()
+    trailer_url = serializers.CharField(allow_blank=True, allow_null=True)
+    image_url = serializers.CharField(allow_blank=True, allow_null=True)
+    image2_url = serializers.CharField(allow_blank=True, allow_null=True)
     fecha_show = serializers.DateTimeField()
 
     class Meta:
         model = show
-        fields = ["titulo","teatro","sinopsis","trailer_url","fecha_show"]
+        fields = ["titulo","teatro","sinopsis","trailer_url","image_url","image2_url","fecha_show"]
     def createShow(self, validated_data,username):
-        
         queryTeatro = clapsUser.objects.get(username=validated_data["teatro"])
         queryCompany = clapsUser.objects.get(username=username)
         print(queryTeatro.latit)
@@ -146,6 +147,8 @@ class auxQueryShowSerializer(serializers.ModelSerializer):
                 sinopsis = validated_data["sinopsis"],
                 trailer_url = validated_data["trailer_url"],
                 fecha_show = validated_data["fecha_show"],
+                image_url = validated_data["image_url"],
+                image2_url = validated_data["image2_url"],
                 latitude = queryTeatro.latit,
                 longitude = queryTeatro.longit,
                 avg_rating = 0
@@ -157,14 +160,16 @@ class ShowSerializer(serializers.ModelSerializer):
     titulo = serializers.CharField()
     teatro = serializers.CharField()
     sinopsis = serializers.CharField()
-    trailer_url = serializers.CharField()
+    trailer_url = serializers.CharField(allow_blank=True, allow_null=True)
+    image_url = serializers.CharField(allow_blank=True, allow_null=True)
+    image2_url = serializers.CharField(allow_blank=True, allow_null=True)
     fecha_show = serializers.DateTimeField()
     latitude = serializers.FloatField()
     longitude = serializers.FloatField()
 
     class Meta:
         model = show
-        fields = ["id_show","titulo","teatro","sinopsis","trailer_url","fecha_show","avg_rating","latitude","longitude"]
+        fields = ["id_show","titulo","teatro","sinopsis","trailer_url","image_url","image2_url","fecha_show","avg_rating","latitude","longitude"]
 
 class CritSerializer(serializers.ModelSerializer):
     cuerpo_crit = serializers.CharField()

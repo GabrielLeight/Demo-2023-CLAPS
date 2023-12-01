@@ -27,12 +27,12 @@ class clapsUserManager(BaseUserManager):
 #        user.save()
 #        return user    
 
-    def create_superuser(self, email, name, password=None):
+    def create_superuser(self, email, username, password=None):
         if not email:
             raise ValueError('Users must have an email address')
         if not password:
             raise ValueError('User must have a password')
-        user = self.model(email=self.normalize_email(email), name=name)
+        user = self.model(username=username,email=self.normalize_email(email))
         user.is_superuser = True
         user.set_password(password)
         user.save()
@@ -70,7 +70,9 @@ class show(models.Model):
     teatro = models.ForeignKey(clapsUser, on_delete=models.CASCADE, related_name="teatro")
     company = models.ForeignKey(clapsUser, on_delete=models.CASCADE, related_name="company")
     sinopsis = models.CharField(max_length=900)
-    trailer_url = models.CharField(max_length=200)
+    trailer_url = models.CharField(max_length=200, default=None,null=True)
+    image_url = models.CharField(max_length=350, default=None, null=True)
+    image2_url = models.CharField(max_length=350, default=None, null=True)
     fecha_show = models.DateTimeField()
     latitude = models.DecimalField(max_digits=15,decimal_places=10,null=True)
     longitude = models.DecimalField(max_digits=15,decimal_places=10,null=True)

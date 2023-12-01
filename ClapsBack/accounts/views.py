@@ -138,13 +138,28 @@ class getShows(APIView):
     
     def get(self, request):
         print(request.user)
-        queryShows = show.objects.all()
+        queryShows = show.objects.all().order_by('-fecha_show')
     
         serializer = ShowSerializer(queryShows, many=True)
         if queryShows:
             return Response(serializer.data)
         else:
             return Response({"None":"no shows found"})
+        
+class deleteShow(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        queryUser = clapsUser.objects.get(username=request.user)
+        if (queryUser.is_superuser):
+            data = request.data
+            q = show.objects.get(id_show=data['id_show'])
+            if (q):
+                q.delete()
+                print("delete")
+            return Response({'confirmation':'Show removed succesfully'})
+        else:
+            return Response({'Error':'User not allowed to do this'})
         
 class deleteUser(APIView):
     permission_classes = (permissions.IsAuthenticated,)
