@@ -20,5 +20,6 @@ urlpatterns = [
     path('getShows', views.getShows.as_view(), name='getShows'),
     path('deleteUser', views.deleteUser.as_view(), name='deleteUser'),
     path('deleteCrit', views.deleteCrit.as_view(), name='deleteCrit'),
+    path('deleteShow', views.deleteShow.as_view(), name='deleteShow'),
     path('updateUser',views.updateUser.as_view(), name='updateUser')
 ]
