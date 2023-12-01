@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, FlatList, TouchableOpacity, Image } from 'react-native';
 import { useNavigation, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import getAuthToken from '../authToken/getAuthToken';
@@ -12,12 +12,13 @@ import { RootStackParamList } from '../types/types';
 import CustomButton from '../../components/CustomButton';
 
 interface Theater {
-    id_show: number;
+    fecha_show : Date;
     titulo: string;
     teatro :  string;
     sinopsis :  string;
     trailer_url : string;
-    fecha_show : Date;
+    image_url : string;
+    id_show: number;
     latitude: number;
     longitude: number;
     distance: number;
@@ -31,6 +32,7 @@ type YourComponentProps = {
     navigation: StackNavigationProp<RootStackParamList, 'YourComponent'>;
   };
 type YourComponentNavigationProp = StackNavigationProp<RootStackParamList, 'YourComponent'>;
+
 const ShowTeatro: React.FC = () => {
     const [latitude, setLatitude] = useState(0);
     const [longitude, setLongitude] = useState(0);
@@ -74,14 +76,7 @@ const ShowTeatro: React.FC = () => {
 					Authorization: `Bearer ${token}`,
 					},
 				});
-				// Calculate distances and sort theaters based on proximity to your position
-				const theatersWithDistances = response.data.map((theater: Theater) => ({
-					...theater,
-					distance: calculateDistance(latitude, longitude, theater.latitude, theater.longitude),
-				}));
-                setToken
-				const sortedTheaters = theatersWithDistances.sort((a: Theater, b: Theater) => a.distance - b.distance);
-				setTheaters(sortedTheaters);
+                setTheaters(response.data);
 			} catch (error) {
 			    console.error('Failed to fetch theaters:', error);
 			} finally {
@@ -92,6 +87,7 @@ const ShowTeatro: React.FC = () => {
     }, [latitude, longitude]);
 
     const [playing, setPlaying] = useState(false)
+    
     return (
         <View style={styles.root}>
             <Text style={styles.title}>Eventos</Text>
@@ -104,12 +100,21 @@ const ShowTeatro: React.FC = () => {
                         <Text style={styles.label}>"{item.titulo}"</Text>
                         <Text style={styles.label2}>Teatro {item.teatro}</Text>
                         <Text style={styles.text}>{item.sinopsis}</Text>
-                        <YoutubeIframe
+                        { item.trailer_url &&
+                            <YoutubeIframe
                             videoId = { urlToID(item.trailer_url) }
                             height={200}
                             play={playing}
-                        />
-                        <Text style={styles.label2}>Calificación: {Number(item.avg_rating).toFixed(1)}/5</Text>
+                            />
+                        }
+                        { item.image_url &&
+                            <Image 
+                            source = {{uri:`https://drive.google.com/uc?export=view&id=${item.image_url}`}} 
+                            style = {styles.eventImage} 
+                            resizeMode='contain'/>
+                        }
+             
+                        <Text style={styles.label2}>Calificación: {Number(item.avg_rating).toFixed(1)}/5.0</Text>
                         <CustomButton
                             text="¡Registra una crítica a esta obra aquí!" 
                             onPress={() => handleReviewPress(item)}
@@ -141,6 +146,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         padding: 10,
         marginBottom: 5,
+    },
+    eventImage: {
+        height: 200,
     },
     container: {
         padding: 10,
