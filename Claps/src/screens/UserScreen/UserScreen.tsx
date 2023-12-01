@@ -77,10 +77,15 @@ const UserScreen = () =>{
     }
 
     const deleteUser = async () => {
+		const token = await getAuthToken()
 		await client.post(
 			"deleteUser",
 			{
 			username: username
+			},{
+                headers: {
+                    Authorization: `Bearer ${token}`,
+            },
 			}
 		).then(() => {
 			console.log("User deleted");
